@@ -1,0 +1,1729 @@
+<document xmlns="http://cnx.rice.edu/cnxml" xmlns:md="http://cnx.rice.edu/mdml">
+  <title>Đa năng hóa toán tử</title>
+  <metadata>
+  <md:content-id>m30595</md:content-id><md:title>Đa năng hóa toán tử</md:title>
+  <md:abstract>Phần này trình bày về đa năng hóa toán tử</md:abstract>
+  <md:uuid>63e3d082-3cd0-4194-b516-114a73009619</md:uuid>
+</metadata>
+
+<content>
+    <para id="id5378199">DẪN NHẬP</para>
+    <para id="id3410155">Trong chương 3, chúng ta đã tìm hiểu các điều cơ bản của các lớp C++ và khái niệm kiểu dữ liệu trừu tượng (ADTs). Các thao tác trên các đối tượng của lớp (nghĩa là các thực thể của ADTs) được thực hiện bởi gởi các thông điệp (dưới dạng các lời gọi hàm thành viên) tới các đối tượng. Ký pháp gọi hàm này thì cồng kềnh cho các loại lớp nhất định, đặc biệt là các lớp toán học. Đối với các loại lớp này sẽ là đẹp để sử dụng tập các toán tử có sẵn phong phú của C++ để chỉ rõ các thao tác của đối tượng. Trong chương này tìm hiểu làm thế nào cho phép các toán tử của C++ làm việc với các đối tượng của lớp. Xử lý này được gọi là đa năng hóa toán tử (operator overloading).</para>
+    <para id="id5382133">Toán tử &lt;&lt; được sử dụng nhiều mục đích trong C++ đó là toán tử chèn dòng (stream-insertion) và toán tử dịch chuyển trái. Đây là một ví dụ của đa năng hóa toán tử. Tương tự &gt;&gt; cũng được đa năng hóa. Nó được sử dụng vừa toán tử trích dòng (stream-extraction) và toán tử dịch chuyển phải.</para>
+    <para id="id5477651">C++ cho phép các lập trình viên đa năng hóa hầu hết các toán tử để biểu thị ngữ cảnh mà trong đó chúng được sử dụng. Trình biên dịch phát sinh đoạn mã thích hợp dựa trên kiểu mà trong đó toán tử được sử dụng. Một vài toán tử được đa năng hóa thường xuyên, đặc biệt là toán tử gán và các toán tử số học như + và -. Công việc thực hiện bởi đa năng hóa các toán tử cũng có thể được thực hiện bởi các lời gọi hàm tường minh, nhưng ký pháp thường sử dụng dễ dàng để đọc.</para>
+    <section id="id-766761655132">
+      <title>CÁC NGUYÊN TẮC CƠ BẢN CỦA ĐA NĂNG HÓA TOÁN TỬ</title>
+      <para id="id5396955">Lập trình viên có thể sử dụng các kiểu có sẵn và có thể định nghĩa các kiểu mới. Các kiểu có thể được sử dụng với tập các toán tử phong phú. Các toán tử cung cấp cho các lập trình viên với ký pháp ngắn ngọn cho việc biểu thị các thao tác của đối tượng của các kiểu có sẵn.</para>
+      <para id="id3827054">Các lập trình viên có thể sử dụng các toán tử với các kiểu do người dùng định nghĩa. Mặc dù C++ không cho phép các toán tử mới được tạo, nó cho phép các toán tử đã tồn tại được đa năng hóa sao cho khi các toán tử này được sử dụng với các đối tượng của lớp, các toán tử có ý nghĩa thích hợp các kiểu mới. Đây chính là một đặc điểm mạnh của C++.</para>
+      <para id="id3827058">Các toán tử được đa năng hóa bằng cách viết một định nghĩa hàm (bao gồm phần đầu và thân) như khi chúng ta viết một hàm bình thường, ngoại trừ tên hàm bây giờ trở thành từ khóa operator theo sau bởi ký hiệu của toán tử được đa năng hóa. Prototype của nó có dạng như sau: </para>
+      <para id="id6124472">type operator operator_symbol ( parameter_list );</para>
+      <para id="id6162958">Để sử dụng một toán tử một các đối tượng của lớp, toán tử phải được đa năng hóa ngoại trừ hai điều. Điều thứ nhất toán tử gán có thể sử dụng với mọi lớp mà không cần đa năng hóa. Cách cư xử mặc định của toán tử gán là một phép gán thành viên của các thành viên dữ liệu của lớp. Chúng ta nhận thấy rằng sao chép thành viên mặc định thì nguy hiểm đối với các lớp với các thành viên mà được cấp phát động. Chúng ta sẽ đa năng hóa một cách tường minh toán tử gán đối với các lớp như thế. Điều thứ hai toán tử địa chỉ (&amp;) cũng có thể được sử dụng với các đối tượng của bất kỳ lớp nào mà không cần đa năng hóa; Nó trả về địa chỉ của đối tượng trong bộ nhớ. Toán tử địa chỉ cũng có thể được đa năng hóa. </para>
+    </section>
+    <section id="id-524896025357">
+      <title>CÁC GIỚI HẠN CỦA ĐA NĂNG HÓA TOÁN TỬ</title>
+      <para id="id4051573">Phần lớn các toán tử của C++ có thể được đa năng hóa. Hình 4.1 cho thấy các toán tử có thể được đa năng hóa và hình 4.1 là các toán tử không thể đa năng hóa.</para>
+      <para id="id6290453">
+        <table id="id3630216" summary="">
+          <tgroup cols="8">
+            <colspec colnum="1" colname="c1"/>
+            <colspec colnum="2" colname="c2"/>
+            <colspec colnum="3" colname="c3"/>
+            <colspec colnum="4" colname="c4"/>
+            <colspec colnum="5" colname="c5"/>
+            <colspec colnum="6" colname="c6"/>
+            <colspec colnum="7" colname="c7"/>
+            <colspec colnum="8" colname="c8"/>
+            <tbody>
+              <row>
+                <entry>+</entry>
+                <entry>-</entry>
+                <entry>*</entry>
+                <entry>/</entry>
+                <entry>%</entry>
+                <entry>^</entry>
+                <entry>&amp;</entry>
+                <entry>|</entry>
+              </row>
+              <row>
+                <entry>~</entry>
+                <entry>!</entry>
+                <entry>=</entry>
+                <entry>&lt;</entry>
+                <entry>&gt;</entry>
+                <entry>+=</entry>
+                <entry>-=</entry>
+                <entry>*=</entry>
+              </row>
+              <row>
+                <entry>/=</entry>
+                <entry>%=</entry>
+                <entry>^=</entry>
+                <entry>&amp;=</entry>
+                <entry>|=</entry>
+                <entry>&lt;&lt;</entry>
+                <entry>&gt;&gt;</entry>
+                <entry>&gt;&gt;=</entry>
+              </row>
+              <row>
+                <entry>&lt;&lt;=</entry>
+                <entry>==</entry>
+                <entry>!=</entry>
+                <entry>&lt;=</entry>
+                <entry>&gt;=</entry>
+                <entry>&amp;&amp;</entry>
+                <entry>||</entry>
+                <entry>++</entry>
+              </row>
+              <row>
+                <entry>--</entry>
+                <entry>-&gt;*</entry>
+                <entry>,</entry>
+                <entry>-&gt;</entry>
+                <entry>[]</entry>
+                <entry>()</entry>
+                <entry>new</entry>
+                <entry>delete</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+      </para>
+      <para id="id3751436">Hình 4.1: </para>
+      <para id="id3507854">Các toán tử có thể được đa năng hóa</para>
+      <para id="id5718564">
+        <table id="id6502353" summary="">
+          <tgroup cols="5">
+            <colspec colnum="1" colname="c1"/>
+            <colspec colnum="2" colname="c2"/>
+            <colspec colnum="3" colname="c3"/>
+            <colspec colnum="4" colname="c4"/>
+            <colspec colnum="5" colname="c5"/>
+            <tbody>
+              <row>
+                <entry>.</entry>
+                <entry>.*</entry>
+                <entry>::</entry>
+                <entry>?:</entry>
+                <entry>sizeof</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+      </para>
+      <para id="id6198996">Hình 4.2: Các toán tử không thể đa năng hóa</para>
+      <para id="id3541269">Chú ý rằng toán tử ngoặc tròn () trong bảng 4.1 là toán tử gọi hàm. Vì toán tử này đứng sau tên hàm có thể chứa trong nó nhiều tham số do đó toán tử ngoặc tròn là một toán tử nhiều ngôi.</para>
+      <para id="id3630528">Thứ tự ưu tiên của một toán tử không thể được thay đổi bởi đa năng hóa. Điều này có thể dẫn tới các tình trạng bất tiện trong đó một toán tử được đa năng hóa theo một cách đối với mức độ ưu tiên cố định của nó thì không thích hợp. Tuy nhiên, các dấu ngoặc đơn có thể được sử dụng để đặt thứ tự ước lượng của các toán tử đã đa năng hóa trong một biểu thức.</para>
+      <para id="id6116244">Tính kết hợp của một toán tử không thể được thay đổi bởi đa năng hóa. Các tham số mặc định không thể sử dụng với một toán tử đa năng hóa.</para>
+      <para id="id6116248">Không thể thay đổi số các toán hạng mà một toán tử yêu cầu: Đa năng hóa các toán tử một ngôi vẫn là các toán tử một ngôi; đa năng hóa các toán tử hai ngôi vẫn là các toán tử hai ngôi. Toán tử ba ngôi duy nhất (?:) của C++ không thể đa năng hóa. Các toán tử &amp;, *, + và – mỗi toán tử có các phiên bản một và hai ngôi.; Các phiên bản một và hai ngôi này có thể được đa năng hóa riêng biệt.</para>
+      <para id="id6217880">Ý nghĩa của làm sao một toán tử làm việc trên các đối tượng của các kiểu có sẵn không thể thay đổi bởi việc đa năng hóa toán tử. Chẳng hạn, lập trình viên không thể thay đổi ý nghĩa của làm sao toán tử (+) cộng hai số nguyên. Việc đa năng hóa toán tử chỉ làm việc với các đối tượng của các kiểu do người dùng định nghĩa hoặc với một sự pha trộn của một đối tượng của kiểu do người dùng định nghĩa và một đối tượng của một kiểu có sẵn.</para>
+      <para id="id5702538">Đa năng hóa một toán tử gán và một toán tử cộng để cho phép các lệnh như là:</para>
+      <para id="id5491403">object2 = object2 + object1</para>
+      <para id="id5390890">không bao hàm toán tử += cũng được đa năng hóa để phép các lệnh như là:</para>
+      <para id="id3797713">object2 += object1</para>
+      <para id="id4051814">Hành vi như thế có thể được thực hiện bởi việc đa năng hóa rõ ràng toán tử += cho lớp đó.</para>
+    </section>
+    <section id="id-334583674708">
+      <title>CÁC HÀM TOÁN TỬ CÓ THỂ LÀ CÁC THÀNH VIÊN CỦA LỚP HOẶC KHÔNG LÀ CÁC THÀNH VIÊN </title>
+      <para id="id3597248">Các hàm toán tử có thể là các hàm thành viên hoặc hàm không thành viên; hàm không thành viên thường là các hàm friend. Các hàm thành viên sử dụng ngầm con trỏ this để chứa một trong các tham số đối tượng lớp của chúng. Tham số lớp đó phải được liệt kê một cách tường minh trong lời gọi hàm không thành viên.</para>
+      <para id="id6063238">Khi đa năng hóa (), [], -&gt; hoặc =, hàm đa năng hóa toán tử phải được khai báo như một thành viên lớp. Đối với các toán tử khác, các hàm đa năng hóa toán tử có thể là các hàm không thành viên (thường là các hàm friend).</para>
+      <para id="id3315180">Liệu có phải một hàm toán tử được cài đặt như một hàm thành viên hoặc như hàm không thành viên, toán tử vẫn còn được sử dụng cùng cách trong biểu thức. Như vậy cách là cách cài đặt nào tốt nhất?</para>
+      <para id="id3367984">Khi một hàm toán tử được cài đặt như một hàm thành viên, toán hạng cực trái phải là một đối tượng lớp của toán tử. Nếu toán hạng bên trái phải là một đối tượng của lớp khác hoặc một kiểu có sẵn thì hàm toán tử này phải được cài đặt như hàm không thành viên. Một hàm toán tử cài đặt như hàm không thành viêân cần là một friend nếu hàm phải truy cập đến các thành viên private hoặc protected.</para>
+      <para id="id5377871">Các hàm thành viên chỉ được gọi khi toán hạng trái của một toán tử hai ngôi là một đối tượng cụ thể của lớp đó, hoặc khi toán hạng đơn của một toán tử một ngôi là một đối tượng của lớp đó.</para>
+      <para id="id4731910"><link resource="javascript:if(confirm('http:">Ví dụ 4.1:</link> Chúng ta xây dựng lớp số phức với tên lớp là Complex và đa năng hóa toán tử + trên lớp này.</para>
+      <para id="id3809895">1: #include &lt;iostream.h&gt;</para>
+      <para id="id6280738">2: </para>
+      <para id="id4322553">3: class Complex</para>
+      <para id="id3790949">4: {</para>
+      <para id="id3448105">5: private: </para>
+      <para id="id3791088">6: double Real, Imaginary;</para>
+      <para id="id4447460">7: public: </para>
+      <para id="id4472528">8: Complex(double R=0.0,double I=0.0);// Constructor mặc định</para>
+      <para id="id3803824">9: void Print(); // Hiển thị số phức</para>
+      <para id="id5630235">10: Complex operator+(Complex Z); // Phép cộng giữa hai số phức</para>
+      <para id="id6042487">11: Complex operator+(double R); //cộng một số phức với một số thực</para>
+      <para id="id6135090">12: };</para>
+      <para id="id6130362">13:</para>
+      <para id="id3778437">14: Complex::Complex(double R,double I)</para>
+      <para id="id6002581">15: {</para>
+      <para id="id4933435">16: Real = R;</para>
+      <para id="id6106444">17: Imaginary = I;</para>
+      <para id="id6200358">18: }</para>
+      <para id="id6487087">19:</para>
+      <para id="id6286998">20: void Complex::Print()</para>
+      <para id="id4845017">21: {</para>
+      <para id="id3825394">22: cout&lt;&lt;'('&lt;&lt;Real&lt;&lt;','&lt;&lt;Imaginary&lt;&lt;')';</para>
+      <para id="id4863292">23: }</para>
+      <para id="id4666110">24:</para>
+      <para id="id5167988">25: Complex Complex::operator + (Complex Z)</para>
+      <para id="id3778510">26: {</para>
+      <para id="id6130353">27: Complex Tmp;</para>
+      <para id="id3631796">28: Tmp.Real = Real + Z.Real;</para>
+      <para id="id3631800">29: Tmp.Imaginary = Imaginary + Z.Imaginary;</para>
+      <para id="id5490658">30: return Tmp;</para>
+      <para id="id5134549">31: }</para>
+      <para id="id3636429">32:</para>
+      <para id="id5406936">33: Complex Complex::operator + (double R)</para>
+      <para id="id5397831">34: {</para>
+      <para id="id6297077">35: Complex Tmp;</para>
+      <para id="id4447271">36: Tmp.Real = Real + R;</para>
+      <para id="id4447276">37: Tmp.Imaginary = Imaginary;</para>
+      <para id="id4724020">38: return Tmp;</para>
+      <para id="id3664391">39: }</para>
+      <para id="id5242517">40:</para>
+      <para id="id4452658">41: int main()</para>
+      <para id="id3598324">42: {</para>
+      <para id="id4035921">43: Complex X,Y(4.3,8.2),Z(3.3,1.1);</para>
+      <para id="id4035925">44: cout&lt;&lt;"X: ";</para>
+      <para id="id3598232">45: X.Print();</para>
+      <para id="id3368099">46: cout&lt;&lt;endl&lt;&lt;"Y: ";</para>
+      <para id="id3368104">47: Y.Print();</para>
+      <para id="id3702681">48: cout&lt;&lt;endl&lt;&lt;"Z: ";</para>
+      <para id="id3529321">49: Z.Print();</para>
+      <para id="id4676274">50: X = Y + Z;</para>
+      <para id="id5706819">51: cout&lt;&lt;endl&lt;&lt;endl&lt;&lt;"X = Y + Z:"&lt;&lt;endl;</para>
+      <para id="id5706823">52: X.Print();</para>
+      <para id="id5490777">53: cout&lt;&lt;" = ";</para>
+      <para id="id6143389">54: Y.Print();</para>
+      <para id="id4052274">55: cout&lt;&lt;" + ";</para>
+      <para id="id4052279">56: Z.Print();</para>
+      <para id="id6480612">57: X = Y + 3.5;</para>
+      <para id="id6508371">58: cout&lt;&lt;endl&lt;&lt;endl&lt;&lt;"X = Y + 3.5:"&lt;&lt;endl;</para>
+      <para id="id6508377">59: X.Print();</para>
+      <para id="id3679623">60: cout&lt;&lt;" = ";</para>
+      <para id="id4888988">61: Y.Print();</para>
+      <para id="id6026196">62: cout&lt;&lt;" + 3.5";</para>
+      <para id="id6026201">63: return 0;</para>
+      <para id="id5005805">64: }</para>
+      <para id="id3270456">Hàm thành viên toán tử operator + () (từ dòng 25 đến 31 và từ dòng 33 đến 39) trả về một đối tượng có kiểu Complex là tổng của hai số phức hoặc tổng của một số phức với một số thực. Chú ý rằng đối tượng tam thời Tmp được dùng bên trong hàm operator + () để giữ kết quả, và đó là đối tượng được trả về. </para>
+      <para id="id3598262">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT4_1.EXE">chạy ví dụ 4.1</link>, kết quả ở hình 4.3</para>
+      <figure id="id3680144">
+        <media id="id1165119531689" alt=""><image src="../../media/graphics1-ff5f.png" mime-type="image/png" height="189" width="519"/></media>
+      </figure>
+      <para id="id3631556">Hình 4.3: Kết quả của ví dụ 4.1</para>
+      <para id="id4459644">Do đa năng hóa toán tử + trên lớp Complex ở ví dụ 4.1, chúng ta có thể viết: </para>
+      <para id="id3532699">X = Y + Z;</para>
+      <para id="id3532703">Câu lệnh này được trình biên dịch hiểu:</para>
+      <para id="id4447377">X = Y.operator + (Z);</para>
+      <para id="id3598290">Như vậy, trong biểu thức Y + Z đối tượng bên trái toán tử + (là đối tượng Y) là đối tượng mà qua đó, hàm thành viên toán tử operator + () được gọi. Do đó hàm thành viên toán tử + chỉ nhận một tham số là đối tượng bên phải toán tử và đối tượng bên trái toán tử là đối tượng tạo lời gọi cho hàm toán tử và được truyền bởi con trỏ this.</para>
+      <para id="id3756579">Hàm operator + () trả về một đối tượng Complex. Do vậy chúng ta có thể viết:</para>
+      <para id="id3650342">(Y + Z).Print();</para>
+      <para id="id3757624">để in trên màn hình số phức của đối tượng được trả về. Đối tượng do Y + Z sinh ra như vậy là một đối tượng tạm thời. Nó sẽ không tồn tại khi hàm thành Print() kết thúc.</para>
+      <para id="id4957484">Hơn nữa khi trả về một đối tượng, toán tử + cho phép một chuỗi phép cộng. Nên chúng ta cũng có thể viết: </para>
+      <para id="id5859940">X = X + Y + Z;</para>
+      <para id="id4531870">Tuy nhiên chúng ta không thể nào viết được câu lệnh sau:</para>
+      <para id="id6051571">X = 3.5 + Y; // Lỗi !!!</para>
+      <para id="id3669529">Chính vì lý do này chúng ta chọn một hàm không thành viên để đa năng hóa một toán tử để cho phép toán tử được giao hoán. Chú ý rằng hàm không thành viên không cần thiết phải là hàm friend nếu các hàm set và get thích hợp tồn tại trong phần giao diện public, và đặt biệt nhất nếu các hàm set và get là các hàm inline.</para>
+      <para id="id6040779">Để đa năng hóa toán tử &lt;&lt; phải có một toán hạng trái của kiểu ostream &amp; (như là cout trong biểu thức cout&lt;&lt;X), vì thế nó phải là hàm không thành viên. Tương tự, đa năng hóa toán tử &gt;&gt; phải có một toán hạng trái của kiểu istream &amp; (như là cin trong biểu thức cin&gt;&gt;X), vì thế vì thế nó cũng phải là hàm không thành viên. </para>
+      <para id="id3270441">Ngoại trừ đa năng hóa toán tử &gt;&gt; và &lt;&lt; liên quan đến dòng nhập/xuất dữ liệu chúng ta có hình 4.4 về cách đa năng hóa toán tử như sau:</para>
+      <table id="id3688703" summary="">
+        <tgroup cols="3">
+          <colspec colnum="1" colname="c1"/>
+          <colspec colnum="2" colname="c2"/>
+          <colspec colnum="3" colname="c3"/>
+          <tbody>
+            <row>
+              <entry>Biểu thức</entry>
+              <entry>Hàm thành viên</entry>
+              <entry>Hàm không thành viên</entry>
+            </row>
+            <row>
+              <entry>a#b</entry>
+              <entry>a.operator#(b)</entry>
+              <entry>operator#(a,b)</entry>
+            </row>
+            <row>
+              <entry>#a</entry>
+              <entry>a.operator()</entry>
+              <entry>operator#(a)</entry>
+            </row>
+            <row>
+              <entry>a=b</entry>
+              <entry>a.operator=(b)</entry>
+              <entry> </entry>
+            </row>
+            <row>
+              <entry>a[b]</entry>
+              <entry>a.operator[](b)</entry>
+              <entry> </entry>
+            </row>
+            <row>
+              <entry>a(b)</entry>
+              <entry>a.operator()(b)</entry>
+              <entry> </entry>
+            </row>
+            <row>
+              <entry>a-&gt;</entry>
+              <entry>a.operator-&gt;()</entry>
+              <entry> </entry>
+            </row>
+            <row>
+              <entry>a++</entry>
+              <entry>a.operator++(0)</entry>
+              <entry>operator++(a,0)</entry>
+            </row>
+            <row>
+              <entry>a--</entry>
+              <entry>a.operator--(0)</entry>
+              <entry>operator--(a,0)</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+      <para id="id5382145">Hình 4.4: Việc cài đặt các hàm toán tử</para>
+    </section>
+    <section id="id-593846658657">
+      <title>ĐA NĂNG HOÁ CÁC TOÁN TỬ HAI NGÔI</title>
+      <para id="id4592747">Các toán tử hai ngôi được đa năng hóa trong hình 4.5 sau:</para>
+      <table id="id5723660" summary="">
+        <tgroup cols="6">
+          <colspec colnum="1" colname="c1"/>
+          <colspec colnum="2" colname="c2"/>
+          <colspec colnum="3" colname="c3"/>
+          <colspec colnum="4" colname="c4"/>
+          <colspec colnum="5" colname="c5"/>
+          <colspec colnum="6" colname="c6"/>
+          <tbody>
+            <row>
+              <entry>Toán tử</entry>
+              <entry>Ví dụ</entry>
+              <entry>Toán tử</entry>
+              <entry>Ví dụ</entry>
+              <entry>Toán tử</entry>
+              <entry>Ví dụ</entry>
+            </row>
+            <row>
+              <entry>+</entry>
+              <entry>a+b</entry>
+              <entry>+=</entry>
+              <entry>a+=b</entry>
+              <entry>&lt;&lt;=</entry>
+              <entry>a&lt;&lt;=b</entry>
+            </row>
+            <row>
+              <entry>-</entry>
+              <entry>a-b</entry>
+              <entry>-=</entry>
+              <entry>a-=b</entry>
+              <entry>==</entry>
+              <entry>a==b</entry>
+            </row>
+            <row>
+              <entry>*</entry>
+              <entry>a*b</entry>
+              <entry>*=</entry>
+              <entry>a*=b</entry>
+              <entry>!=</entry>
+              <entry>a!=b</entry>
+            </row>
+            <row>
+              <entry>/</entry>
+              <entry>a/b</entry>
+              <entry>/=</entry>
+              <entry>a/=b</entry>
+              <entry>&lt;=</entry>
+              <entry>a&lt;=b</entry>
+            </row>
+            <row>
+              <entry>%</entry>
+              <entry>a%b</entry>
+              <entry>%=</entry>
+              <entry>a%=b</entry>
+              <entry>&gt;=</entry>
+              <entry>a&gt;=b</entry>
+            </row>
+            <row>
+              <entry>^</entry>
+              <entry>a^b</entry>
+              <entry>^=</entry>
+              <entry>a^=b</entry>
+              <entry>&amp;&amp;</entry>
+              <entry>a&amp;&amp;b</entry>
+            </row>
+            <row>
+              <entry>&amp;</entry>
+              <entry>a&amp;b</entry>
+              <entry>&amp;=</entry>
+              <entry>a&amp;=b</entry>
+              <entry>||</entry>
+              <entry>a||b</entry>
+            </row>
+            <row>
+              <entry>|</entry>
+              <entry>a|b</entry>
+              <entry>|=</entry>
+              <entry>a|=b</entry>
+              <entry>,</entry>
+              <entry>a,b</entry>
+            </row>
+            <row>
+              <entry>=</entry>
+              <entry>a=b</entry>
+              <entry>&lt;&lt;</entry>
+              <entry>a&lt;&lt;b</entry>
+              <entry>[]</entry>
+              <entry>a[b]</entry>
+            </row>
+            <row>
+              <entry>&lt;</entry>
+              <entry>a&lt;b</entry>
+              <entry>&gt;&gt;</entry>
+              <entry>a&gt;&gt;b</entry>
+              <entry>-&gt;*</entry>
+              <entry>a-&gt;*b</entry>
+            </row>
+            <row>
+              <entry>&gt;</entry>
+              <entry>a&gt;b</entry>
+              <entry>&gt;&gt;=</entry>
+              <entry>a&gt;&gt;=b</entry>
+              <entry namest="c5" nameend="c6"/>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+      <para id="id5492069">Hình 4.5: Các toán tử hai ngôi được đa năng hóa</para>
+      <para id="id5492075">Một toán tử hai ngôi có thể được đa năng hóa như là hàm thành viên không tĩnh với một tham số hoặc như một hàm không thành viên với hai tham số (một trong các tham số này phải là hoặc là một đối tượng lớp hoặc là một tham chiếu đến đối tượng lớp).</para>
+      <para id="id6040782"><link resource="javascript:if(confirm('http:">Ví dụ 4.2:</link> Chúng ta xây dựng lớp số phức với tên lớp là Complex và đa năng hóa các toán tử tính toán + - += -= và các toán tử so sánh == != &gt; &gt;= &lt; &lt;= với các hàm toán tử là các hàm thành viên. </para>
+      <para id="id5674634">1: #include &lt;iostream.h&gt;</para>
+      <para id="id5051884">2: #include &lt;math.h&gt;</para>
+      <para id="id5682476">3:</para>
+      <para id="id5682480">4: class Complex</para>
+      <para id="id5168126">5: {</para>
+      <para id="id5168135">6: private: </para>
+      <para id="id5042041">7: double Real, Imaginary;</para>
+      <para id="id5126775">8: public: </para>
+      <para id="id5126783">9: Complex(); // Constructor mặc định</para>
+      <para id="id5126808">10: Complex(double R,double I);</para>
+      <para id="id5126812">11: Complex (const Complex &amp; Z); // Constructor sao chép</para>
+      <para id="id5167880">12: Complex (double R); // Constructor chuyển đổi</para>
+      <para id="id5169295">13: void Print(); // Hiển thị số phức</para>
+      <para id="id5490471">14: // Các toán tử tính toán</para>
+      <para id="id5946892">15: Complex operator + (Complex Z);</para>
+      <para id="id5946897">16: Complex operator - (Complex Z);</para>
+      <para id="id5477871">17: Complex operator += (Complex Z);</para>
+      <para id="id5477876">18: Complex operator -= (Complex Z);</para>
+      <para id="id5477880">19: // Các toán tử so sánh</para>
+      <para id="id5042239">20: int operator == (Complex Z);</para>
+      <para id="id5406267">21: int operator != (Complex Z);</para>
+      <para id="id5298345">22: int operator &gt; (Complex Z);</para>
+      <para id="id6219830">23: int operator &gt;= (Complex Z);</para>
+      <para id="id6219712">24: int operator &lt; (Complex Z);</para>
+      <para id="id6219723">25: int operator &lt;= (Complex Z);</para>
+      <para id="id6219748">26: private: </para>
+      <para id="id5674659">27: double Abs(); // Giá trị tuyệt đối của số phức</para>
+      <para id="id6218747">28: };</para>
+      <para id="id6218771">29:</para>
+      <para id="id6218775">30: Complex::Complex()</para>
+      <para id="id5673768">31: {</para>
+      <para id="id5673777">32: Real = 0.0;</para>
+      <para id="id5682075">33: Imaginary = 0.0;</para>
+      <para id="id5682079">34: }</para>
+      <para id="id3772516">35:</para>
+      <para id="id3772520">36: Complex::Complex(double R,double I)</para>
+      <para id="id3772524">37: {</para>
+      <para id="id5477111">38: Real = R;</para>
+      <para id="id5477116">39: Imaginary = I;</para>
+      <para id="id5670879">40: }</para>
+      <para id="id5670888">41:</para>
+      <para id="id6002048">42: Complex::Complex(const Complex &amp; Z)</para>
+      <para id="id6002054">43: {</para>
+      <para id="id5298372">44: Real = Z.Real;</para>
+      <para id="id5298376">45: Imaginary = Z.Imaginary;</para>
+      <para id="id6003006">46: }</para>
+      <para id="id6003015">47:</para>
+      <para id="id6018278">48: Complex::Complex(double R)</para>
+      <para id="id6018283">49: {</para>
+      <para id="id6005019">50: Real = R;</para>
+      <para id="id6005023">51: Imaginary = 0.0;</para>
+      <para id="id6005027">52: }</para>
+      <para id="id5478097">53:</para>
+      <para id="id5478101">54: void Complex::Print()</para>
+      <para id="id5267888">55: {</para>
+      <para id="id4096762">56: cout&lt;&lt;'('&lt;&lt;Real&lt;&lt;','&lt;&lt;Imaginary&lt;&lt;')';</para>
+      <para id="id4096768">57: }</para>
+      <para id="id6362588">58:</para>
+      <para id="id6362593">59: Complex Complex::operator + (Complex Z)</para>
+      <para id="id6004228">60: {</para>
+      <para id="id6362354">61: Complex Tmp;</para>
+      <para id="id6362358">62</para>
+      <para id="id6362362">63: Tmp.Real = Real + Z.Real;</para>
+      <para id="id6217792">64: Tmp.Imaginary = Imaginary + Z.Imaginary;</para>
+      <para id="id6217798">65: return Tmp;</para>
+      <para id="id6004976">66: }</para>
+      <para id="id6004985">67:</para>
+      <para id="id5491754">68: Complex Complex::operator - (Complex Z)</para>
+      <para id="id5491758">69: {</para>
+      <para id="id5167808">70: Complex Tmp;</para>
+      <para id="id5167813">71:</para>
+      <para id="id5394790">72: Tmp.Real = Real - Z.Real;</para>
+      <para id="id5394794">73: Tmp.Imaginary = Imaginary - Z.Imaginary;</para>
+      <para id="id5394800">74: return Tmp;</para>
+      <para id="id6013140">75: }</para>
+      <para id="id4680120">76:</para>
+      <para id="id4680124">77: Complex Complex::operator += (Complex Z)</para>
+      <para id="id5396593">78: {</para>
+      <para id="id5396602">79: Real += Z.Real;</para>
+      <para id="id6002339">80: Imaginary += Z.Imaginary;</para>
+      <para id="id6002344">81: return *this;</para>
+      <para id="id6001896">82: }</para>
+      <para id="id6001904">83:</para>
+      <para id="id6218266">84: Complex Complex::operator -= (Complex Z)</para>
+      <para id="id6218272">85: {</para>
+      <para id="id6218293">86: Real -= Z.Real;</para>
+      <para id="id6218298">87: Imaginary -= Z.Imaginary;</para>
+      <para id="id5267829">88: return *this;</para>
+      <para id="id5267839">89: }</para>
+      <para id="id5267862">90:</para>
+      <para id="id5267937">91: int Complex::operator == (Complex Z)</para>
+      <para id="id5267946">92: {</para>
+      <para id="id6002935">93: return (Real == Z.Real) &amp;&amp; (Imaginary == Z.Imaginary);</para>
+      <para id="id5407034">94: }</para>
+      <para id="id5169067">95:</para>
+      <para id="id5169072">96: int Complex::operator != (Complex Z)</para>
+      <para id="id5675332">97: {</para>
+      <para id="id5675340">98: return (Real != Z.Real) || (Imaginary != Z.Imaginary);</para>
+      <para id="id5406754">99: }</para>
+      <para id="id5477826">100:</para>
+      <para id="id5477831">101: int Complex::operator &gt; (Complex Z)</para>
+      <para id="id5477855">102: {</para>
+      <para id="id6002659">103: return Abs() &gt; Z.Abs();</para>
+      <para id="id6002682">104: }</para>
+      <para id="id6002691">105:</para>
+      <para id="id5477897">106: int Complex::operator &gt;= (Complex Z)</para>
+      <para id="id5394544">107: {</para>
+      <para id="id5394552">108: return Abs() &gt;= Z.Abs();</para>
+      <para id="id5394840">109: }</para>
+      <para id="id5394862">110:</para>
+      <para id="id5394867">111: int Complex::operator &lt; (Complex Z)</para>
+      <para id="id6478559">112: {</para>
+      <para id="id5490940">113: return Abs() &lt; Z.Abs();</para>
+      <para id="id5490951">114: }</para>
+      <para id="id6011014">115:</para>
+      <para id="id6291957">116: int Complex::operator &lt;= (Complex Z)</para>
+      <para id="id6291968">117: {</para>
+      <para id="id5493808">118: return Abs() &lt;= Z.Abs();</para>
+      <para id="id5490632">119: }</para>
+      <para id="id5123360">120:</para>
+      <para id="id5123365">121: double Complex::Abs()</para>
+      <para id="id5123369">122: {</para>
+      <para id="id6218494">123: return sqrt(Real*Real+Imaginary*Imaginary);</para>
+      <para id="id5491942">124: }</para>
+      <para id="id5169210">125:</para>
+      <para id="id5169215">126: int main()</para>
+      <para id="id6283302">127: {</para>
+      <para id="id6283310">128: Complex X, Y(4.3,8.2), Z(3.3,1.1), T;</para>
+      <para id="id5477966">129</para>
+      <para id="id5477970">130: cout&lt;&lt;"X: ";</para>
+      <para id="id6491672">131: X.Print();</para>
+      <para id="id6491676">132: cout&lt;&lt;endl&lt;&lt;"Y: ";</para>
+      <para id="id6491682">133: Y.Print();</para>
+      <para id="id5396645">134: cout&lt;&lt;endl&lt;&lt;"Z: ";</para>
+      <para id="id5396650">135: Z.Print();</para>
+      <para id="id5396655">136: cout&lt;&lt;endl&lt;&lt;"T: ";</para>
+      <para id="id5477136">137: T.Print();</para>
+      <para id="id5477140">138: T=5.3;// Gọi constructor chuyển kiểu</para>
+      <para id="id5053407">139: cout&lt;&lt;endl&lt;&lt;endl&lt;&lt;"T = 5.3"&lt;&lt;endl;</para>
+      <para id="id5053412">140: cout&lt;&lt;"T: ";</para>
+      <para id="id6002960">141: T.Print();</para>
+      <para id="id6002964">142: X = Y + Z;</para>
+      <para id="id5874940">143: cout&lt;&lt;endl&lt;&lt;endl&lt;&lt;"X = Y + Z: ";</para>
+      <para id="id5874945">144: X.Print();</para>
+      <para id="id5874950">145: cout&lt;&lt;" = ";</para>
+      <para id="id6218966">146: Y.Print();</para>
+      <para id="id6218971">147: cout&lt;&lt;" + ";</para>
+      <para id="id6218976">148: Z.Print();</para>
+      <para id="id6004409">149: X = Y - Z;</para>
+      <para id="id6004414">150: cout&lt;&lt;endl&lt;&lt;"X = Y - Z: ";</para>
+      <para id="id5683177">151: X.Print();</para>
+      <para id="id5683181">152: cout&lt;&lt;" = ";</para>
+      <para id="id5683186">153: Y.Print();</para>
+      <para id="id5053622">154: cout&lt;&lt;" - ";</para>
+      <para id="id5053627">155: Z.Print();</para>
+      <para id="id5390922">156: cout&lt;&lt;endl&lt;&lt;endl&lt;&lt;"Y += T i.e ";</para>
+      <para id="id5390927">157: Y.Print();</para>
+      <para id="id5390932">158: cout&lt;&lt;" += ";</para>
+      <para id="id5052549">159: T.Print();</para>
+      <para id="id5052553">160: Y += T;</para>
+      <para id="id5052558">161: cout&lt;&lt;endl&lt;&lt;"Y: ";</para>
+      <para id="id5406990">162: Y.Print();</para>
+      <para id="id5406995">163: cout&lt;&lt;endl&lt;&lt;"Z -= T i.e ";</para>
+      <para id="id5297494">164: Z.Print();</para>
+      <para id="id5297498">165: cout&lt;&lt;" -= ";</para>
+      <para id="id5297503">166: T.Print();</para>
+      <para id="id5053023">167: Z -= T;</para>
+      <para id="id5053028">168: cout&lt;&lt;endl&lt;&lt;"Z: ";</para>
+      <para id="id6218819">169: Z.Print();</para>
+      <para id="id6218824">170: Complex U(X);// Gọi constructor sao chép</para>
+      <para id="id5123297">171: cout&lt;&lt;endl&lt;&lt;endl&lt;&lt;"U: ";</para>
+      <para id="id5123302">172: U.Print();</para>
+      <para id="id5477049">173: cout&lt;&lt;endl&lt;&lt;endl&lt;&lt;"Evaluating: X==U"&lt;&lt;endl;</para>
+      <para id="id5477055">174: if (X==U)</para>
+      <para id="id5406791">175: cout&lt;&lt;"They are equal"&lt;&lt;endl;</para>
+      <para id="id5406796">176: cout&lt;&lt;"Evaluating: Y!=Z"&lt;&lt;endl;</para>
+      <para id="id5406802">177: if (Y!=Z)</para>
+      <para id="id6010013">178: cout&lt;&lt;"They are not equal =&gt; ";</para>
+      <para id="id6010019">179: if (Y&gt;Z)</para>
+      <para id="id5397609">180: cout&lt;&lt;"Y&gt;Z";</para>
+      <para id="id5397614">181: else</para>
+      <para id="id5397619">182: cout&lt;&lt;"Y&lt;Z";</para>
+      <para id="id6381799">183: return 0;</para>
+      <para id="id6381809">184: }</para>
+      <para id="id5394637">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT4_2.EXE">chạy ví dụ 4.2</link>, kết quả ở hình 4.6.</para>
+      <para id="id5674968">Dòng thứ 10 của chương trình ở ví dụ 4.2: Complex(const Complex &amp;Z);</para>
+      <para id="id5674977">là một constructor sao chép (copy constructor). Nó khởi động một đối tượng lớp bằng cách tạo một sao chép của một đối tượng lớp đó. Constructor sao chép thực hiện công việc giống như toán tử sao chép nhưng nó có một vai trò đặc biệt. Constructor sao chép chỉ nhận tham số là một tham chiếu chỉ đến đối tượng thuộc chính lớp mà nó được định nghĩa. Các constructor sao chép được dùng mỗi khi một sự sao chép của một đối tượng cần thiết như khi có sự truyền tham số bằng trị, khi trả về một đối tượng từ hàm, hoặc khi khởi động một đối tượng mà được sao chép từ đối tượng khác của cùng lớp. Chẳng hạn:</para>
+      <para id="id5041930">Complex A(3.5, 4.5);</para>
+      <para id="id6122856">Complex B(A); // Gọi constructor sao chép</para>
+      <para id="id5493037">Complex C = B; // Gọi constructor sao chép</para>
+      <para id="id6218451">…………………</para>
+      <para id="id6218455">Complex MyFunc(Complex Z) // Gọi constructor sao chép</para>
+      <para id="id6217828">{ rZ; // Gọi constructor sao chép }</para>
+      <figure id="id5298099">
+        <media id="id1165117283576" alt=""><image src="../../media/graphics2-6632.png" mime-type="image/png" height="405" width="502"/></media>
+      </figure>
+      <para id="id5204805">Hình 4.6: Kết quả của ví dụ 4.2</para>
+      <para id="id6001284">Chúng ta chú ý rằng, dấu = trong câu lệnh trên ứng với constructor sao chép chứ không phải là toán tử gán . Nếu chúng ta không định nghĩa constructor sao chép, trình biên dịch tạo ra một constructor sao chép mặc định sẽ sao chép từng thành viên một.</para>
+      <para id="id5390223">Ở dòng 12 của chương trình ở ví dụ 4.2:</para>
+      <para id="id5669299">Complex(double R);</para>
+      <para id="id5669304">là một constructor chuyển đổi (conversion constructor). Constructor này lấy một tham số double và khởi tạo đối tượng Complex mà phần thực bằng giá trị tham số truyền vào và phần ảo bằng 0.0 (từ dòng 48 đến 52). Bất kỳ một constructor nào có tham số đơn có thể được nghĩ như một constructor chuyển đổi. Constructor chuyển đổi sẽ đổi một số thực thành một đối tượng Complex rồi gán cho đối tượng đích Complex. Chẳng hạn:</para>
+      <para id="id5042345">T = 3.5; // Ngầm định: T = Complex(3.5) </para>
+      <para id="id5946449">Trình biên dịch tự động dùng constructor chuyển đổi để tạo một đối tượng tạm thời Complex, rồi dùng toán tử gán để gán đối tượng tạm thời này cho đối tượng khác của Complex. Chẳng hạn câu lệnh sau vẫn đúng:</para>
+      <para id="id5039284">X = Y + 3.5; // Ngầm định: X = Y + Complex(3.5);</para>
+      <para id="id6219874">Như vậy một constructor chuyển đổi được sử dụng để thực hiện một sự chuyển đổi ngầm định.</para>
+      <para id="id6219884"><link resource="javascript:if(confirm('http:">Ví dụ 4.3:</link> Lấy lại ví dụ 4.2 nhưng các hàm toán tử +, - và các hàm toán tử so sánh là hàm không thành viên. </para>
+      <para id="id5684038">#include &lt;iostream.h&gt;</para>
+      <para id="id5491701">#include &lt;math.h&gt;</para>
+      <para id="id5491706">class Complex</para>
+      <para id="id5491710">{</para>
+      <para id="id6132313">private:</para>
+      <para id="id6132318">double Real,Imaginary;</para>
+      <para id="id5405989">public:</para>
+      <para id="id5405994">Complex();//Constructor mac dinh</para>
+      <para id="id6115936">Complex(double R,double I);</para>
+      <para id="id6115943">Complex (const Complex &amp; Z);//Constructor sao chep</para>
+      <para id="id5947001">Complex (double R);//Constructor chuyen doi</para>
+      <para id="id6001350">void Print();//Hien thi so phuc</para>
+      <para id="id6001355">//Cac toan tu tinh toan</para>
+      <para id="id6001362">friend Complex operator + (Complex Z1,Complex Z2);</para>
+      <para id="id5852680">friend Complex operator - (Complex Z1,Complex Z2);</para>
+      <para id="id5744457">Complex operator += (Complex Z);</para>
+      <para id="id5744464">Complex operator -= (Complex Z);</para>
+      <para id="id5394589">//Cac toan tu so sanh</para>
+      <para id="id5394595">friend int operator == (Complex Z1,Complex Z2);</para>
+      <para id="id5490750">friend int operator != (Complex Z1,Complex Z2);</para>
+      <para id="id5490757">friend int operator &gt; (Complex Z1,Complex Z2);</para>
+      <para id="id6002493">friend int operator &gt;= (Complex Z1,Complex Z2);</para>
+      <para id="id5042327">friend int operator &lt; (Complex Z1,Complex Z2);</para>
+      <para id="id5042336">friend int operator &lt;= (Complex Z1,Complex Z2);</para>
+      <para id="id5683597">private:</para>
+      <para id="id5683603">double Abs();//Gia tri tuyet doi cua so phuc</para>
+      <para id="id5406185">};</para>
+      <para id="id5406189">Complex::Complex()</para>
+      <para id="id5053335">{</para>
+      <para id="id5053340">Real = 0.0;</para>
+      <para id="id5053345">Imaginary = 0.0;</para>
+      <para id="id5053364">}</para>
+      <para id="id5053368">Complex::Complex(double R,double I)</para>
+      <para id="id5053372">{</para>
+      <para id="id5405099">Real = R;</para>
+      <para id="id5405105">Imaginary = I;</para>
+      <para id="id5394233">}</para>
+      <para id="id5394237">Complex::Complex(const Complex &amp; Z)</para>
+      <para id="id5394242">{</para>
+      <para id="id6004544">Real = Z.Real;</para>
+      <para id="id6004549">Imaginary = Z.Imaginary;</para>
+      <para id="id6212768">}</para>
+      <para id="id6212773">Complex::Complex(double R)</para>
+      <para id="id6212777">{</para>
+      <para id="id5053048">Real = R;</para>
+      <para id="id5053054">Imaginary = 0.0;</para>
+      <para id="id5053060">}</para>
+      <para id="id5365356">void Complex::Print()</para>
+      <para id="id5365360">{</para>
+      <para id="id5365364">cout&lt;&lt;'('&lt;&lt;Real&lt;&lt;','&lt;&lt;Imaginary&lt;&lt;')';</para>
+      <para id="id5476595">}</para>
+      <para id="id5476599">Complex operator + (Complex Z1,Complex Z2)</para>
+      <para id="id5478121">{</para>
+      <para id="id5478125">Complex Tmp;</para>
+      <para id="id5478130">Tmp.Real = Z1.Real + Z2.Real;</para>
+      <para id="id6218941">Tmp.Imaginary = Z1.Imaginary + Z2.Imaginary;</para>
+      <para id="id6218948">return Tmp;</para>
+      <para id="id5669349">}</para>
+      <para id="id5669353">Complex operator - (Complex Z1,Complex Z2)</para>
+      <para id="id5669357">{</para>
+      <para id="id5126823">Complex Tmp;</para>
+      <para id="id5126828">Tmp.Real = Z1.Real - Z2.Real;</para>
+      <para id="id5126833">Tmp.Imaginary = Z1.Imaginary - Z2.Imaginary;</para>
+      <para id="id5126853">return Tmp;</para>
+      <para id="id5126859">}</para>
+      <para id="id5397780">Complex Complex::operator += (Complex Z)</para>
+      <para id="id5397784">{</para>
+      <para id="id5397788">Real += Z.Real;</para>
+      <para id="id6004267">Imaginary += Z.Imaginary;</para>
+      <para id="id6004272">return *this;</para>
+      <para id="id5394207">}</para>
+      <para id="id5394211">Complex Complex::operator -= (Complex Z)</para>
+      <para id="id5394215">{</para>
+      <para id="id5051936">Real -= Z.Real;</para>
+      <para id="id5051942">Imaginary -= Z.Imaginary;</para>
+      <para id="id5051947">return *this;</para>
+      <para id="id5674312">}</para>
+      <para id="id5674316">int operator == (Complex Z1,Complex Z2)</para>
+      <para id="id4681291">{</para>
+      <para id="id4681295">return (Z1.Real == Z2.Real) &amp;&amp; (Z1.Imaginary == Z2.Imaginary);</para>
+      <para id="id5169263">}</para>
+      <para id="id5169267">int operator != (Complex Z1,Complex Z2)</para>
+      <para id="id5169271">{</para>
+      <para id="id6001918">return (Z1.Real != Z2.Real) || (Z1.Imaginary != Z2.Imaginary);</para>
+      <para id="id6001925">}</para>
+      <para id="id6001929">int operator &gt; (Complex Z1,Complex Z2)</para>
+      <para id="id5492042">{</para>
+      <para id="id5492046">return Z1.Abs() &gt; Z2.Abs();</para>
+      <para id="id5477276">}</para>
+      <para id="id5477281">int operator &gt;= (Complex Z1,Complex Z2)</para>
+      <para id="id5477287">{</para>
+      <para id="id5477304">return Z1.Abs() &gt;= Z2.Abs();</para>
+      <para id="id5477310">}</para>
+      <para id="id6218404">int operator &lt; (Complex Z1,Complex Z2)</para>
+      <para id="id6218410">{</para>
+      <para id="id6218414">return Z1.Abs() &lt; Z2.Abs();</para>
+      <para id="id6005097">}</para>
+      <para id="id6005101">int operator &lt;= (Complex Z1,Complex Z2)</para>
+      <para id="id5397766">{</para>
+      <para id="id5397770">return Z1.Abs() &lt;= Z2.Abs();</para>
+      <para id="id5397776">}</para>
+      <para id="id5396924">double Complex::Abs()</para>
+      <para id="id5396928">{</para>
+      <para id="id5396932">return sqrt(Real*Real+Imaginary*Imaginary);</para>
+      <para id="id5674237">}</para>
+      <para id="id5674241">int main()</para>
+      <para id="id5297518">{</para>
+      <para id="id5297522">Complex X,Y(4.3,8.2),Z(3.3,1.1);</para>
+      <para id="id5297527">cout&lt;&lt;"X: "; X.Print();</para>
+      <para id="id5041995">cout&lt;&lt;endl&lt;&lt;"Y: "; Y.Print();</para>
+      <para id="id5123273">cout&lt;&lt;endl&lt;&lt;"Z: "; Z.Print();</para>
+      <para id="id5051910">X = Y + 3.6;</para>
+      <para id="id5051915">cout&lt;&lt;endl&lt;&lt;endl&lt;&lt;"X = Y + 3.6: ";</para>
+      <para id="id5476721">X.Print(); cout&lt;&lt;" = ";</para>
+      <para id="id5041581">Y.Print(); cout&lt;&lt;" + 3.6 ";</para>
+      <para id="id5491612">X = 3.6 + Y;cout&lt;&lt;endl&lt;&lt;"X = 3.6 + Y: ";</para>
+      <para id="id5491622">X.Print(); cout&lt;&lt;" = 3.6 + ";</para>
+      <para id="id5683136">Y.Print(); X = 3.8 - Z;</para>
+      <para id="id5438603">cout&lt;&lt;endl&lt;&lt;"X = 3.8 - Z: ";</para>
+      <para id="id5669897">X.Print(); cout&lt;&lt;" = 3.8 - ";</para>
+      <para id="id6219848">Z.Print(); X = Z - 3.8;</para>
+      <para id="id6219859">cout&lt;&lt;endl&lt;&lt;"X = Z - 3.8: ";</para>
+      <para id="id5491275">X.Print(); cout&lt;&lt;" = ";</para>
+      <para id="id5041504">Z.Print(); cout&lt;&lt;" - 3.8 ";</para>
+      <para id="id5168208">return 0;</para>
+      <para id="id5168212">}</para>
+      <para id="id3991223">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT4_3.EXE">chạy ví dụ 4.3</link>, kết quả ở hình 4.7</para>
+      <figure id="id5491788">
+        <media id="id1165122111116" alt=""><image src="../../media/graphics3-6da4.png" mime-type="image/png" height="188" width="556"/></media>
+      </figure>
+      <para id="id5167968">Hình 4.7: Kết quả của ví dụ 4.3</para>
+    </section>
+    <section id="id-819058338541">
+      <title>ĐA NĂNG HÓA CÁC TOÁN TỬ MỘT NGÔI</title>
+      <para id="id6279798">Các toán tử một ngôi được đa năng hóa trong hình 4.8 sau:</para>
+      <table id="id6279819" summary="">
+        <tgroup cols="4">
+          <colspec colnum="1" colname="c1"/>
+          <colspec colnum="2" colname="c2"/>
+          <colspec colnum="3" colname="c3"/>
+          <colspec colnum="4" colname="c4"/>
+          <tbody>
+            <row>
+              <entry>Toán tử</entry>
+              <entry>Ví dụ</entry>
+              <entry>Toán tử</entry>
+              <entry>Ví dụ</entry>
+            </row>
+            <row>
+              <entry>+</entry>
+              <entry>+c</entry>
+              <entry>~</entry>
+              <entry>~c</entry>
+            </row>
+            <row>
+              <entry>-</entry>
+              <entry>-c</entry>
+              <entry>!</entry>
+              <entry>!a</entry>
+            </row>
+            <row>
+              <entry>*</entry>
+              <entry>*c</entry>
+              <entry>++</entry>
+              <entry>++c, c++</entry>
+            </row>
+            <row>
+              <entry>&amp;</entry>
+              <entry>&amp;c</entry>
+              <entry>--</entry>
+              <entry>--c, c--</entry>
+            </row>
+            <row>
+              <entry>-&gt;</entry>
+              <entry>c-&gt;</entry>
+              <entry> </entry>
+              <entry> </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+      <para id="id5052941">Hình 4.8: Các toán tử một ngôi được đa năng hóa</para>
+      <para id="id5394886">Một toán tử một ngôi của lớp được đa năng hóa như một hàm thành viên không tĩnh với không có tham số hoặc như một hàm không thành viên với một tham số; Tham số đó phải hoặc là một đối tượng lớp hoặc là một tham chiếu đến đối tượng lớp.</para>
+      <para id="id6005105"><link resource="javascript:if(confirm('http:">Ví dụ 4.4:</link>  Lấy lại ví dụ 4.3 và thêm toán tử dấu trừ một ngôi.</para>
+      <para id="id5052318">1: #include &lt;iostream.h&gt;</para>
+      <para id="id5052327">2: #include &lt;math.h&gt;</para>
+      <para id="id5052349">3:</para>
+      <para id="id5052353">4: class Complex</para>
+      <para id="id6004615">5: {</para>
+      <para id="id5477171">6: private: </para>
+      <para id="id5477179">7: double Real,Imaginary;</para>
+      <para id="id5406117">8: public: </para>
+      <para id="id5042195">9: Complex(); // Constructor mặc định</para>
+      <para id="id5042205">10: Complex(double R,double I);</para>
+      <para id="id5394409">11: Complex (const Complex &amp; Z); // Constructor sao chép</para>
+      <para id="id5394434">12: Complex (double R); // Constructor chuyển đổi</para>
+      <para id="id5394445">13: void Print(); // Hiển thị số phức</para>
+      <para id="id6002105">14: // Các toán tử tính toán</para>
+      <para id="id6002129">15: friend Complex operator + (Complex Z1,Complex Z2);</para>
+      <para id="id6002135">16: friend Complex operator - (Complex Z1,Complex Z2);</para>
+      <para id="id6002140">17: Complex operator += (Complex Z);</para>
+      <para id="id5493916">18: Complex operator -= (Complex Z);</para>
+      <para id="id5493920">19: // Toán tử trừ một ngôi</para>
+      <para id="id5675274">20: Complex operator – ();</para>
+      <para id="id5675280">21: // Các toán tử so sánh</para>
+      <para id="id5393003">22: friend int operator == (Complex Z1,Complex Z2);</para>
+      <para id="id6217980">23: friend int operator != (Complex Z1,Complex Z2);</para>
+      <para id="id5478046">24: friend int operator &gt; (Complex Z1,Complex Z2);</para>
+      <para id="id6287226">25: friend int operator &gt;= (Complex Z1,Complex Z2);</para>
+      <para id="id6001609">26: friend int operator &lt; (Complex Z1,Complex Z2);</para>
+      <para id="id3545293">27: friend int operator &lt;= (Complex Z1,Complex Z2);</para>
+      <para id="id4052126">28: private: </para>
+      <para id="id4052135">29: double Abs(); // Giá trị tuyệt đối của số phức</para>
+      <para id="id5476752">30: };</para>
+      <para id="id6002520">31:</para>
+      <para id="id6002525">32: Complex::Complex()</para>
+      <para id="id6217747">33: {</para>
+      <para id="id6217756">34: Real = 0.0;</para>
+      <para id="id5490811">35: Imaginary = 0.0;</para>
+      <para id="id5490815">36: }</para>
+      <para id="id4679620">37:</para>
+      <para id="id4679624">38: Complex::Complex(double R,double I)</para>
+      <para id="id4679642">39: {</para>
+      <para id="id4679650">40: Real = R;</para>
+      <para id="id5396812">41: Imaginary = I;</para>
+      <para id="id5396816">42: }</para>
+      <para id="id5169034">43:</para>
+      <para id="id5169039">44: Complex::Complex(const Complex &amp; Z)</para>
+      <para id="id5169045">45: {</para>
+      <para id="id6001570">46: Real = Z.Real;</para>
+      <para id="id5478178">47: Imaginary = Z.Imaginary;</para>
+      <para id="id5478182">48: }</para>
+      <para id="id5478205">49:</para>
+      <para id="id5478209">50: Complex::Complex(double R)</para>
+      <para id="id5478213">51: {</para>
+      <para id="id5477996">52: Real = R;</para>
+      <para id="id5478000">53: Imaginary = 0.0;</para>
+      <para id="id5492253">54: }</para>
+      <para id="id5492262">55:</para>
+      <para id="id6217943">56: void Complex::Print()</para>
+      <para id="id6217954">57: {</para>
+      <para id="id5669407">58: cout&lt;&lt;'('&lt;&lt;Real&lt;&lt;','&lt;&lt;Imaginary&lt;&lt;')';</para>
+      <para id="id4257780">59: }</para>
+      <para id="id4257789">60:</para>
+      <para id="id3655965">61: Complex operator + (Complex Z1,Complex Z2)</para>
+      <para id="id3655969">62: {</para>
+      <para id="id3689559">63: Complex Tmp;</para>
+      <para id="id3689562">64:</para>
+      <para id="id3689567">65: Tmp.Real = Z1.Real + Z2.Real;</para>
+      <para id="id4118788">66: Tmp.Imaginary = Z1.Imaginary + Z2.Imaginary;</para>
+      <para id="id4118793">67: return Tmp;</para>
+      <para id="id4257846">68: }</para>
+      <para id="id6360827">69:</para>
+      <para id="id6360831">70: Complex operator - (Complex Z1,Complex Z2)</para>
+      <para id="id6360837">71: {</para>
+      <para id="id5406333">72: Complex Tmp;</para>
+      <para id="id5406338">73:</para>
+      <para id="id5493839">74: Tmp.Real = Z1.Real - Z2.Real;</para>
+      <para id="id5493843">75: Tmp.Imaginary = Z1.Imaginary - Z2.Imaginary;</para>
+      <para id="id5041165">76: return Tmp;</para>
+      <para id="id5041174">77: }</para>
+      <para id="id5041196">78:</para>
+      <para id="id5041200">79: Complex Complex::operator += (Complex Z)</para>
+      <para id="id6004334">80: {</para>
+      <para id="id6004343">81: Real += Z.Real;</para>
+      <para id="id6004361">82: Imaginary += Z.Imaginary;</para>
+      <para id="id6004365">83: return *this;</para>
+      <para id="id5405202">84: }</para>
+      <para id="id6004505">85:</para>
+      <para id="id6004509">86: Complex Complex::operator -= (Complex Z)</para>
+      <para id="id6004514">87: {</para>
+      <para id="id6002901">88: Real -= Z.Real;</para>
+      <para id="id6002905">89: Imaginary -= Z.Imaginary;</para>
+      <para id="id6002698">90: return *this;</para>
+      <para id="id5674863">91: }</para>
+      <para id="id5674872">92:</para>
+      <para id="id6218201">93: Complex Complex::operator - ()</para>
+      <para id="id6218206">94: {</para>
+      <para id="id5404721">95: Complex Tmp;</para>
+      <para id="id5404725">96:</para>
+      <para id="id5404729">97: Tmp.Real = -Real;</para>
+      <para id="id5404747">98: Tmp.Imaginary = -Imaginary;</para>
+      <para id="id5404752">99: return Tmp;</para>
+      <para id="id5404770">100: }</para>
+      <para id="id5404777">101</para>
+      <para id="id5938764">102: int operator == (Complex Z1,Complex Z2)</para>
+      <para id="id5938788">103: {</para>
+      <para id="id5938797">104: return (Z1.Real == Z2.Real) &amp;&amp; (Z1.Imaginary == Z2.Imaginary);</para>
+      <para id="id5492520">105: }</para>
+      <para id="id5492542">106:</para>
+      <para id="id5492546">107: int operator != (Complex Z1,Complex Z2)</para>
+      <para id="id5492570">108: {</para>
+      <para id="id5396976">109: return (Z1.Real != Z2.Real) || (Z1.Imaginary != Z2.Imaginary);</para>
+      <para id="id5168157">110: }</para>
+      <para id="id5168165">111:</para>
+      <para id="id5683102">112: int operator &gt; (Complex Z1,Complex Z2)</para>
+      <para id="id5943941">113: {</para>
+      <para id="id5943950">114: return Z1.Abs() &gt; Z2.Abs();</para>
+      <para id="id5394723">115: }</para>
+      <para id="id6001310">116:</para>
+      <para id="id6001315">117: int operator &gt;= (Complex Z1,Complex Z2)</para>
+      <para id="id6002979">118: {</para>
+      <para id="id6217903">119: return Z1.Abs() &gt;= Z2.Abs();</para>
+      <para id="id6005120">120: }</para>
+      <para id="id6005129">121:</para>
+      <para id="id6109908">122: int operator &lt; (Complex Z1,Complex Z2)</para>
+      <para id="id5041842">123: {</para>
+      <para id="id5041850">124: return Z1.Abs() &lt; Z2.Abs();</para>
+      <para id="id5167851">125: }</para>
+      <para id="id5053537">126:</para>
+      <para id="id5053542">127: int operator &lt;= (Complex Z1,Complex Z2)</para>
+      <para id="id5134326">128: {</para>
+      <para id="id4592783">129: return Z1.Abs() &lt;= Z2.Abs();</para>
+      <para id="id5491991">130: }</para>
+      <para id="id5492000">131:</para>
+      <para id="id5394926">132: double Complex::Abs()</para>
+      <para id="id5394930">133: {</para>
+      <para id="id5683623">134: return sqrt(Real*Real+Imaginary*Imaginary);</para>
+      <para id="id5683634">135: }</para>
+      <para id="id6003696">136:</para>
+      <para id="id5673805">137: int main()</para>
+      <para id="id5673816">138: {</para>
+      <para id="id5094041">139: Complex X, Y(4.3,8.2), Z(3.3,1.1);</para>
+      <para id="id5094046">140:</para>
+      <para id="id5682537">141: cout&lt;&lt;"X: ";</para>
+      <para id="id5682542">142: X.Print();</para>
+      <para id="id5477948">143: cout&lt;&lt;endl&lt;&lt;"Y: ";</para>
+      <para id="id5477953">144: Y.Print();</para>
+      <para id="id5477958">145: cout&lt;&lt;endl&lt;&lt;"Z: ";</para>
+      <para id="id5394684">146: Z.Print();</para>
+      <para id="id5394689">147: X = -Y + 3.6;</para>
+      <para id="id6218514">148: cout&lt;&lt;endl&lt;&lt;endl&lt;&lt;"X = -Y + 3.6: ";</para>
+      <para id="id6218519">149: X.Print();</para>
+      <para id="id6218524">150: cout&lt;&lt;" = ";</para>
+      <para id="id6218178">151: (-Y).Print();</para>
+      <para id="id6218182">152: cout&lt;&lt;" + 3.6 ";</para>
+      <para id="id6218187">153: X = -Y + -Z;</para>
+      <para id="id5645239">154: cout&lt;&lt;endl&lt;&lt;"X = -Y + -Z: ";</para>
+      <para id="id5645244">155: X.Print();</para>
+      <para id="id5477663">156: cout&lt;&lt;" = ";</para>
+      <para id="id5477668">157: (-Y).Print();</para>
+      <para id="id5477672">158: cout&lt;&lt;" + ";</para>
+      <para id="id3847504">159: (-Z).Print();</para>
+      <para id="id3847509">160: return 0;</para>
+      <para id="id5674697">161: }</para>
+      <para id="id3661983">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT4_4.EXE">chạy ví dụ 4.4</link>, kết quả ở hình 4.9</para>
+      <figure id="id5167923">
+        <media id="id1165117453696" alt=""><image src="../../media/graphics4-d181.png" mime-type="image/png" height="113" width="467"/></media>
+      </figure>
+      <para id="id6060409">Hình 4.9: Kết quả của ví dụ 4.4</para>
+    </section>
+    <section id="id-685380854089">
+      <title>ĐA NĂNG HÓA MỘT SỐ TOÁN TỬ ĐẶC BIỆT</title>
+      <para id="id3534861">Trong phần này chúng ta sẽ tìm hiểu cách cài đặt một vài toán tử đặc biệt như () [] ++ -- , = -&gt;</para>
+      <section id="id-736189631618">
+        <title>Toán tử []</title>
+        <para id="id5872818">Khi cài đặt các lớp vector hoặc chuỗi ký tự, chúng ta cần phải truy cập đến từng phần tử của chúng, trong ngôn ngữ C/C++ đã có toán tử [] để truy cập đến một phần tử của mảng. Đây là toán tử hai ngôi, có dạng a[b] và khi đa năng toán tử này thì hàm toán tử tương ứng phải là thành viên của một lớp.</para>
+        <para id="id5123965"><link resource="javascript:if(confirm('http:">Ví dụ 4.5:</link>  Đa năng hóa toán tử [] để truy cập đến một phần tử của vector.</para>
+        <para id="id5668772">1: #include &lt;iostream.h&gt;</para>
+        <para id="id4620836">2: </para>
+        <para id="id4620840">3: class Vector</para>
+        <para id="id6217681">4: {</para>
+        <para id="id5168038">5: private: </para>
+        <para id="id5168046">6: int Size;</para>
+        <para id="id5682111">7: int *Data;</para>
+        <para id="id5682116">8: public: </para>
+        <para id="id5669274">9: Vector(int S=2,int V=0);</para>
+        <para id="id6046664">10: ~Vector();</para>
+        <para id="id5042302">11: void Print() const;</para>
+        <para id="id6001583">12: int &amp; operator [] (int I);</para>
+        <para id="id5212275">13: };</para>
+        <para id="id5682134">14:</para>
+        <para id="id5682139">15: Vector::Vector(int S,int V)</para>
+        <para id="id5391243">16: {</para>
+        <para id="id5491367">17: Size = S;</para>
+        <para id="id5491372">18: Data=new int[Size];</para>
+        <para id="id5395873">19: for(int I=0;I&lt;Size;++I)</para>
+        <para id="id6217721">20: Data[I]=V;</para>
+        <para id="id6217725">21: }</para>
+        <para id="id5477769">22:</para>
+        <para id="id5477773">23: Vector::~Vector()</para>
+        <para id="id5477777">24: {</para>
+        <para id="id3333615">25: delete []Data;</para>
+        <para id="id3333620">26: }</para>
+        <para id="id5396845">27: void Vector::Print() const</para>
+        <para id="id5406855">28: {</para>
+        <para id="id5396405">29: cout&lt;&lt;"Vector:(";</para>
+        <para id="id5396409">30: for(int I=0;I&lt;Size-1;++I)</para>
+        <para id="id5123336">31: cout&lt;&lt;Data[I]&lt;&lt;",";</para>
+        <para id="id5123342">32: cout&lt;&lt;Data[Size-1]&lt;&lt;")"&lt;&lt;endl;</para>
+        <para id="id5168015">33: }</para>
+        <para id="id6004310">34:</para>
+        <para id="id6004314">35: int &amp; Vector::operator [](int I)</para>
+        <para id="id5490443">36: {</para>
+        <para id="id5490413">37: return Data[I];</para>
+        <para id="id5052522">38: }</para>
+        <para id="id5052530">39:</para>
+        <para id="id5406962">40: int main()</para>
+        <para id="id5406972">41: {</para>
+        <para id="id5051861">42: Vector V(5,1);</para>
+        <para id="id6486778">43: V.Print();</para>
+        <para id="id6486783">44: for(int I=0;I&lt;5;++I)</para>
+        <para id="id4128125">45: V[I]*=(I+1);</para>
+        <para id="id4128130">46: V.Print();</para>
+        <para id="id5169096">47: V[0]=10;</para>
+        <para id="id5169101">48: V.Print();</para>
+        <para id="id5169106">49: return 0;</para>
+        <para id="id6002851">50: }</para>
+        <para id="id5493963">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT4_5.EXE">chạy ví dụ 4.5</link>, kết quả ở hình 4.10</para>
+        <figure id="id5169152">
+          <media id="id1165110263274" alt=""><image src="../../media/graphics5-f587.png" mime-type="image/png" height="71" width="497"/></media>
+        </figure>
+        <para id="id4168302">Hình 4.10: Kết quả của ví dụ 4.5</para>
+        <para id="id5491316">Trong chương trình ở ví dụ 4.5, hàm toán tử của toán tử [] ở lớp Vector trả về một tham chiếu vì toán tử này có thể dùng ở vế trái của phép gán.</para>
+      </section>
+      <section id="id-0586274686299">
+        <title>Toán tử ()</title>
+        <para id="id5390978">Toán tử () được dùng để gọi hàm, toán tử này gồm hai toán hạng: toán hạng đầu tiên là tên hàm, toán hạng thứ hai là danh sách các tham số của hàm. Toán tử này có dạng giống như toán tử [] và khi đa năng toán tử này thì hàm toán tử tương ứng phải là thành viên của một lớp.</para>
+        <para id="id6001466"><link resource="javascript:if(confirm('http:">Ví dụ 4.6:</link>  Lấy lại ví dụ 4.5 nhưng đa năng hóa toán tử () để truy cập đến một phần tử của vector.</para>
+        <para id="id6055938">1: #include &lt;iostream.h&gt;</para>
+        <para id="id6055946">2: </para>
+        <para id="id5396438">3: class Vector</para>
+        <para id="id5396448">4: {</para>
+        <para id="id3778956">5: private: </para>
+        <para id="id5945808">6: int Size;</para>
+        <para id="id5945818">7: int *Data;</para>
+        <para id="id5673315">8: public: </para>
+        <para id="id6212570">9: Vector(int S=2,int V=0);</para>
+        <para id="id6002827">10: ~Vector();</para>
+        <para id="id5947023">11: void Print() const;</para>
+        <para id="id5947034">12: int &amp; operator () (int I);</para>
+        <para id="id3631314">13: };</para>
+        <para id="id3631324">14:</para>
+        <para id="id5477512">15: Vector::Vector(int S,int V)</para>
+        <para id="id6005073">16: {</para>
+        <para id="id5051756">17: Size = S;</para>
+        <para id="id5051760">18: Data=new int[Size];</para>
+        <para id="id5051764">19: for(int I=0;I&lt;Size;++I)</para>
+        <para id="id5707813">20: Data[I]=V;</para>
+        <para id="id4681228">21: }</para>
+        <para id="id4681237">22:</para>
+        <para id="id5940668">23: Vector::~Vector()</para>
+        <para id="id5940672">24: {</para>
+        <para id="id6486313">25: delete []Data;</para>
+        <para id="id6486318">26: }</para>
+        <para id="id5946271">27: void Vector::Print() const</para>
+        <para id="id5394161">28: {</para>
+        <para id="id5394169">29: cout&lt;&lt;"Vector:(";</para>
+        <para id="id5736175">30: for(int I=0;I&lt;Size-1;++I)</para>
+        <para id="id6283280">31: cout&lt;&lt;Data[I]&lt;&lt;",";</para>
+        <para id="id6283285">32: cout&lt;&lt;Data[Size-1]&lt;&lt;")"&lt;&lt;endl;</para>
+        <para id="id6283291">33: }</para>
+        <para id="id5392208">34:</para>
+        <para id="id5168181">35: int &amp; Vector::operator ()(int I)</para>
+        <para id="id5040153">36: {</para>
+        <para id="id5040161">37: return Data[I];</para>
+        <para id="id6002877">38: }</para>
+        <para id="id5406307">39:</para>
+        <para id="id5406311">40: int main()</para>
+        <para id="id5053116">41: {</para>
+        <para id="id5404683">42: Vector V(5,1);</para>
+        <para id="id5404687">43: V.Print();</para>
+        <para id="id5404691">44: for(int I=0;I&lt;5;++I)</para>
+        <para id="id5493872">45: V(I)*=(I+1);</para>
+        <para id="id6004433">46: V.Print();</para>
+        <para id="id6004438">47: V(0)=10;</para>
+        <para id="id6004442">48: V.Print();</para>
+        <para id="id6003709">49: return 0;</para>
+        <para id="id6297634">50: }</para>
+        <para id="id6297643">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT4_6.EXE">chạy ví dụ 4.6</link>, kết quả ở hình 4.11</para>
+        <figure id="id5406145">
+          <media id="id1165110501511" alt=""><image src="../../media/graphics6-f587.png" mime-type="image/png" height="75" width="525"/></media>
+        </figure>
+        <para id="id5204846">Hình 4.11: Kết quả của ví dụ 4.6</para>
+        <para id="id5204852"><link resource="javascript:if(confirm('http:">Ví dụ 4.7:</link> Đa năng hóa toán tử () để truy cập đến phần tử của ma trận.</para>
+        <para id="id5945832">1: #include &lt;iostream.h&gt;</para>
+        <para id="id5945842">2: </para>
+        <para id="id5490782">3: class Matrix</para>
+        <para id="id5490793">4: {</para>
+        <para id="id5396902">5: private: </para>
+        <para id="id5397808">6: int Rows,Cols;</para>
+        <para id="id5397739">7: int **Data;</para>
+        <para id="id5397748">8: public: </para>
+        <para id="id5167939">9: Matrix(int R=2,int C=2,int V=0);</para>
+        <para id="id5946487">10: ~Matrix();</para>
+        <para id="id5946492">11: void Print() const;</para>
+        <para id="id6218012">12: int &amp; operator () (int R,int C);</para>
+        <para id="id5644984">13: };</para>
+        <para id="id6002549">14:</para>
+        <para id="id6002553">15: Matrix::Matrix(int R,int C,int V)</para>
+        <para id="id5204777">16: {</para>
+        <para id="id5478155">17: int I,J;</para>
+        <para id="id5669326">18: Rows=R;</para>
+        <para id="id5669331">19: Cols=C;</para>
+        <para id="id6217654">20: Data = new int *[Rows];</para>
+        <para id="id6217664">21: int *Temp=new int[Rows*Cols];</para>
+        <para id="id5683158">22: for(I=0;I&lt;Rows;++I)</para>
+        <para id="id3408022">23: {</para>
+        <para id="id3408031">24: Data[I]=Temp;</para>
+        <para id="id6218899">25: Temp+=Cols;</para>
+        <para id="id6218904">26: }</para>
+        <para id="id3800618">27: for(I=0;I&lt;Rows;++I)</para>
+        <para id="id3800624">28: for(J=0;J&lt;Cols;++J)</para>
+        <para id="id5477920">29: Data[I][J]=V;</para>
+        <para id="id5477925">30: } </para>
+        <para id="id5053564">31:</para>
+        <para id="id5053568">32: Matrix::~Matrix()</para>
+        <para id="id5053572">33: {</para>
+        <para id="id6362630">34: delete [] Data[0];</para>
+        <para id="id6362635">35: delete [] Data;</para>
+        <para id="id4679725">36: }</para>
+        <para id="id6004380">37:</para>
+        <para id="id6004384">38: void Matrix::Print() const</para>
+        <para id="id5406910">39: {</para>
+        <para id="id5406917">40: int I,J;</para>
+        <para id="id5053383">41: for(I=0;I&lt;Rows;++I)</para>
+        <para id="id5407907">42: {</para>
+        <para id="id5407915">43: for(J=0;J&lt;Cols;++J)</para>
+        <para id="id5407881">44: {</para>
+        <para id="id5407890">45: cout.width(5); // Hiển thị canh lề phải với chiều dài 5 ký tự</para>
+        <para id="id5491646">46: cout&lt;&lt;Data[I][J];</para>
+        <para id="id5946912">47: }</para>
+        <para id="id5946921">48: cout&lt;&lt;endl;</para>
+        <para id="id5406882">49: }</para>
+        <para id="id5406891">50: }</para>
+        <para id="id5493759">51:</para>
+        <para id="id5493763">52: int &amp; Matrix::operator () (int R,int C)</para>
+        <para id="id5491738">53: {</para>
+        <para id="id5397003">54: return Data[R][C];</para>
+        <para id="id5397013">55: }</para>
+        <para id="id6001544">56:</para>
+        <para id="id6001548">57: int main()</para>
+        <para id="id6004487">58: {</para>
+        <para id="id5169322">59: int I,J;</para>
+        <para id="id5946413">60: Matrix M(2,3,1);</para>
+        <para id="id5946416">61: cout&lt;&lt;"Matrix:"&lt;&lt;endl;</para>
+        <para id="id5946421">62: M.Print();</para>
+        <para id="id5490610">63: for(I=0;I&lt;2;++I)</para>
+        <para id="id5490615">64: for(J=0;J&lt;3;++J)</para>
+        <para id="id6219005">65: M(I,J)*=(I+J+1);</para>
+        <para id="id6219009">66: cout&lt;&lt;"Matrix:"&lt;&lt;endl;</para>
+        <para id="id6219014">67: M.Print();</para>
+        <para id="id6002191">68: return 0;</para>
+        <para id="id6002201">69: }</para>
+        <para id="id5042388">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT4_7.EXE">chạy ví dụ 4.7</link>, kết quả ở hình 4.12</para>
+        <figure id="id3757314">
+          <media id="id1165104458829" alt=""><image src="../../media/graphics7-02ae.png" mime-type="image/png" height="113" width="457"/></media>
+        </figure>
+        <para id="id3664180">Hình 4.12: Kết quả của ví dụ 4.7</para>
+      </section>
+    </section>
+    <section id="id-323856638329">
+      <title>TOÁN TỬ CHUYỂN ĐỔI KIỂU</title>
+      <para id="id3598618">Phần lớn các chương trình xử lý thông tin sự đa dạng của các kiểu. Đôi khi tất cả các thao tác "dừng lại bên trong một kiểu". Chẳng hạn, một số nguyên với một số nguyên tạo thành một số nguyên (miễn là kết quả không quá lớn để được biểu diễn như một số nguyên). Nhưng thật cần thiết để chuyển đổi dữ liệu của một kiểu tới dữ liệu của kiểu khác. Điều này có thể xảy ra trong các phép gán, các kết quả tính toán, trong việc chuyển các giá trị tới hàm, và trong việc trả về trị từ hàm. Trình biên dịch biết làm thế nào để thực hiện các chuyển đổi nào đó trong số các kiểu có sẵn. Các lập trình viên có thể ép buộc các chuyển đổi trong số các kiểu có sẵn bởi ép kiểu.</para>
+      <para id="id5849368">Nhưng đối với các kiểu do người dùng định nghĩa thì trình biên dịch không thể tự động biết làm thế nào chuyển đổi trong số các kiểu dữ liệu do người dùng định nghĩa và các kiểu có sẵn. Lập trình viên phải chỉ rõ làm sao các chuyển đổi như vậy sẽ xuất hiện. Các chuyển đổi như thế có thể được thực hiện với constructor chuyển đổi.</para>
+      <para id="id3598627">Một toán tử chuyển đổi kiểu có thể được sử dụng để chuyển đổi một đối tượng của một lớp thành đối tượng của một lớp khác hoặc thành một đối tượng của một kiểu có sẵn. Toán tử chuyển đổi kiểu như thế phải là hàm thành viên không tĩnh và không là hàm friend. Prototype của hàm thành viên này có cú pháp:</para>
+      <para id="id3598369">operator &lt;data type&gt; ();</para>
+      <para id="id4276925"><link resource="javascript:if(confirm('http:">Ví dụ 4.14:</link>  Toán tử chuyển đổi kiểu</para>
+      <para id="id4271917">1: #include &lt;iostream.h&gt; </para>
+      <para id="id4271926">2: </para>
+      <para id="id3368066">3: class Number</para>
+      <para id="id3368076">4: {</para>
+      <para id="id3685077">5: private:</para>
+      <para id="id3685081">6: float Data;</para>
+      <para id="id3685086">7: public:</para>
+      <para id="id4329303">8: Number(float F=0.0)</para>
+      <para id="id4329307">9: {</para>
+      <para id="id4329312">10: Data=F;</para>
+      <para id="id5736842">11: }</para>
+      <para id="id5736846">12: operator float()</para>
+      <para id="id5736851">13: {</para>
+      <para id="id5736856">14: return Data;</para>
+      <para id="id6379741">15: }</para>
+      <para id="id6379745">16: operator int()</para>
+      <para id="id6379750">17: {</para>
+      <para id="id3709665">18: return (int)Data;</para>
+      <para id="id3709669">19: }</para>
+      <para id="id3709674">20: };</para>
+      <para id="id3598401">21:</para>
+      <para id="id3598405">22: int main()</para>
+      <para id="id3598410">23: {</para>
+      <para id="id3598415">24: Number N1(9.7), N2(2.6);</para>
+      <para id="id6360780">25: float X=(float)N1; //Gọi operator float()</para>
+      <para id="id6360786">26: cout&lt;&lt;X&lt;&lt;endl;</para>
+      <para id="id6360791">27: int Y=(int)N2; //Gọi operator int()</para>
+      <para id="id3753248">28: cout&lt;&lt;Y&lt;&lt;endl;</para>
+      <para id="id3753252">29: return 0;</para>
+      <para id="id3753256">30: }</para>
+      <para id="id6360929">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT4_14.EXE">chạy ví dụ 4.14</link>, kết quả ở hình 4.19</para>
+      <figure id="id3689333">
+        <media id="id1165110502074" alt=""><image src="../../media/graphics8-4ebf.png" mime-type="image/png" height="51" width="450"/></media>
+      </figure>
+      <para id="id6381828">Hình 4.19: Kết quả của ví dụ 4.14</para>
+    </section>
+    <section id="id-323486766591">
+      <title>TOÁN TỬ NEW VÀ DELETE</title>
+      <para id="id3703695">Các toán tử new và delete toàn cục có thể được đa năng hóa. Điều này cho phép các lập trình viên C++ có khả năng xây dựng một hệ thống cấp phát bộ nhớ theo ý người dùng, cói cùng giao tiếp như hệ thống cấp phát mặc định.</para>
+      <para id="id3778469">Có hai cách đa năng hóa các toán tử new và delete:</para>
+      <para id="id3838158"> Có thể đa năng hóa một cách toàn cục nghĩa là thay thế hẳn các toán tử new và delete mặc định.</para>
+      <para id="id5082873"> Chúng ta đa năng hóa các toán tử new và delete với tư cách là hàm thành viên của lớp nếu muốn các toán tử new và delete áp dụng đối với lớp đó. Khi chúng ta dùng new và delete đối với lớp nào đó, trình biên dịch sẽ kiểm tra xem new và delete có được định nghĩa riêng cho lớp đó hay không; nếu không thì dùng new và delete toàn cục (có thể đã được đa năng hóa).</para>
+      <para id="id5744545">Hàm toán tử của toán tử new và delete có prototype như sau:</para>
+      <para id="id3598582">void * operator new(size_t size);</para>
+      <para id="id5167997">void operator delete(void * ptr);</para>
+      <para id="id3367895">Trong đó tham số kiểu size_t được trình biên dịch hiểu là kích thước của kiểu dữ liệu được trao cho toán tử new.</para>
+      <section id="id-76818339607">
+        <title>Đa năng hóa toán tử new và delete toàn cục</title>
+        <para id="id4713195"><link resource="javascript:if(confirm('http:">Ví dụ 4.15:</link> Đa năng hóa toán tử new và delete toàn cục đồng thời chứng tỏ rằng toán tử new và delete do đa năng hóa thay thế toán tử new và delete mặc định.</para>
+        <para id="id4245797">1: #include &lt;iostream.h&gt; </para>
+        <para id="id4245806">2: #include &lt;stdlib.h&gt;</para>
+        <para id="id4245811">3:</para>
+        <para id="id4714186">4: class Point</para>
+        <para id="id4714196">5: {</para>
+        <para id="id4714201">6: private:</para>
+        <para id="id4447340">7: int X, Y;</para>
+        <para id="id4447345">8: public:</para>
+        <para id="id4447349">9: Point(int A=0,int B=0)</para>
+        <para id="id4447354">10: {</para>
+        <para id="id4051537">11: X=A;</para>
+        <para id="id4051541">12: Y=B;</para>
+        <para id="id4051546">13: cout&lt;&lt;"Constructor!"&lt;&lt;endl;</para>
+        <para id="id4051552">14: }</para>
+        <para id="id5144341">15: ~Point()</para>
+        <para id="id5144346">16: {</para>
+        <para id="id5144350">17: cout&lt;&lt;"Destructor!"&lt;&lt;endl;</para>
+        <para id="id5144356">18: }</para>
+        <para id="id4107484">19: void Print() const</para>
+        <para id="id4107489">20: {</para>
+        <para id="id4107493">21: cout&lt;&lt;"X="&lt;&lt;X&lt;&lt;","&lt;&lt;"Y="&lt;&lt;Y&lt;&lt;endl;</para>
+        <para id="id4107499">22: }</para>
+        <para id="id6025297">23: };</para>
+        <para id="id6025301">24:</para>
+        <para id="id6025306">25: void * operator new(size_t Size)</para>
+        <para id="id6025310">26: {</para>
+        <para id="id4110323">27: return malloc(Size);</para>
+        <para id="id4110328">28: }</para>
+        <para id="id4110332">29:</para>
+        <para id="id4110337">30: void operator delete(void *Ptr)</para>
+        <para id="id4110341">31: {</para>
+        <para id="id5629051">32: free(Ptr);</para>
+        <para id="id5629056">33: }</para>
+        <para id="id5629061">34:</para>
+        <para id="id5629065">35: int main()</para>
+        <para id="id4521970">36: {</para>
+        <para id="id4521975">37: Point *P1,*P2;</para>
+        <para id="id4521979">38: P1= new Point(10,20);</para>
+        <para id="id4521984">39: if (P1==NULL)</para>
+        <para id="id3631336">40: {</para>
+        <para id="id3631340">41: cout&lt;&lt;"Out of memory!"&lt;&lt;endl;</para>
+        <para id="id3631345">42: return 1;</para>
+        <para id="id3631350">43: }</para>
+        <para id="id3689166">44: P2= new Point(-10,-20);</para>
+        <para id="id3689171">45: if (P2==NULL)</para>
+        <para id="id3689175">46: {</para>
+        <para id="id3689180">47: cout&lt;&lt;"Out of memory!"&lt;&lt;endl;</para>
+        <para id="id6382096">48: return 1;</para>
+        <para id="id6382100">49: }</para>
+        <para id="id6382105">50: int *X=new int;</para>
+        <para id="id6382110">51: if (X==NULL)</para>
+        <para id="id5404619">52: {</para>
+        <para id="id5404623">53: cout&lt;&lt;"Out of memory!"&lt;&lt;endl;</para>
+        <para id="id5404629">54: return 1;</para>
+        <para id="id5404634">55: }</para>
+        <para id="id3890789">56: *X=10;</para>
+        <para id="id3890794">57: cout&lt;&lt;"X="&lt;&lt;*X&lt;&lt;endl;</para>
+        <para id="id3890799">58: cout&lt;&lt;"Point 1:";</para>
+        <para id="id3890805">59: P1-&gt;Print();</para>
+        <para id="id3689396">60: cout&lt;&lt;"Point 2:";</para>
+        <para id="id3689402">61: P2-&gt;Print();</para>
+        <para id="id3689406">62: delete P1;</para>
+        <para id="id3689411">63: delete P2;</para>
+        <para id="id3650429">64: delete X;</para>
+        <para id="id3650434">65: return 0;</para>
+        <para id="id3650439">66: }</para>
+        <para id="id3650443">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT4_15.EXE">chạy ví dụ 4.15</link>, kết quả ở hình 4.20</para>
+        <figure id="id6361084">
+          <media id="id1165104419532" alt=""><image src="../../media/graphics9-ff41.png" mime-type="image/png" height="136" width="474"/></media>
+        </figure>
+        <para id="id3733807">Hình 4.20: Kết quả của ví dụ 4.15</para>
+      </section>
+      <section id="id-741920114412">
+        <title>Đa năng hóa toán tử new và delete cho một lớp</title>
+        <para id="id5716790">Nếu muốn toán tử new và delete có tính chất đặc biệt chỉ khi áp dụng cho đối tượng của lớp nào đó, chúng ta có thể đa năng hóa toán tử new và delete với tư cách là hàm thành viên của lớp đó. Việc này không khác lắm so với cách đa năng hóa toán tử new và delete một cách toàn cục.</para>
+        <para id="id5378387"><link resource="javascript:if(confirm('http:">Ví dụ 4.16:</link> Đa năng hóa toán tử new và delete cho một lớp.</para>
+        <para id="id6361234">1: #include &lt;iostream.h&gt; </para>
+        <para id="id6361243">2: #include &lt;stdlib.h&gt;</para>
+        <para id="id4329279">3: class Number</para>
+        <para id="id4329289">4: {</para>
+        <para id="id4329293">5: private:</para>
+        <para id="id4329298">6: int Data;</para>
+        <para id="id5170596">7: public:</para>
+        <para id="id5170600">8: Number(int X=0)</para>
+        <para id="id5170605">9: {</para>
+        <para id="id5170610">10: Data=X;</para>
+        <para id="id6361003">11: }</para>
+        <para id="id6361007">12:</para>
+        <para id="id6361011">13: void * operator new(size_t Size)</para>
+        <para id="id6361016">14: {</para>
+        <para id="id6361020">15: cout&lt;&lt;"Toan tu new cua lop!"&lt;&lt;endl;</para>
+        <para id="id3684492">16: return ::new unsigned char[Size];</para>
+        <para id="id3684497">17: }</para>
+        <para id="id3684501">18:</para>
+        <para id="id3684506">19: void operator delete(void *Ptr)</para>
+        <para id="id3684510">20: {</para>
+        <para id="id6509557">21: cout&lt;&lt;"Toan tu delete cua lop!"&lt;&lt;endl;</para>
+        <para id="id6509563">22: ::delete Ptr;</para>
+        <para id="id6509568">23: }</para>
+        <para id="id6509572">24:</para>
+        <para id="id6509577">25: void Print() const</para>
+        <para id="id4831702">26: {</para>
+        <para id="id4831707">27: cout&lt;&lt;"Data:"&lt;&lt;Data&lt;&lt;endl;</para>
+        <para id="id4831712">28: }</para>
+        <para id="id4831717">29:</para>
+        <para id="id4831721">30: };</para>
+        <para id="id5500702">31:</para>
+        <para id="id5500706">32: int main()</para>
+        <para id="id5500711">33: {</para>
+        <para id="id5500715">34: Number *N;</para>
+        <para id="id5500720">35: N= new Number(10);</para>
+        <para id="id6360796">36: if (N==NULL)</para>
+        <para id="id6360801">37: {</para>
+        <para id="id6360806">38: cout&lt;&lt;"Out of memory!"&lt;&lt;endl;</para>
+        <para id="id6360812">39: return 1;</para>
+        <para id="id6360816">40: }</para>
+        <para id="id6485829">41: int *X=new int;</para>
+        <para id="id6485834">42: if (X==NULL)</para>
+        <para id="id6485839">43: {</para>
+        <para id="id6485844">44: cout&lt;&lt;"Out of memory!"&lt;&lt;endl;</para>
+        <para id="id6485849">45: return 1;</para>
+        <para id="id6119425">46: }</para>
+        <para id="id6119430">47: *X=10;</para>
+        <para id="id6119434">48: cout&lt;&lt;"X="&lt;&lt;*X&lt;&lt;endl;</para>
+        <para id="id6119440">49: N-&gt;Print();</para>
+        <para id="id6119444">50: delete N;</para>
+        <para id="id6072622">51: delete X;</para>
+        <para id="id6072627">52: return 0;</para>
+        <para id="id6072632">53: }</para>
+        <para id="id6072636">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT4_16.EXE">chạy ví dụ 4.16</link>, kết quả ở hình 4.21</para>
+        <figure id="id6029850">
+          <media id="id1165110471894" alt=""><image src="../../media/graphics10-f0cf.png" mime-type="image/png" height="86" width="474"/></media>
+        </figure>
+        <para id="id6295637">Hình 4.21: Kết quả của ví dụ 4.16</para>
+      </section>
+    </section>
+    <section id="id-865693487989">
+      <title>ĐA NĂNG HÓA CÁC TOÁN TỬ CHÈN DÒNG &lt;&lt; VÀ TRÍCH DÒNG &gt;&gt;</title>
+      <para id="id3787899">Chúng ta có thể đa năng hóa các toán tử chèn dòng &lt;&lt; (stream insertion) và trích dòng &gt;&gt; (stream extraction). Hàm toán tử của toán tử &lt;&lt; được đa năng hóa có prototype như sau:</para>
+      <para id="id5528402">ostream &amp; operator &lt;&lt; (ostream &amp; stream, ClassName Object);</para>
+      <para id="id6046585">Hàm toán tử &lt;&lt; trả về tham chiếu chỉ đến dòng xuất ostream. Tham số thứ nhất của hàm toán tử &lt;&lt; là một tham chiếu chỉ đến dòng xuất ostream, tham số thứ hai là đối tượng được chèn vào dòng. Khi sử dụng, dòng trao cho toán tử &lt;&lt; (tham số thứ nhất) là toán hạng bên trái và đối tượng được đưa vào dòng (tham số thứ hai) là toán hạng bên phải. Để bảo đảm cách dùng toán tử &lt;&lt; luôn nhất quán, chúng ta không thể định nghĩa hàm toán tử &lt;&lt; như là hàm thành viên của lớp đang xét, thông thường nó chính là hàm friend. </para>
+      <para id="id5376160">Còn hàm toán tử của toán tử &gt;&gt; được đa năng hóa có prototype như sau:</para>
+      <para id="id5376173">istream &amp; operator &gt;&gt; (istream &amp; stream, ClassName Object);</para>
+      <para id="id6136943">Hàm toán tử &gt;&gt; trả về tham chiếu chỉ đến dòng nhập istream. Tham số thứ nhất của hàm toán tử này là một tham chiếu chỉ đến dòng nhập istream, tham số thứ hai là đối tượng của lớp đang xét mà chúng ta muốn tạo dựng nhờ vào dữ liệu lấy từ dòng nhập. Khi sử dụng, dòng nhập đóng vai toán hạng bên trái, đối tượng nhận dữ liệu đóng vai toán hạng bên phải. Cũng như trường hợp toán tử &lt;&lt;, hàm toán tử &gt;&gt; không là hàm thành viên của lớp, thông thường nó chính là hàm friend.</para>
+      <para id="id6485754">
+        <link resource="javascript:if(confirm('http:">Ví dụ 4.17:</link>
+      </para>
+      <para id="id6485774">1: #include &lt;iostream.h&gt; </para>
+      <para id="id3684936">2: </para>
+      <para id="id3684940">3: class Point</para>
+      <para id="id3684950">4: {</para>
+      <para id="id3684955">5: private:</para>
+      <para id="id6500977">6: int X,Y;</para>
+      <para id="id6500981">7: public:</para>
+      <para id="id6500986">8: Point();</para>
+      <para id="id6500991">9: friend ostream &amp; operator &lt;&lt; (ostream &amp; Out,Point &amp; P);</para>
+      <para id="id6500997">10: friend istream &amp; operator &gt;&gt; (istream &amp; In,Point &amp; P);</para>
+      <para id="id5217456">11: };</para>
+      <para id="id5217460">12:</para>
+      <para id="id5217465">13: Point::Point()</para>
+      <para id="id5217469">14: {</para>
+      <para id="id5217474">15: X=Y=0;</para>
+      <para id="id5217478">16: }</para>
+      <para id="id6018154">17:</para>
+      <para id="id6018158">18: ostream &amp; operator &lt;&lt; (ostream &amp; Out,Point &amp; P)</para>
+      <para id="id6018164">19: {</para>
+      <para id="id6018169">20: Out&lt;&lt;"X="&lt;&lt;P.X&lt;&lt;",Y="&lt;&lt;P.Y&lt;&lt;endl;</para>
+      <para id="id6018174">21: return Out; //Cho phép cout&lt;&lt;a&lt;&lt;b&lt;&lt;c;</para>
+      <para id="id6018180">22: }</para>
+      <para id="id6018184">23:</para>
+      <para id="id5742636">24: istream &amp; operator &gt;&gt; (istream &amp;In,Point &amp; P)</para>
+      <para id="id5742642">25: {</para>
+      <para id="id5742647">26: cout&lt;&lt;"X:";</para>
+      <para id="id5742651">27: In&gt;&gt;P.X;</para>
+      <para id="id5742656">28: cout&lt;&lt;"Y:";</para>
+      <para id="id5742661">29: In&gt;&gt;P.Y;</para>
+      <para id="id5308768">30: return In; //Cho phép cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;</para>
+      <para id="id5308773">31: }</para>
+      <para id="id5308778">32:</para>
+      <para id="id5308782">33: int main()</para>
+      <para id="id5308787">34: {</para>
+      <para id="id5308791">35: Point P;</para>
+      <para id="id5308796">36: cin&gt;&gt;P;</para>
+      <para id="id5378233">37: cout&lt;&lt;"Point:"&lt;&lt;P;</para>
+      <para id="id5378238">38: return 0;</para>
+      <para id="id5378243">39: }</para>
+      <para id="id5378247">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT4_17.EXE">chạy ví dụ 4.17</link>, kết quả ở hình 4.22</para>
+      <figure id="id5724186">
+        <media id="id1165104461122" alt=""><image src="../../media/graphics11-438b.png" mime-type="image/png" height="65" width="461"/></media>
+      </figure>
+      <para id="id5724210">Hình 4.22: Kết quả của ví dụ 4.17</para>
+    </section>
+    <section id="id-180345403307">
+      <title>MỘT SỐ VÍ DỤ</title>
+      <section id="id-109849557583">
+        <title>Lớp String</title>
+        <para id="id6149981"><link resource="javascript:if(confirm('http:">Ví dụ 4.18:</link> Chúng ta sẽ xây dựng một lớp xử lý việc tạo và thao tác trên các chuỗi (string). C++ không cài sẵn kiểu dữ liệu chuỗi. Nhưng C++ cho phép chúng ta thêm kiểu chuỗi như một lớp thông qua cơ chế đa năng hóa.</para>
+        <para id="id6149992">#include &lt;iostream.h&gt;</para>
+        <para id="id6046564">#include &lt;iomanip.h&gt;</para>
+        <para id="id6046569">#include &lt;string.h&gt;</para>
+        <para id="id4447287">#include &lt;assert.h&gt;</para>
+        <para id="id4447291">class String</para>
+        <para id="id4447295">{</para>
+        <para id="id4447299">private:</para>
+        <para id="id4447304">char *Ptr; //Con tro tro den diem bat dau cua chuoi</para>
+        <para id="id4447315">int Length; //Chieu dai chuoi</para>
+        <para id="id4771050">public:</para>
+        <para id="id4771055">String(const char * = ""); //Constructor chuyen doi</para>
+        <para id="id4771062">String(const String &amp;); //Constructor sao chep</para>
+        <para id="id4771073">~String(); //Destructor</para>
+        <para id="id6480533">const String &amp;operator=(const String &amp;); //Phep gan</para>
+        <para id="id6480544">String &amp;operator+=(const String &amp;); //Phep noi</para>
+        <para id="id6480557">int operator!() const; //Kiem tra chuoi rong</para>
+        <para id="id6485657">int operator==(const String &amp;) const;</para>
+        <para id="id6485664">int operator!=(const String &amp;) const;</para>
+        <para id="id6485671">int operator&lt;(const String &amp;) const;</para>
+        <para id="id6029533">int operator&gt;(const String &amp;) const;</para>
+        <para id="id6029542">int operator&gt;=(const String &amp;) const;</para>
+        <para id="id6029550">int operator&lt;=(const String &amp;) const;</para>
+        <para id="id6029558">char &amp; operator[](int); //Tra ve ky tu tham chieu</para>
+        <para id="id6030052">String &amp;operator()(int, int); //Tra ve mot chuoi con</para>
+        <para id="id6030060">int GetLength() const;</para>
+        <para id="id6030067">friend ostream &amp;operator&lt;&lt;(ostream &amp;, const String &amp;);</para>
+        <para id="id6030075">friend istream &amp;operator&gt;&gt;(istream &amp;, String &amp;);</para>
+        <para id="id4161088">};</para>
+        <para id="id4161092">//Constructor sao chep: Chuyen doi char * thanh String</para>
+        <para id="id4161098">String::String(const char *S)</para>
+        <para id="id4161102">{</para>
+        <para id="id4161106">cout &lt;&lt; "Conversion constructor: " &lt;&lt; S &lt;&lt; endl;</para>
+        <para id="id4161113">Length = strlen(S);</para>
+        <para id="id4161118">Ptr = new char[Length + 1];</para>
+        <para id="id3863874">assert(Ptr != 0);</para>
+        <para id="id3863879">strcpy(Ptr, S);</para>
+        <para id="id3863885">}</para>
+        <para id="id3863889">String::String(const String &amp;Copy)</para>
+        <para id="id3863894">{</para>
+        <para id="id3863898">cout &lt;&lt; "Copy constructor: " &lt;&lt; Copy.Ptr &lt;&lt; endl;</para>
+        <para id="id5308997">Length = Copy.Length;</para>
+        <para id="id5309002">Ptr = new char[Length + 1];</para>
+        <para id="id5309008">assert(Ptr != 0);</para>
+        <para id="id5309013">strcpy(Ptr, Copy.Ptr);</para>
+        <para id="id5309018">}</para>
+        <para id="id5309023">//Destructor</para>
+        <para id="id5309027">String::~String()</para>
+        <para id="id4052230">{</para>
+        <para id="id4052234">cout &lt;&lt; "Destructor: " &lt;&lt; Ptr &lt;&lt; endl;</para>
+        <para id="id4052240">delete [] Ptr;</para>
+        <para id="id4052246">}</para>
+        <para id="id4052250">const String &amp;String::operator=(const String &amp;Right)</para>
+        <para id="id4052256">{</para>
+        <para id="id5309279">cout &lt;&lt; "operator= called" &lt;&lt; endl;</para>
+        <para id="id5309285">if (&amp;Right != this)</para>
+        <para id="id5309291">{</para>
+        <para id="id5309296">delete [] Ptr;</para>
+        <para id="id5309303">Length = Right.Length;</para>
+        <para id="id5309309">Ptr = new char[Length + 1];</para>
+        <para id="id4617100">assert(Ptr != 0);</para>
+        <para id="id4617106">strcpy(Ptr, Right.Ptr);</para>
+        <para id="id4617112">}</para>
+        <para id="id4617118">else</para>
+        <para id="id4617123">cout &lt;&lt; "Attempted assignment of a String to itself" &lt;&lt; endl;</para>
+        <para id="id3839850">return *this;</para>
+        <para id="id3839855">}</para>
+        <para id="id3839860">String &amp;String::operator+=(const String &amp;Right)</para>
+        <para id="id3839865">{</para>
+        <para id="id3839870">char *TempPtr = Ptr;</para>
+        <para id="id3839875">Length += Right.Length;</para>
+        <para id="id3839880">Ptr = new char[Length + 1];</para>
+        <para id="id3839885">assert(Ptr != 0);</para>
+        <para id="id6111105">strcpy(Ptr, TempPtr);</para>
+        <para id="id6111111">strcat(Ptr, Right.Ptr);</para>
+        <para id="id6111116">delete [] TempPtr;</para>
+        <para id="id6111121">return *this;</para>
+        <para id="id6111127">}</para>
+        <para id="id6111131">int String::operator!() const</para>
+        <para id="id6111135">{</para>
+        <para id="id6111139">return Length == 0;</para>
+        <para id="id4510684">}</para>
+        <para id="id4510688">int String::operator==(const String &amp;Right) const</para>
+        <para id="id4510694">{</para>
+        <para id="id4510698">return strcmp(Ptr, Right.Ptr) == 0;</para>
+        <para id="id4510703">}</para>
+        <para id="id4510707">int String::operator!=(const String &amp;Right) const</para>
+        <para id="id4510713">{</para>
+        <para id="id4510717">return strcmp(Ptr, Right.Ptr) != 0;</para>
+        <para id="id6057115">}</para>
+        <para id="id6057119">int String::operator&lt;(const String &amp;Right) const</para>
+        <para id="id6057126">{</para>
+        <para id="id6057130">return strcmp(Ptr, Right.Ptr) &lt; 0;</para>
+        <para id="id6057136">}</para>
+        <para id="id6057140">int String::operator&gt;(const String &amp;Right) const</para>
+        <para id="id6057146">{</para>
+        <para id="id6057150">return strcmp(Ptr, Right.Ptr) &gt; 0;</para>
+        <para id="id5092236">}</para>
+        <para id="id5092240">int String::operator&gt;=(const String &amp;Right) const</para>
+        <para id="id5092246">{</para>
+        <para id="id5092250">return strcmp(Ptr, Right.Ptr) &gt;= 0;</para>
+        <para id="id5092257">}</para>
+        <para id="id5092261">int String::operator&lt;=(const String &amp;Right) const</para>
+        <para id="id5092267">{</para>
+        <para id="id5092271">return strcmp(Ptr, Right.Ptr) &lt;= 0;</para>
+        <para id="id5733089">}</para>
+        <para id="id5733093">char &amp;String::operator[](int Subscript)</para>
+        <para id="id5733099">{</para>
+        <para id="id5733103">assert(Subscript &gt;= 0 &amp;&amp; Subscript &lt; Length);</para>
+        <para id="id5733110">return Ptr[Subscript];</para>
+        <para id="id5733115">}</para>
+        <para id="id5733119">String &amp;String::operator()(int Index, int SubLength)</para>
+        <para id="id3864000">{</para>
+        <para id="id3864004">assert(Index &gt;= 0 &amp;&amp; Index &lt; Length &amp;&amp; SubLength &gt;= 0);</para>
+        <para id="id3864010">String *SubPtr = new String;</para>
+        <para id="id3864016">assert(SubPtr != 0);</para>
+        <para id="id3864021">if ((SubLength == 0) || (Index + SubLength &gt; Length))</para>
+        <para id="id3864028">SubPtr-&gt;Length = Length - Index + 1;</para>
+        <para id="id3864035">else</para>
+        <para id="id6129759">SubPtr-&gt;Length = SubLength + 1;</para>
+        <para id="id6129767">delete SubPtr-&gt;Ptr;</para>
+        <para id="id6129772">SubPtr-&gt;Ptr = new char[SubPtr-&gt;Length];</para>
+        <para id="id6129778">assert(SubPtr-&gt;Ptr != 0);</para>
+        <para id="id6129784">strncpy(SubPtr-&gt;Ptr, &amp;Ptr[Index], SubPtr-&gt;Length);</para>
+        <para id="id6129791">SubPtr-&gt;Ptr[SubPtr-&gt;Length] = '\0';</para>
+        <para id="id5850400">return *SubPtr;</para>
+        <para id="id5850404">}</para>
+        <para id="id5850408">int String::GetLength() const</para>
+        <para id="id5850412">{return Length;</para>
+        <para id="id5850419">}</para>
+        <para id="id5850423">ostream &amp;operator&lt;&lt;(ostream &amp;Output, const String &amp;S)</para>
+        <para id="id5850428">{</para>
+        <para id="id5850432">Output &lt;&lt; S.Ptr;</para>
+        <para id="id6089421">return Output;</para>
+        <para id="id6089427">}</para>
+        <para id="id6089431">istream &amp;operator&gt;&gt;(istream &amp;Input, String &amp;S)</para>
+        <para id="id6089436">{</para>
+        <para id="id6089440">char Temp[100];</para>
+        <para id="id6089446">Input &gt;&gt; setw(100) &gt;&gt; Temp;</para>
+        <para id="id6089452">S = Temp;</para>
+        <para id="id6089458">return Input;</para>
+        <para id="id6089463">}</para>
+        <para id="id4844211">int main()</para>
+        <para id="id4844215">{</para>
+        <para id="id4844219">String S1("happy"), S2(" birthday"), S3;</para>
+        <para id="id4844224">cout &lt;&lt; "S1 is \"" &lt;&lt; S1 &lt;&lt; "\"; S2 is \"" &lt;&lt; S2</para>
+        <para id="id4844231"> &lt;&lt; "\"; S3 is \"" &lt;&lt; S3 &lt;&lt; '\"' &lt;&lt; endl</para>
+        <para id="id4844240"> &lt;&lt; "The results of comparing S2 and S1:" &lt;&lt; endl</para>
+        <para id="id4844250"> &lt;&lt; "S2 == S1 yields " &lt;&lt; (S2 == S1) &lt;&lt; endl</para>
+        <para id="id6192852"> &lt;&lt; "S2 != S1 yields " &lt;&lt; (S2 != S1) &lt;&lt; endl</para>
+        <para id="id6192861"> &lt;&lt; "S2 &gt; S1 yields " &lt;&lt; (S2 &gt; S1) &lt;&lt; endl</para>
+        <para id="id6192873"> &lt;&lt; "S2 &lt; S1 yields " &lt;&lt; (S2 &lt; S1) &lt;&lt; endl</para>
+        <para id="id6192885"> &lt;&lt; "S2 &gt;= S1 yields " &lt;&lt; (S2 &gt;= S1) &lt;&lt; endl</para>
+        <para id="id6136853"> &lt;&lt; "S2 &lt;= S1 yields " &lt;&lt; (S2 &lt;= S1) &lt;&lt; endl;</para>
+        <para id="id6136862">cout &lt;&lt; "Testing !S3:" &lt;&lt; endl;</para>
+        <para id="id6136868">if (!S3)</para>
+        <para id="id6136874">{</para>
+        <para id="id6136879">cout &lt;&lt; "S3 is empty; assigning S1 to S3;" &lt;&lt; endl;</para>
+        <para id="id6136887">S3 = S1;</para>
+        <para id="id6136893">cout &lt;&lt; "S3 is \"" &lt;&lt; S3 &lt;&lt; "\"" &lt;&lt; endl;</para>
+        <para id="id6302246">}</para>
+        <para id="id6302251">cout &lt;&lt; "S1 += S2 yields S1 = ";</para>
+        <para id="id6302258">S1 += S2;</para>
+        <para id="id6302263">cout &lt;&lt; S1 &lt;&lt; endl;</para>
+        <para id="id6302269">cout &lt;&lt; "S1 += \" to you\" yields" &lt;&lt; endl;</para>
+        <para id="id6302276">S1 += " to you";</para>
+        <para id="id6302282">cout &lt;&lt; "S1 = " &lt;&lt; S1 &lt;&lt; endl;</para>
+        <para id="id6302288">cout &lt;&lt; "The substring of S1 starting at" &lt;&lt; endl</para>
+        <para id="id4051130"> &lt;&lt; "location 0 for 14 characters, S1(0, 14), is: "</para>
+        <para id="id4051141"> &lt;&lt; S1(0, 14) &lt;&lt; endl;</para>
+        <para id="id4051150">cout &lt;&lt; "The substring of S1 starting at" &lt;&lt; endl</para>
+        <para id="id4051157"> &lt;&lt; "location 15, S1(15, 0), is: "</para>
+        <para id="id4051166"> &lt;&lt; S1(15, 0) &lt;&lt;endl; // 0 is "to end of string"</para>
+        <para id="id6044179">String *S4Ptr = new String(S1);</para>
+        <para id="id6044184">cout &lt;&lt; "*S4Ptr = " &lt;&lt; *S4Ptr &lt;&lt;endl;</para>
+        <para id="id6044190">cout &lt;&lt; "assigning *S4Ptr to *S4Ptr" &lt;&lt; endl;</para>
+        <para id="id6044197">*S4Ptr = *S4Ptr;</para>
+        <para id="id6044202">cout &lt;&lt; "*S4Ptr = " &lt;&lt; *S4Ptr &lt;&lt; endl;</para>
+        <para id="id6044209">delete S4Ptr;</para>
+        <para id="id6044214">S1[0] = 'H';</para>
+        <para id="id6041011">S1[6] = 'B';</para>
+        <para id="id6041016">cout &lt;&lt;"S1 after S1[0] = 'H' and S1[6] = 'B' is: "&lt;&lt; S1 &lt;&lt; endl;</para>
+        <para id="id6041023">cout &lt;&lt; "Attempt to assign 'd' to S1[30] yields:" &lt;&lt; endl;</para>
+        <para id="id6041031">S1[30] = 'd'; //Loi: Chi so vuot khoi mien!!!</para>
+        <para id="id6041037">return 0;</para>
+        <para id="id6041042">}</para>
+        <para id="id6041046">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT4_18.EXE">chạy ví dụ 4.18</link>, kết quả ở hình 4.23</para>
+        <figure id="id4013860">
+          <media id="id1165110224134" alt=""><image src="../../media/graphics12-700b.png" mime-type="image/png" height="755" width="567"/></media>
+        </figure>
+        <para id="id4013884">Hình 4.23: Kết quả của ví dụ 4.18</para>
+      </section>
+      <section id="id-233510771761">
+        <title>Lớp Date</title>
+        <para id="id5874230"><link resource="javascript:if(confirm('http:">Ví dụ 4.19:</link>  </para>
+        <para id="id5874251">#include &lt;iostream.h&gt;</para>
+        <para id="id5874256">class Date</para>
+        <para id="id5874260">{</para>
+        <para id="id5874264">private:</para>
+        <para id="id5874270">int Month;</para>
+        <para id="id5629954">int Day;</para>
+        <para id="id5629961">int Year;</para>
+        <para id="id5629968">static int Days[]; //Mang chua so ngay trong thang</para>
+        <para id="id5629978">void HelpIncrement(); //Ham tang ngay len mot</para>
+        <para id="id5629987">public:</para>
+        <para id="id5629992">Date(int M = 1, int D = 1, int Y = 1900);</para>
+        <para id="id5381855">void SetDate(int, int, int);</para>
+        <para id="id5381861">Date operator++(); //Tien to</para>
+        <para id="id5381872">Date operator++(int); //Hau to</para>
+        <para id="id5381883">const Date &amp;operator+=(int);</para>
+        <para id="id5381891">int LeapYear(int); //Kiem tra nam nhuan</para>
+        <para id="id6063525">int EndOfMonth(int); //Kiem tra cuoi thang</para>
+        <para id="id6063536">friend ostream &amp;operator&lt;&lt;(ostream &amp;, const Date &amp;);</para>
+        <para id="id6063544">};</para>
+        <para id="id6063548">int Date::Days[] = {31, 28, 31, 30, 31, 30,31, 31, 30, 31, 30, 31};</para>
+        <para id="id6063553">Date::Date(int M, int D, int Y)</para>
+        <para id="id6063557">{</para>
+        <para id="id6063561">SetDate(M, D, Y);</para>
+        <para id="id6063566">}</para>
+        <para id="id5873058">void Date::SetDate(int MM, int DD, int YY)</para>
+        <para id="id5873061">{</para>
+        <para id="id5873065">Month = (MM &gt;= 1 &amp;&amp; MM &lt;= 12) ? MM : 1;</para>
+        <para id="id5873072">Year = (YY &gt;= 1900 &amp;&amp; YY &lt;= 2100) ? YY : 1900;</para>
+        <para id="id5873078">if (Month == 2 &amp;&amp; LeapYear(Year))</para>
+        <para id="id5873084">Day = (DD &gt;= 1 &amp;&amp; DD &lt;= 29) ? DD : 1;</para>
+        <para id="id5873092">else</para>
+        <para id="id5873097">Day = (DD &gt;= 1 &amp;&amp; DD &lt;= Days[Month-1]) ? DD : 1;</para>
+        <para id="id5450543">}</para>
+        <para id="id5450547">Date Date::operator++()</para>
+        <para id="id5450552">{</para>
+        <para id="id5450556">HelpIncrement();</para>
+        <para id="id5450561">return *this;</para>
+        <para id="id5450566">}</para>
+        <para id="id5450571">Date Date::operator++(int)</para>
+        <para id="id5450575">{</para>
+        <para id="id5450579">Date Temp = *this;</para>
+        <para id="id5450584">HelpIncrement();</para>
+        <para id="id6294737">return Temp;</para>
+        <para id="id6294743">}</para>
+        <para id="id6294747">const Date &amp;Date::operator+=(int AdditionalDays)</para>
+        <para id="id6294753">{</para>
+        <para id="id6294758">for (int I = 1; I &lt;= AdditionalDays; I++)</para>
+        <para id="id6294765">HelpIncrement();</para>
+        <para id="id6294772">return *this;</para>
+        <para id="id6294777">}</para>
+        <para id="id6294781">int Date::LeapYear(int Y)</para>
+        <para id="id5631778">{</para>
+        <para id="id5631782">if (Y % 400 == 0 || (Y % 100 != 0 &amp;&amp; Y % 4 == 0) )</para>
+        <para id="id5631788">return 1; //Nam nhuan</para>
+        <para id="id5631797">return 0;  //Nam khong nhuan</para>
+        <para id="id5631808">}</para>
+        <para id="id5631812">int Date::EndOfMonth(int D)</para>
+        <para id="id5631816">{</para>
+        <para id="id5631821">if (Month == 2 &amp;&amp; LeapYear(Year))</para>
+        <para id="id6488262">return D == 29;</para>
+        <para id="id6488268">return D == Days[Month-1];</para>
+        <para id="id6488274">}</para>
+        <para id="id6488278">void Date::HelpIncrement()</para>
+        <para id="id6488282">{</para>
+        <para id="id6488286">if (EndOfMonth(Day) &amp;&amp; Month == 12) //Het nam</para>
+        <para id="id6488294">{</para>
+        <para id="id6488299">Day = 1;</para>
+        <para id="id5631828">Month = 1;</para>
+        <para id="id5631835">++Year;</para>
+        <para id="id5631841">}</para>
+        <para id="id5631846">else</para>
+        <para id="id5631852">if (EndOfMonth(Day)) //Het thang</para>
+        <para id="id5631858">{</para>
+        <para id="id5631864">Day = 1;</para>
+        <para id="id5631872">++Month;</para>
+        <para id="id6485535">}</para>
+        <para id="id6485541">else</para>
+        <para id="id6485548">++Day;</para>
+        <para id="id6485555">}</para>
+        <para id="id6485559">ostream &amp;operator&lt;&lt;(ostream &amp;Output, const Date &amp;D)</para>
+        <para id="id6485565">{</para>
+        <para id="id6485569">static char*MonthName[12]={"January","February","March","April","May",</para>
+        <para id="id6485575">"June","July", "August","September",</para>
+        <para id="id6293795">"October","November", "December" };</para>
+        <para id="id6293806">Output &lt;&lt; MonthName[D.Month-1] &lt;&lt; ' '&lt;&lt; D.Day &lt;&lt; ", " &lt;&lt; D.Year;</para>
+        <para id="id6293812">return Output;</para>
+        <para id="id6293818">}</para>
+        <para id="id6293822">int main()</para>
+        <para id="id6293826">{</para>
+        <para id="id6293830">Date D1, D2(12, 27, 1992), D3(0, 99, 8045);</para>
+        <para id="id5843376">cout &lt;&lt; "D1 is " &lt;&lt; D1 &lt;&lt; endl</para>
+        <para id="id5843382"> &lt;&lt; "D2 is " &lt;&lt; D2 &lt;&lt; endl</para>
+        <para id="id5843391"> &lt;&lt; "D3 is " &lt;&lt; D3 &lt;&lt; endl &lt;&lt; endl;</para>
+        <para id="id5843400">cout &lt;&lt; "D2 += 7 is " &lt;&lt; (D2 += 7) &lt;&lt; endl &lt;&lt; endl;</para>
+        <para id="id5843407">D3.SetDate(2, 28, 1992);</para>
+        <para id="id5843412">cout &lt;&lt; " D3 is " &lt;&lt; D3 &lt;&lt; endl;</para>
+        <para id="id5843421">cout &lt;&lt; "++D3 is " &lt;&lt; ++D3 &lt;&lt; endl &lt;&lt; endl;</para>
+        <para id="id4394598">Date D4(3, 18, 1969);</para>
+        <para id="id4394604">cout &lt;&lt; "Testing the preincrement operator:" &lt;&lt; endl</para>
+        <para id="id4394611"> &lt;&lt; " D4 is " &lt;&lt; D4 &lt;&lt; endl;</para>
+        <para id="id4394622">cout &lt;&lt; "++D4 is " &lt;&lt; ++D4 &lt;&lt; endl;</para>
+        <para id="id4394628">cout &lt;&lt; " D4 is " &lt;&lt; D4 &lt;&lt; endl &lt;&lt; endl;</para>
+        <para id="id4394637">cout &lt;&lt; "Testing the postincrement operator:" &lt;&lt; endl</para>
+        <para id="id5645051"> &lt;&lt; " D4 is " &lt;&lt; D4 &lt;&lt; endl;</para>
+        <para id="id5645063">cout &lt;&lt; "D4++ is " &lt;&lt; D4++ &lt;&lt; endl;</para>
+        <para id="id5645069">cout &lt;&lt; " D4 is " &lt;&lt; D4 &lt;&lt; endl;</para>
+        <para id="id5645078">return 0;</para>
+        <para id="id5645083">}</para>
+        <para id="id5645087">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT4_19.EXE">chạy ví dụ 4.19</link>, kết quả ở hình 4.24</para>
+        <figure id="id5202534">
+          <media id="id1165110537875" alt=""><image src="../../media/graphics13-17a1.png" mime-type="image/png" height="342" width="513"/></media>
+        </figure>
+        <para id="id5202558">Hình 4.24: Kết quả của ví dụ 4.19</para>
+      </section>
+    </section>
+    <section id="id-964711652474">
+      <title>BÀI TẬP</title>
+      <para id="id3850975"><media id="id1165110537938" alt=""><image src="../../media/graphics14-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 1: Xây dựng lớp Complex chứa các số phức gồm các phép toán: +, -, *, /, +=, -=, *=, /=, ==, !=, &gt;, &gt;=, &lt;, &lt;=.</para>
+      <para id="id3851014"><media id="id1165110537969" alt=""><image src="../../media/graphics15-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 2: Xây dựng lớp String để thực hiện các thao tác trên các chuỗi, trong lớp này có các phép toán:</para>
+      <para id="id3630572"><figure id="id3630575"><media id="id1165110538010" alt=""><image src="../../media/graphics16-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>Phép toán + để nối hai chuỗi lại với nhau.</para>
+      <para id="id3630602"><figure id="id3630605"><media id="id1165110538050" alt=""><image src="../../media/graphics17-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>Phép toán = để gán một chuỗi cho một chuỗi khác.</para>
+      <para id="id3630632"><figure id="id3630636"><media id="id1165110538089" alt=""><image src="../../media/graphics18-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>Phép toán [] truy cập đến một ký tự trong chuỗi.</para>
+      <para id="id3630663"><figure id="id3630666"><media id="id1165110271815" alt=""><image src="../../media/graphics19-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>Các phép toán so sánh: ==, !=, &gt;, &gt;=, &lt;, &lt;=</para>
+      <para id="id6090358"><media id="id1165110271846" alt=""><image src="../../media/graphics20-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 3: Xây dựng lớp ma trận Matrix gồm các phép toán cộng, trừ và nhân hai ma trận bất kỳ.</para>
+      <para id="id6090398"><media id="id1165110271879" alt=""><image src="../../media/graphics21-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 4: Xây dựng lớp Rational chứa các số hữu tỷ gồm các phép toán +, - , *, /, ==, !=, &gt;, &gt;=, &lt;, &lt;=.</para>
+      <para id="id6090437"><media id="id1165110271910" alt=""><image src="../../media/graphics22-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 5: Xây dựng lớp Time để lưu trữ giờ, phút, giây gồm các phép toán:</para>
+      <para id="id5859658"><figure id="id5859661"><media id="id1165110271950" alt=""><image src="../../media/graphics23-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>Phép cộng giữa dữ liệu thời gian và một số nguyên là số giây, kết quả là một dữ liệu thời gian.</para>
+      <para id="id5859690"><figure id="id5859693"><media id="id1165110271990" alt=""><image src="../../media/graphics24-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>Phép trừ giữa hai dữ liệu thời gian, kết quả là một số nguyên chính là số giây.</para>
+      <para id="id5859722"><figure id="id5859725"><media id="id1165110272030" alt=""><image src="../../media/graphics25-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>++ và – để tăng hay giảm thời gian xuống một giây.</para>
+      <para id="id5859752"><figure id="id5859755"><media id="id1165110272069" alt=""><image src="../../media/graphics26-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>Các phép so sánh.</para>
+      <para id="id5298728"><media id="id1165110272100" alt=""><image src="../../media/graphics27-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 6: Xây dựng lớp Date để lưu trữ ngày, tháng, năm gồm các phép toán:</para>
+      <para id="id5298766"><figure id="id5298770"><media id="id1165110272140" alt=""><image src="../../media/graphics28-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>Phép cộng giữa dữ liệu Date và một số nguyên là số ngày, kết quả là một dữ liệu Date.</para>
+      <para id="id5298798"><figure id="id5298802"><media id="id1165110272180" alt=""><image src="../../media/graphics29-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>Phép trừ giữa hai dữ liệu Date, kết quả là một số nguyên chính là số ngày.</para>
+      <para id="id5298830"><figure id="id5298833"><media id="id1165110272220" alt=""><image src="../../media/graphics30-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>++ và – để tăng hay giảm thời gian xuống một ngày.</para>
+      <para id="id6032027"><figure id="id6032030"><media id="id1165110272259" alt=""><image src="../../media/graphics31-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>Các phép so sánh.</para>
+      <para id="id6032057"><media id="id1165110272290" alt=""><image src="../../media/graphics32-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 7: Các số nguyên 32 bit có thể biểu diễn trong phạm vi từ 2147483648 đến 2147483647. Hãy xây dựng lớp HugeInt để biểu diễn các số nguyên 32 bit gồm các phép toán +, -, *, /<media id="id1165110272314" alt=""><image src="../../media/graphics33-9e00.png" mime-type="image/png" height="16" width="16"/></media></para>
+    </section>
+  </content>
+</document>

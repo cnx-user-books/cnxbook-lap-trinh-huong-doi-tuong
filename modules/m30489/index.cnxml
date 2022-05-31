@@ -1,0 +1,234 @@
+<document xmlns="http://cnx.rice.edu/cnxml" xmlns:md="http://cnx.rice.edu/mdml">
+  <title>Hàm và lớp Template</title>
+  <metadata>
+  <md:content-id>m30489</md:content-id><md:title>Hàm và lớp Template</md:title>
+  <md:abstract>Phần này trình bày về Hàm và lớp Template</md:abstract>
+  <md:uuid>0a01736e-4321-4ad2-8d8b-e3a74a81edd8</md:uuid>
+</metadata>
+
+<content>
+    <para id="id5756804">Trong phần này, chúng ta tìm hiểu về một trong các đặc tính còn lại của C++, đó là template (khuôn mẫu). Các template cho phép chúng ta để định rõ, với một đoạn mã đơn giản, một toàn bộ phạm vi của các hàm có liên quan (đa năng hóa)–gọi là các hàm template-hoặc một toàn bộ phạm vi của các lớp có liên quan-gọi là lớp template.</para>
+    <para id="id5756819">Chúng ta có thể viết một hàm template đơn giản cho việc sắp xếp một mảng và C++ tự động phát sinh các hàm template riêng biệt mà sẽ sắp xếp một mảng int, sắp xếp một mảng float, …</para>
+    <para id="id5756843">Chúng ta có thể viết một lớp template cho lớp stack và sau đó C++ tự động phát sinh các lớp template riêng biệt như lớp stack của int, lớp stack của float,…</para>
+    <section id="id-31777172458">
+      <title>Các hàm template</title>
+      <para id="id5756879">Các hàm đa năng hóa bình thường được sử dụng để thực hiện các thao tác tương tự trên các kiểu khác nhau của dữ liệu. Nếu các thao tác đồng nhất cho mỗi kiểu, điều này có thể thực hiện mạch lạc và thuận tiện hơn sử dụng các hàm template. Lập trình viên viết định nghĩa hàm template đơn giản. Dựa vào các kiểu tham số cung cấp trong lời gọi hàm này, trình biên dịch tự động phát sinh các hàm mã đối tượng riêng biệt để xử lý mỗi kiểu của lời gọi thích hợp. Trong C, điều này có thể được thực hiện bằng cách sử dụng các macro tạo với tiền xử lý #define. Tuy nhiên, các macro biểu thị khả năng đối với các hiệu ứng lề nghiêm trọng và không cho phép trình biên dịch thực hiện việc kiểm tra kiểu. Các hàm template cung cấp một giải pháp mạch lạc giống như các macro, nhưng cho phép kiểm tra kiểu đầy đủ. Chẳng hạn, chúng ta muốn viết hàm lấy trị tuyệt đối của một số, chúng ta có thể viết nhiều dạng khác nhau như sau:</para>
+      <para id="id5756925">int MyAbs(int X)</para>
+      <para id="id5756929">{</para>
+      <para id="id5756933">return X&gt;=0?X:-X;</para>
+      <para id="id5756938">}</para>
+      <para id="id5756942">long MyAbs(long X)</para>
+      <para id="id5756946">{</para>
+      <para id="id5756950">return X&gt;=0?X:-X;</para>
+      <para id="id5756955">}</para>
+      <para id="id5756959">double MyAbs(double X)</para>
+      <para id="id5756963">{</para>
+      <para id="id5756967">return X&gt;=0?X:-X;</para>
+      <para id="id5756972">}</para>
+      <para id="id5756976">Tuy nhiên với các hàm này chúng ta vẫn chưa có giải pháp tốt, mang tính tổng quát nhất như hàm có tham số kiểu int nhưng giá trị trả về là double và ngược lại.</para>
+      <para id="id5756988">Tất cả các hàm template định nghĩa bắt đầu với từ khóa template theo sau một danh sách các tham số hình thức với hàm template vây quanh trong các ngoặc nhọn (&lt; và &gt;); Mỗi tham số hình thức phải được đặt trước bởi từ khóa class như:</para>
+      <para id="id5757025">template &lt;class T&gt;</para>
+      <para id="id5757042">hoặctemplate &lt;class T1, class T2,…&gt;</para>
+      <para id="id5757071">Các tham số hình thức của một định nghĩa template được sử dụng để mô tả các kiểu của các tham số cho hàm, để mô tả kiểu trả về của hàm, và để khai báo các biến bên trong hàm. Phần định nghĩa hàm theo sau và được định nghĩa giống như bất kỳ hàm nào. Chú ý từ khóa class sử dụng để mô tả các kiểu tham số của hàm template thực sự nghĩa là "kiểu có sẵn và kiểu người dùng định nghĩa bất kỳ". </para>
+      <para id="id5757098">Khi đó, hàm trị tuyệt đối ở trên viết theo hàm template:</para>
+      <para id="id5757106">template &lt;class T&gt;</para>
+      <para id="id5757111">T MyAbs(T x)</para>
+      <para id="id5757115">{</para>
+      <para id="id5757119">return (x&gt;=0)?x:-x;</para>
+      <para id="id5757124">}</para>
+      <para id="id5757128">Hàm template MyAbs() khai báo một tham số hình thức T cho kiểu của một số. T được tham khảo như một tham số kiểu. Khi trình biên dịch phát hiện ra một lời gọi hàm MyAbs() trong chương trình, kiểu của tham số thứ nhất của hàm MyAbs() được thay thế cho T thông qua định nghĩa template, và C++ tạo một hàm template đầy đủ để trả về trị tuyệt đối của một số của kiểu dữ liệu đã cho. Sau đó, hàm mới tạo được biên dịch. Chẳng hạn:</para>
+      <para id="id5757181">cout&lt;&lt;MyAbs(-2)&lt;&lt;endl;</para>
+      <para id="id5757186">cout&lt;&lt;MyAbs(3.5)&lt;&lt;endl;</para>
+      <para id="id5757191">Trong lần gọi thứ nhất, hàm MyAbs() có tham số thực là int nên trình biên dịch tạo ra hàm int MyAbs(int) theo dạng của hàm template, lần thứ hai sẽ tạo ra hàm float MyAbs(float).</para>
+      <para id="id5757250">Mỗi tham số hình thức trong một định nghĩa hàm template phải xuất hiện trong danh sách tham số của hàm tối thiểu một lần. Tên của tham số hình thức chỉ có thể sử dụng một lần trong danh sách tham số của phần đầu template.</para>
+      <para id="id5757265"><link resource="javascript:if(confirm('http:">Ví dụ 9.1:</link> Sử dụng hàm template để in các giá trị của một mảng có kiểu bất kỳ.</para>
+      <para id="id5757290">1: //Chương trình 9.1</para>
+      <para id="id5757296">2: #include &lt;iostream.h&gt;</para>
+      <para id="id5757301">3:</para>
+      <para id="id5757305">4: template&lt;class T&gt;</para>
+      <para id="id5757310">5: void PrintArray(T *Array, const int Count)</para>
+      <para id="id5757315">6: {</para>
+      <para id="id5757320">7: for (int I = 0; I &lt; Count; I++)</para>
+      <para id="id5757325">8: cout &lt;&lt; Array[I] &lt;&lt; " ";</para>
+      <para id="id5757331">9:</para>
+      <para id="id5757335">10: cout &lt;&lt; endl;</para>
+      <para id="id5757340">11: }</para>
+      <para id="id5757345">12: </para>
+      <para id="id5757349">13: int main()</para>
+      <para id="id5757354">14: {</para>
+      <para id="id5757358">15: const int Count1 = 5, Count2 = 7, Count3 = 6;</para>
+      <para id="id5757364">16: int A1[Count1] = {1, 2, 3, 4, 5};</para>
+      <para id="id5757368">17: float A2[Count2] = {1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7};</para>
+      <para id="id5757374">18: char A3[Count3] = "HELLO";</para>
+      <para id="id5757379">19: cout &lt;&lt; "Array A1 contains:" &lt;&lt; endl;</para>
+      <para id="id5757385">20: PrintArray(A1, Count1); //Hàm template kiểu int</para>
+      <para id="id5757391">21: cout &lt;&lt; "Array A2 contains:" &lt;&lt; endl;</para>
+      <para id="id5757397">22: PrintArray(A2, Count2); //Hàm template kiểu float</para>
+      <para id="id5757404">23: cout &lt;&lt; "Array A3 contains:" &lt;&lt; endl;</para>
+      <para id="id5757410">24: PrintArray(A3, Count3); //Hàm template kiểu char</para>
+      <para id="id5757416">25: return 0;</para>
+      <para id="id5757420">26: }</para>
+      <para id="id5757425">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT9_1.EXE">chạy ví dụ 9.1</link>, kết quả ở hình 9.1</para>
+      <figure id="id5757448">
+        <media id="id1169727396074" alt=""><image src="../../media/hinh9.1.png" mime-type="image/png" height="135" width="525"/></media>
+      </figure>
+      <para id="id5757472">Hình 9.1: Kết quả của ví dụ 9.1</para>
+      <para id="id5757478"><link resource="javascript:if(confirm('http:">Ví dụ 9.2:</link> Hàm template có thể có nhiều tham số.</para>
+      <para id="id5757501">1: //Chương trình 9.2</para>
+      <para id="id5757507">2: #include &lt;iostream.h&gt;</para>
+      <para id="id5757512">3:</para>
+      <para id="id5757516">4: template&lt;class T&gt;</para>
+      <para id="id5757521">5: T Max(T a, T b)</para>
+      <para id="id5757525">6: {</para>
+      <para id="id5757530">7: return (a&gt;b)?a:b;</para>
+      <para id="id5757535">8: }</para>
+      <para id="id5757540">9:</para>
+      <para id="id5757544">10: int main()</para>
+      <para id="id5757548">11: {</para>
+      <para id="id5757553">12: float A,B;</para>
+      <para id="id5757558">13: cout&lt;&lt;"Enter first number:";</para>
+      <para id="id5757563">14: cin&gt;&gt;A;</para>
+      <para id="id5757568">15: cout&lt;&lt;"Enter second number:";</para>
+      <para id="id5757574">16: cin&gt;&gt;B;</para>
+      <para id="id5757579">17: cout&lt;&lt;"Maximum:"&lt;&lt;Max(A,B);</para>
+      <para id="id5757584">18: return 0;</para>
+      <para id="id5757589">19: }</para>
+      <para id="id5757594">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT9_2.EXE">chạy ví dụ 9.2</link>, kết quả ở hình 9.2</para>
+      <figure id="id5757617">
+        <media id="id1169727402149" alt=""><image src="../../media/hinh9.2.png" mime-type="image/png" height="74" width="514"/></media>
+      </figure>
+      <para id="id5757640">Hình 9.2: Kết quả của ví dụ 9.2</para>
+      <para id="id5757646">Một hàm template có thể được đa năng hóa theo vài cách. Chúng ta có thể cung cấp các hàm template khác mà mô tả cùng tên hàm nhưng các tham số hàm khác nhau. Một hàm template cũng có thể được đa năng hóa bởi cung cấp hàm non-template với cùng tên hàm nhưng các tham số hàm khác nhau. Trình biên dịch thực hiện một xử lý so sánh để xác định hàm gọi khi một hàm được gọi. Đầu tiên trình biên dịch cố gắng tìm và sử dụng một đối sánh chính xác mà các tên hàm và các kiểu tham số đối sánh chính xác. Nếu điều này thất bại, trình biên dịch kiểm tra nếu một hàm template đã có mà có thể phát sinh một hàm template với một đối sánh chính xác của tên hàm và các kiểu tham số. Nếu một hàm template như thế được tìm thấy, trình biên dịch phát sinh và sử dụng hàm template thích hợp. Chú ý xử lý đối sánh này với các template đòi yêu các đối sánh chính xác trên tất cả kiểu tham số-không có các chuyển đổi tự động được áp dụng.</para>
+    </section>
+    <section id="id-702175315325">
+      <title>Các lớp template</title>
+      <para id="id5757690">Bên cạnh hàm template, ngôn ngữ C++ còn trang bị thêm lớp template, lớp này cũng mang đầy đủ ý tưởng của hàm template. Các lớp template được gọi là các kiểu có tham số (parameterized types) bởi vì chúng đòi hỏi một hoặc nhiều tham số để mô tả làm thế nào tùy chỉnh một lớp template chung để tạo thành một lớp template cụ thể.</para>
+      <para id="id5757706">Chúng ta cài đặt một lớp Stack, thông thường chúng ta phải định nghĩa trước một kiểu dữ liệu cho từng phần tử của stack. Nhưng điều này chỉ mang lại sự trong sáng cho một chương trình và không giải quyết được vấn đề tổng quát. Do đó chúng ta định nghĩa lớp template Stack.</para>
+      <para id="id5757734">
+        <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CSource%5CCT9_3.zip">Ví dụ 9.3:</link>
+      </para>
+      <para id="id5757750">File TSTACK.H:</para>
+      <para id="id5757760">1: //TSTACK.H</para>
+      <para id="id5757765">2: //Lớp template Stack</para>
+      <para id="id5757770">3: #ifndef TSTACK_H</para>
+      <para id="id5757775">4: #define TSTACK_H</para>
+      <para id="id5757780">5:</para>
+      <para id="id5757785">6: #include &lt;iostream.h&gt;</para>
+      <para id="id5757790">7: </para>
+      <para id="id5757794">8: template&lt;class T&gt;</para>
+      <para id="id5757799">9: class Stack</para>
+      <para id="id5757804">10: {</para>
+      <para id="id5757809">11: private:</para>
+      <para id="id5757813">12: int Size; //Kích thước stack</para>
+      <para id="id5757819">13: int Top;</para>
+      <para id="id5757824">14: T *StackPtr;</para>
+      <para id="id5757829">15: public:</para>
+      <para id="id5757833">16: Stack(int = 10);</para>
+      <para id="id5757838">17: ~Stack()</para>
+      <para id="id5757843">18: {</para>
+      <para id="id5757848">19: delete [] StackPtr;</para>
+      <para id="id5757853">20: }</para>
+      <para id="id5757857">21: int Push(const T&amp;);</para>
+      <para id="id5757863">22: int Pop(T&amp;);</para>
+      <para id="id5757868">23: int IsEmpty() const</para>
+      <para id="id5757873">24: {</para>
+      <para id="id5757877">25: return Top == -1;</para>
+      <para id="id5757882">26: }</para>
+      <para id="id5757887">27: int IsFull() const</para>
+      <para id="id5757892">28: {</para>
+      <para id="id5757896">29: return Top == Size - 1;</para>
+      <para id="id5757901">30: }</para>
+      <para id="id5757906">31: };</para>
+      <para id="id5757911">32:</para>
+      <para id="id5757915">33: template&lt;class T&gt;</para>
+      <para id="id5757920">34: Stack&lt;T&gt;::Stack(int S)</para>
+      <para id="id5757926">35: {</para>
+      <para id="id5757930">36: Size = (S &gt; 0 &amp;&amp; S &lt; 1000) ? S : 10;</para>
+      <para id="id5757937">37: Top = -1;</para>
+      <para id="id5757941">38: StackPtr = new T[Size];</para>
+      <para id="id5757946">39: }</para>
+      <para id="id5757951">40: </para>
+      <para id="id5757956">41: template&lt;class T&gt;</para>
+      <para id="id5757961">42: int Stack&lt;T&gt;::Push(const T &amp;Item)</para>
+      <para id="id5757967">43: {</para>
+      <para id="id5757971">44: if (!IsFull())</para>
+      <para id="id5757976">45: {</para>
+      <para id="id5757981">46: StackPtr[++Top] = Item;</para>
+      <para id="id5757986">47: return 1;</para>
+      <para id="id5757990">48: }</para>
+      <para id="id5757995">49: return 0;</para>
+      <para id="id5758000">50: }</para>
+      <para id="id5758005">51:</para>
+      <para id="id5758009">52: template&lt;class T&gt;</para>
+      <para id="id5758014">53: int Stack&lt;T&gt;::Pop(T &amp;PopValue)</para>
+      <para id="id5758020">54: {</para>
+      <para id="id5758024">55: if (!IsEmpty())</para>
+      <para id="id5758029">56: {</para>
+      <para id="id5758034">57: PopValue = StackPtr[Top--];</para>
+      <para id="id5758039">58: return 1;</para>
+      <para id="id5758044">59: }</para>
+      <para id="id5758048">60: return 0;</para>
+      <para id="id5758053">61: }</para>
+      <para id="id5758058">62:</para>
+      <para id="id5758063">63: #endif</para>
+      <para id="id5758067">File CT9_3.CPP:</para>
+      <para id="id5758073">1: //CT9_3.CPP</para>
+      <para id="id5758078">2: //Chương trình 9.3</para>
+      <para id="id5758083">3: #include "tstack.h"</para>
+      <para id="id5758088">4:</para>
+      <para id="id5758093">5: int main()</para>
+      <para id="id5758098">6: {</para>
+      <para id="id5758103">7: Stack&lt;float&gt; FloatStack(5);</para>
+      <para id="id5758108">8: float F = 1.1;</para>
+      <para id="id5758113">9: cout &lt;&lt; "Pushing elements onto FloatStack" &lt;&lt; endl;</para>
+      <para id="id5758120">10: while (FloatStack.Push(F))</para>
+      <para id="id5758125">11: {</para>
+      <para id="id5758129">12: cout &lt;&lt; F &lt;&lt; ' ';</para>
+      <para id="id5758134">13: F += 1.1;</para>
+      <para id="id5758139">14: }</para>
+      <para id="id5758144">15:cout &lt;&lt; endl &lt;&lt; "Stack is full. Cannot push " &lt;&lt; F &lt;&lt; endl</para>
+      <para id="id5758150">16:    &lt;&lt; endl &lt;&lt; "Popping elements from FloatStack" &lt;&lt; endl;</para>
+      <para id="id5758156">17: while (FloatStack.Pop(F))</para>
+      <para id="id5758161">18: cout &lt;&lt; F &lt;&lt; ' ';</para>
+      <para id="id5758166">19: cout &lt;&lt; endl &lt;&lt; "Stack is empty. Cannot pop" &lt;&lt; endl;</para>
+      <para id="id5758173">20: Stack&lt;int&gt; IntStack;</para>
+      <para id="id5758178">21: int I = 1;</para>
+      <para id="id5758183">22: cout &lt;&lt; endl &lt;&lt; "Pushing elements onto IntStack" &lt;&lt; endl;</para>
+      <para id="id5758189">23: while (IntStack.Push(I))</para>
+      <para id="id5758194">24: {</para>
+      <para id="id5758199">25: cout &lt;&lt; I &lt;&lt; ' ';</para>
+      <para id="id5758204">26: ++I ;</para>
+      <para id="id5758209">27: }</para>
+      <para id="id5758213">28:cout &lt;&lt; endl &lt;&lt; "Stack is full. Cannot push " &lt;&lt; I &lt;&lt; endl</para>
+      <para id="id5758220">29: &lt;&lt; endl &lt;&lt; "Popping elements from IntStack" &lt;&lt; endl;</para>
+      <para id="id5758226">30: while (IntStack.Pop(I))</para>
+      <para id="id5758231">31: cout &lt;&lt; I &lt;&lt; ' ';</para>
+      <para id="id5758236">32: cout &lt;&lt; endl &lt;&lt; "Stack is empty. Cannot pop" &lt;&lt; endl;</para>
+      <para id="id5758243">33: return 0;</para>
+      <para id="id5758247">34: }</para>
+      <para id="id5758252">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT9_3.EXE">chạy ví dụ 9.3</link>, kết quả ở hình 9.3</para>
+      <figure id="id5758276">
+        <media id="id1169723915844" alt=""><image src="../../media/graphics1-2022.png" mime-type="image/png" height="307" width="525"/></media>
+      </figure>
+      <para id="id5758299">Hình 9.3: Kết quả của ví dụ 9.3</para>
+      <para id="id5758305">Hàm thành viên định nghĩa bên ngoài lớp template bắt đầu với phần đầu là</para>
+      <para id="id5758314">template &lt;class T&gt;</para>
+      <para id="id5758330">Sau đó mỗi định nghĩa tương tự một định nghĩa hàm thường ngoại trừ kiểu phần tử luôn luôn được liệt kê tổng quát như tham số kiểu T. Chẳng hạn:</para>
+      <para id="id5758348">template&lt;class T&gt;</para>
+      <para id="id5758352">int Stack&lt;T&gt;::Push(const T &amp;Item)</para>
+      <para id="id5758358">{</para>
+      <para id="id5758362">…………….</para>
+      <para id="id5758366">}</para>
+      <para id="id5758370">Ngôn ngữ C++ còn cho phép chúng ta tạo ra các lớp template linh động hơn bằng cách cho phép thay đổi giá trị của các thành viên dữ liệu bên trong lớp. Khi đó lớp có dạng của một hàm với tham số hình thức.</para>
+    </section>
+    <section id="id-679822008526">
+      <title>BÀI TẬP</title>
+      <para id="id5758393"><media id="id1169720846134" alt=""><image src="../../media/ani_ball.png" mime-type="image/png" height="14" width="14"/></media>Bài 1: Viết hàm template trả về giá trị trung bình của một mảng, các tham số hình thức của hàm này là tên mảng và kích thước mảng. </para>
+      <para id="id5758443"><media id="id1169720919076" alt=""><image src="../../media/ani_ball.png" mime-type="image/png" height="14" width="14"/></media>Bài 2: Cài đặt hàng đợi template.</para>
+      <para id="id5758484"><media id="id1169720675198" alt=""><image src="../../media/ani_ball.png" mime-type="image/png" height="14" width="14"/></media>Bài 3: Cài đặt lớp template dùng cho cây nhị phân tìm kiếm (BST).</para>
+      <para id="id5758527"><media id="id1169720849418" alt=""><image src="../../media/ani_ball.png" mime-type="image/png" height="14" width="14"/></media>Bài 4: Cài đặt lớp template cho vector để quản lý vector các thành phần có kiểu bất kỳ.</para>
+      <para id="id5758570"><media id="id1169720679590" alt=""><image src="../../media/ani_ball.png" mime-type="image/png" height="14" width="14"/></media>Bài 5: Viết hàm template để sắp xếp kiểu dữ liệu bất kỳ.</para>
+      <para id="id5758613"><media id="id1169720926085" alt=""><image src="../../media/ani_ball.png" mime-type="image/png" height="14" width="14"/></media>Bài 6: Trong C++, phép toán new được dùng để cấp phát bộ nhớ, khi không cấp phát được con trỏ có giá trị NULL. Hãy cài đặt lại các lớp Matrix và Vector trong đó có bổ sung thêm thành viên là lớp exception với tên gọi là Memory để kiểm tra việc cấp phát này.</para>
+    </section>
+  </content>
+</document>

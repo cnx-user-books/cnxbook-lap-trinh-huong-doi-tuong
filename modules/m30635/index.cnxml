@@ -1,0 +1,705 @@
+<document xmlns="http://cnx.rice.edu/cnxml" xmlns:md="http://cnx.rice.edu/mdml">
+  <title>Kế thừa</title>
+  <metadata>
+  <md:content-id>m30635</md:content-id><md:title>Kế thừa</md:title>
+  <md:abstract>Phần này trình bày về kế thừa</md:abstract>
+  <md:uuid>b3a918ea-9be9-45f6-b219-af0ec101d51a</md:uuid>
+</metadata>
+
+<content>
+    <para id="id6596332">DẪN NHẬP</para>
+    <para id="id6596337">Trong chương này và chương kế, chúng ta tìm hiểu hai khả năng mà lập trình hướng đối tượng cung cấp là tính kế thừa (inheritance) và tính đa hình (polymorphism). Tính kế thừa là một hình thức của việc sử dụng lại phần mềm trong đó các lớp mới được tạo từ các lớp đã có bằng cách "hút" các thuộc tính và hành vi của chúng và tô điểm thêm với các khả năng mà các lớp mới đòi hỏi. Việc sử dụng lại phần mềm tiết kiệm thời gian trong việc phát triển chương trình. Nó khuyến khích sử dụng lại phần mềm chất lượng cao đã thử thách và gỡ lỗi, vì thế giảm thiểu các vấn đề sau khi một hệ trở thành chính thức. Tính đa hình cho phép chúng ta viết các chương trình trong một kiểu cách chung để xử lý các lớp có liên hệ nhau. Tính kế thừa và tính đa hình các kỹ thuật có hiệu lực đối với sự chia với sự phức tạp của phần mềm.</para>
+    <para id="id6596372">Khi tạo một lớp mới, thay vì viết các thành viên dữ liệu và các hàm thành viên, lập trình viên có thể thiết kế mà lớp mới được kế thừa các thành viên dữ liệu và các hàm thành viên của lớp trước định nghĩa là lớp cơ sở (base class). Lớp mới được tham chiếu là lớp dẫn xuất (derived class). Mỗi lớp dẫn xuất tự nó trở thành một ứng cử là một lớp cơ sở cho lớp dẫn xuất tương lai nào đó.</para>
+    <para id="id6596386">Bình thường một lớp dẫn xuất thêm các thành viên dữ liệu và các hàm thành viên, vì thế một lớp dẫn xuất thông thường rộng hơn lớp cơ sở của nó. Một lớp dẫn xuất được chỉ định hơn một lớp cơ sở và biểu diễn một nhóm của các đối tượng nhỏ hơn. Với đối tượng đơn, lớp dẫn xuất, lớp dẫn xuất bắt đầu bên ngoài thực chất giống như lớp cơ sở. Sức mạnh thực sự của sự kế thừa là khả năng định nghĩa trong lớp dẫn xuất các phần thêm, thay thế hoặc tinh lọc các đặc tính kế thừa từ lớp cơ sở. </para>
+    <para id="id6596413">Mỗi đối tượng của một lớp dẫn xuất cũng là một đối tượng của lớp cơ sở của lớp dẫn xuất đó. Tuy nhiên điều ngược lại không đúng, các đối tượng lớp cơ sở không là các đối tượng của các lớp dẫn xuất của lớp cơ sở đó. Chúng ta sẽ lấy mối quan hệ "đối tượng lớp dẫn xuất là một đối tượng lớp cơ sở" để thực hiện các thao tác quan trọng nào đó. Chẳng hạn, chúng ta có thể luồn một sự đa dạng của các đối tượng khác nhau có liên quan thông qua sư kế thừa thành danh sách liên kết của các đối tượng lớp cơ sở. Điều này cho phép sự đa dạng của các đối tượng để xử lý một cách tổng quát.</para>
+    <para id="id6596444">Chúng ta phân biệt giữa "là một" (is a) quan hệ và "có một" (has a) quan hệ. "là một" là sự kế thừa. Trong một "là một" quan hệ, một đối tượng của kiểu lớp dẫn xuất cũng có thể được xử lý như một đối tượng của kiểu lớp cơ sở. "có một" là sự phức hợp (composition). Trong một "có một" quan hệ, một đối tượng lớp có một hay nhiều đối tượng của các lớp khác như là các thành viên, do đó lớp bao các đối tượng này gọi là lớp phức hợp (composed class).</para>
+    <section id="id-804924144976">
+      <title>KẾ THỪA ĐƠN</title>
+      <section id="id-247535469138">
+        <title>Các lớp cơ sở và các lớp dẫn xuất</title>
+        <para id="id6596485">Thường một đối tượng của một lớp thật sự là một đối tượng của lớp khác cũng được. Một hình chữ nhật là một tứ giác, vì thế lớp Rectangle có thể kế thừa từ lớp Quadrilateral. Trong khung cảnh này, lớp Quadrilateral gọi là một lớp cơ sở và lớp Rectangle gọi là một lớp dẫn xuất. Hình 5.1 cho chúng ta một vài ví dụ về kế thừa đơn.</para>
+        <para id="id6596527">Các ngôn ngữ lập trình hướng đối tượng như SMALLTALK sử dụng thuật ngữ khác: Trong kế thừa, lớp cơ sở được gọi là lớp cha (superclass), lớp dẫn xuất được gọi là lớp con (subclass).</para>
+        <table id="id6596540" summary="">
+          <tgroup cols="2">
+            <colspec colnum="1" colname="c1"/>
+            <colspec colnum="2" colname="c2"/>
+            <tbody>
+              <row>
+                <entry>Lớp cơ sở</entry>
+                <entry>Lớp dẫn xuất</entry>
+              </row>
+              <row>
+                <entry>Student</entry>
+                <entrytbl cols="1">
+                  <colspec colnum="1" colname="c1"/>
+                  <tbody>
+                    <row>
+                      <entry>GraduateStudent</entry>
+                    </row>
+                    <row>
+                      <entry>UndergraduateStudent</entry>
+                    </row>
+                  </tbody>
+                </entrytbl>
+              </row>
+              <row>
+                <entry>Shape</entry>
+                <entrytbl cols="1">
+                  <colspec colnum="1" colname="c1"/>
+                  <tbody>
+                    <row>
+                      <entry>Circle</entry>
+                    </row>
+                    <row>
+                      <entry>Triangle</entry>
+                    </row>
+                    <row>
+                      <entry>Rectangle</entry>
+                    </row>
+                  </tbody>
+                </entrytbl>
+              </row>
+              <row>
+                <entry>Loan</entry>
+                <entrytbl cols="1">
+                  <colspec colnum="1" colname="c1"/>
+                  <tbody>
+                    <row>
+                      <entry>CarLoan</entry>
+                    </row>
+                    <row>
+                      <entry>HomeImprovementLoan</entry>
+                    </row>
+                    <row>
+                      <entry>MortgageLoan</entry>
+                    </row>
+                  </tbody>
+                </entrytbl>
+              </row>
+              <row>
+                <entry>Employee</entry>
+                <entrytbl cols="1">
+                  <colspec colnum="1" colname="c1"/>
+                  <tbody>
+                    <row>
+                      <entry>FacultyMember</entry>
+                    </row>
+                    <row>
+                      <entry>StaffMember</entry>
+                    </row>
+                  </tbody>
+                </entrytbl>
+              </row>
+              <row>
+                <entry>Acount</entry>
+                <entrytbl cols="1">
+                  <colspec colnum="1" colname="c1"/>
+                  <tbody>
+                    <row>
+                      <entry>CheckingAcount</entry>
+                    </row>
+                    <row>
+                      <entry>SavingsAcount</entry>
+                    </row>
+                  </tbody>
+                </entrytbl>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+        <para id="id6596838">Hình 5.1: Một vài kế thừa đơn.</para>
+        <para id="id6596844">Sự kế thừa hình thành các cấu trúc phân cấp giống cây (còn gọi là cây phả hệ). Một lớp cơ sở tồn tại trong một phân cấp quan hệ với lớp dẫn xuất của nó. Một lớp có thể tồn tại chắc chắn bởi chính nó, nhưng khi một lớp được sử dụng với cơ chế của sự kế thừa thì lớp trở thành hoặc là một lớp cơ sở mà cung cấp các thuộc tính và các hành vi cho các lớp khác, hoặc là lớp trở thành một lớp dẫn xuất mà kế thừa các thuộc tính và các hành vi.</para>
+        <para id="id6596860">Chúng ta phát triển một phân cấp kế thừa đơn. Một trường đại học cộng đồng đặc thù có hàng ngàn người mà là các thành viên cộng đồng. Những người này gồm các người làm công và các sinh viên. Những người làm công hoặc là các thành viên khoa hoặc các thành viên nhân viên. Các thành viên khoa hoặc là các nhà quản lý hoặc giảng viên. Điều này trở thành phân cấp kế thừa như hình 5.2</para>
+        <figure id="id6596879">
+          <media id="id6695057" alt=""><image src="../../media/graphics1-3e2a.png" mime-type="image/png" height="252" width="424"/></media>
+        </figure>
+        <para id="id6596903">Hình 5.2: Một phân cấp kế thừa cho các thành viên của trường đại học cộng đồng.</para>
+        <para id="id6596911">Phân cấp kế thừa quan trọng khác là phân cấp Shape ở hình 5.3.</para>
+        <figure id="id6596928">
+          <media id="id6695103" alt=""><image src="../../media/graphics2-6471.png" mime-type="image/png" height="199" width="491"/></media>
+        </figure>
+        <para id="id6596952">Hình 5.3: Phân cấp lớp Shape</para>
+        <para id="id6596957">Để chỉ định lớp CommissionWorker được dẫn xuất từ lớp Employee, lớp CommissionWorker được định nghĩa như sau:</para>
+        <para id="id6596981">class CommissionWorker: public Employee</para>
+        <para id="id6596987">{………….</para>
+        <para id="id6596993">};</para>
+        <para id="id6596999">Điều này được gọi là kế thừa public và là loại mà phần lớn được sử dụng. Ngoài ra chúng ta còn có kế thừa private và kế thừa protected. Với kế thừa public, các thành viên public và protected của lớp cơ sở được kế thừa như là các thành viên public và protected của lớp dẫn xuất tương ứng. Nên nhớ rằng các thành viên private của lớp cơ sở không thể truy cập từ các lớp dẫn xuất của lớp đó.</para>
+        <para id="id6597069">Xử lý các đối tượng lớp cơ sở và các đối tượng lớp dẫn xuất tương tự; phổ biến là được biểu diễn bằng các thuộc tính và các hành vi của lớp cơ sở. Các đối tượng của bất kỳ lớp nào dẫn xuất từ một lớp cơ sở chung có thể tất cả được xử lý như các đối tượng của lớp cơ sở đó.</para>
+      </section>
+      <section id="id-325598256789">
+        <title>Các thành viên protected</title>
+        <para id="id6597101">Các thành viên public của một lớp cơ sở được truy cập bởi tất cả các hàm trong chương trình. Các thành viên private của một lớp cơ sở chỉ được truy cập bởi các hàm thành viên và các hàm friend của lớp cơ sở.</para>
+        <para id="id6597132">Truy cập protected phục vụ như một mức trung gian của sự bảo vệ giữa truy cập public và truy cập private. Các thành viên protected của một lớp cơ sở có thể chỉ được truy cập bởi các hàm thành viên và các hàm friend của lớp cơ sở và bởi các hàm thành viên và các hàm friend của lớp dẫn xuất.</para>
+        <para id="id6005878">Các thành viên lớp dẫn xuất kế thừa public có thể tham khảo tới các thành viên public và protected bằng cách sử dụng các tên thành viên.</para>
+      </section>
+      <section id="id-159372038639">
+        <title>Ép kiểu các con trỏ lớp cơ sở tới các con trỏ lớp dẫn xuất</title>
+        <para id="id6005921">Một đối tượng của một lớp dẫn xuất kế thừa public cũng có thể được xử lý như một đối tượng của lớp cơ sở của nó tương ứng. Nhưng ngược lại không đúng: một đối tượng lớp cơ sở cũng không tự động là một đối tượng lớp dẫn xuất.</para>
+        <para id="id6005943">Tuy nhiên, có thể sử dụng ép kiểu để chuyển đổi một con trỏ lớp cơ sở thành một con trỏ lớp dẫn xuất.</para>
+        <para id="id6005953"><link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CSource%5CCT5_1.zip">Ví dụ 5.1:</link> Chương trình sau sẽ được chia thành nhiều file (gồm các file .H và .CPP) và tạo một project có tên là CT5_1.PRJ gồm các file .cpp </para>
+        <para id="id6005976"><media id="id6852874" alt=""><image src="../../media/graphics3-1930.png" mime-type="image/png" height="17" width="14"/></media>File POINT.H:</para>
+        <para id="id6006012">1: //POINT.H</para>
+        <para id="id6006016">2: //Định nghĩa lớp Point</para>
+        <para id="id6006022">3: #ifndef POINT_H</para>
+        <para id="id6006026">4: #define POINT_H</para>
+        <para id="id6006031">5:</para>
+        <para id="id6006035">6: class Point</para>
+        <para id="id6006040">7: {</para>
+        <para id="id6006048">8: protected:</para>
+        <para id="id6006052">9: float X,Y;</para>
+        <para id="id6006057">10: public:</para>
+        <para id="id6006061">11: Point(float A= 0, float B= 0);</para>
+        <para id="id6006066">12: void SetPoint(float A, float B);</para>
+        <para id="id6006070">13: float GetX() const</para>
+        <para id="id6006075">14: {</para>
+        <para id="id6006079">15: return X;</para>
+        <para id="id6006084">16: }</para>
+        <para id="id6006088">17: float GetY() const</para>
+        <para id="id6006093">18: {</para>
+        <para id="id6006097">19: return Y;</para>
+        <para id="id6006102">20: }</para>
+        <para id="id6006106">21: friend ostream &amp; operator &lt;&lt;(ostream &amp;Output, const Point &amp;P);</para>
+        <para id="id6006112">22: };</para>
+        <para id="id6006116">23:</para>
+        <para id="id6006120">24: #endif</para>
+        <para id="id6006125"><figure id="id6006129"><media id="id7004188" alt=""><image src="../../media/graphics4-1c7c.png" mime-type="image/png" height="17" width="14"/></media></figure>File POINT.CPP</para>
+        <para id="id6006158">1: //POINT.CPP</para>
+        <para id="id6006162">2: //Định nghĩa các hàm thành viên của lớp Point</para>
+        <para id="id6006169">3: #include &lt;iostream.h&gt;</para>
+        <para id="id6006174">4: #include "point.h"</para>
+        <para id="id6006179">5:</para>
+        <para id="id6006183">6: Point::Point(float A, float B)</para>
+        <para id="id6006188">7: {</para>
+        <para id="id6006193">8: SetPoint(A, B);</para>
+        <para id="id6006197">9: }</para>
+        <para id="id6006202">10:</para>
+        <para id="id6006207">11: void Point::SetPoint(float A, float B)</para>
+        <para id="id6006211">12: {</para>
+        <para id="id6006216">13: X = A;</para>
+        <para id="id6006220">14: Y = B;</para>
+        <para id="id6006225">15: }</para>
+        <para id="id6006230">16:</para>
+        <para id="id6006234">17: ostream &amp; operator &lt;&lt;(ostream &amp;Output, const Point &amp;P)</para>
+        <para id="id6006240">18: {</para>
+        <para id="id6006245">19: Output &lt;&lt; '[' &lt;&lt; P.X &lt;&lt; ", " &lt;&lt; P.Y &lt;&lt; ']';</para>
+        <para id="id6006250">20: return Output;</para>
+        <para id="id6006255">21: }</para>
+        <para id="id6006260"><figure id="id6006264"><media id="id7004445" alt=""><image src="../../media/graphics5-1930.png" mime-type="image/png" height="17" width="14"/></media></figure>File CIRCLE.H</para>
+        <para id="id6006292">1: //CIRCLE.H</para>
+        <para id="id6006297">2: //Định nghĩa lớp Circle</para>
+        <para id="id6006303">3: #ifndef CIRCLE_H</para>
+        <para id="id6006308">4: #define CIRCLE_H</para>
+        <para id="id6006312">5:</para>
+        <para id="id6006317">6: #include "point.h"</para>
+        <para id="id6006322">7: class Circle : public Point</para>
+        <para id="id6006327">8: {</para>
+        <para id="id6006331">9: protected:</para>
+        <para id="id6006336">10: float Radius;</para>
+        <para id="id6006341">11: public:</para>
+        <para id="id6006346">12: Circle(float R = 0.0, float A = 0, float B = 0);</para>
+        <para id="id6006351">13: void SetRadius(float R);</para>
+        <para id="id6006356">14: float GetRadius() const;</para>
+        <para id="id6006361">15: float Area() const;</para>
+        <para id="id6006366">16: friend ostream &amp; operator &lt;&lt;(ostream &amp;Output, const Circle &amp;C);</para>
+        <para id="id6006372">17: };</para>
+        <para id="id6006377">18:</para>
+        <para id="id6006381">19: #endif</para>
+        <para id="id6006386"><figure id="id6006390"><media id="id7004684" alt=""><image src="../../media/graphics6-1c7c.png" mime-type="image/png" height="17" width="14"/></media></figure>File CIRCLE.CPP</para>
+        <para id="id6006419">1: //CIRCLE.CPP</para>
+        <para id="id6006424">2: //Định nghĩa các hàm thành viên của lớp Circle</para>
+        <para id="id6006430">3: #include &lt;iostream.h&gt;</para>
+        <para id="id6006435">4: #include &lt;iomanip.h&gt;</para>
+        <para id="id6006440">5: #include "circle.h"</para>
+        <para id="id6006445">6:</para>
+        <para id="id6006449">7: Circle::Circle(float R, float A, float B): Point(A, B) </para>
+        <para id="id6006455">8: {</para>
+        <para id="id6006459">9: Radius = R;</para>
+        <para id="id6006464">10: }</para>
+        <para id="id6006469">11:</para>
+        <para id="id6006473">12: void Circle::SetRadius(float R)</para>
+        <para id="id6006478">13: {</para>
+        <para id="id6006483">14: Radius = R;</para>
+        <para id="id6006488">15: }</para>
+        <para id="id6006492">16:</para>
+        <para id="id6006497">17: float Circle::GetRadius() const</para>
+        <para id="id6006502">18: {</para>
+        <para id="id6006507">19: return Radius;</para>
+        <para id="id6006511">20: }</para>
+        <para id="id6006516">21:</para>
+        <para id="id6006520">22: float Circle::Area() const</para>
+        <para id="id6006526">23: {</para>
+        <para id="id6006530">24: return 3.14159 * Radius * Radius;</para>
+        <para id="id6006535">25: }</para>
+        <para id="id6006539">26:</para>
+        <para id="id6006544">27: //Xuất một Circle theo dạng: Center = [x, y]; Radius = #.##</para>
+        <para id="id6006550">28: ostream &amp; operator &lt;&lt;(ostream &amp;Output, const Circle &amp;C)</para>
+        <para id="id6006556">29: {</para>
+        <para id="id6006561">30: Output &lt;&lt; "Center = [" &lt;&lt; C.X &lt;&lt; ", " &lt;&lt; C.Y</para>
+        <para id="id6006567">31: &lt;&lt; "]; Radius = " &lt;&lt; setiosflags(ios::showpoint)</para>
+        <para id="id6006572">32: &lt;&lt; setprecision(2) &lt;&lt; C.Radius;</para>
+        <para id="id6006578">33: return Output;</para>
+        <para id="id6006582">34: }</para>
+        <para id="id6006587"><figure id="id6006592"><media id="id7005080" alt=""><image src="../../media/graphics7-1c7c.png" mime-type="image/png" height="17" width="14"/></media></figure>File CT5_1.CPP:</para>
+        <para id="id6006620">1: //CT5_1.CPP</para>
+        <para id="id6006625">2: //Chương trình 5.1: Ép các con trỏ lớp cơ sở tới các con trỏ lớp dẫn xuất</para>
+        <para id="id6006633">3: #include &lt;iostream.h&gt;</para>
+        <para id="id6006638">4: #include &lt;iomanip.h&gt;</para>
+        <para id="id6006642">5: #include "point.h"</para>
+        <para id="id6006647">6: #include "circle.h"</para>
+        <para id="id6006652">7:</para>
+        <para id="id6006657">8: int main()</para>
+        <para id="id6006662">9: {</para>
+        <para id="id6006666">10: Point *PointPtr, P(3.5, 5.3);</para>
+        <para id="id6006671">11: Circle *CirclePtr, C(2.7, 1.2, 8.9);</para>
+        <para id="id6006676">12: cout &lt;&lt; "Point P: "&lt;&lt;P&lt;&lt;endl&lt;&lt;"Circle C: "&lt;&lt;C&lt;&lt; endl;</para>
+        <para id="id6006681">13 //Xử lý một Circle như một Point (chỉ xem một phần lớp cơ sở)</para>
+        <para id="id6006689">14: PointPtr = &amp;C;</para>
+        <para id="id6006694">15: cout &lt;&lt; endl &lt;&lt; "Circle C (via *PointPtr): "&lt;&lt;*PointPtr&lt;&lt;endl;</para>
+        <para id="id6006700">16 //Xử lý một Circle như một Circle</para>
+        <para id="id6006706">17: PointPtr = &amp;C;</para>
+        <para id="id6006711">18: CirclePtr = (Circle *) PointPtr;</para>
+        <para id="id6006715">19: cout &lt;&lt; endl &lt;&lt; "Circle C (via *CirclePtr): " &lt;&lt; endl</para>
+        <para id="id6006722">20:            &lt;&lt;*CirclePtr&lt;&lt; endl &lt;&lt; "Area of C (via CirclePtr): "</para>
+        <para id="id6006729">21:            &lt;&lt; CirclePtr-&gt;Area() &lt;&lt; endl;</para>
+        <para id="id6006736">22: //Nguy hiểm: Xem một Point như một Circle</para>
+        <para id="id6006742">23: PointPtr = &amp;P;</para>
+        <para id="id6006747">24: CirclePtr = (Circle *) PointPtr;</para>
+        <para id="id6006751">25: cout &lt;&lt; endl &lt;&lt; "Point P (via *CirclePtr): "&lt;&lt; endl</para>
+        <para id="id6006758">26:            &lt;&lt;*CirclePtr&lt;&lt; endl &lt;&lt; "Area of object CirclePtr points to: "</para>
+        <para id="id6006765">27:            &lt;&lt;CirclePtr-&gt;Area() &lt;&lt; endl;</para>
+        <para id="id6006772">28: return 0;</para>
+        <para id="id6006776">29: }</para>
+        <para id="id6006781">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT5_1.EXE">chạy ví dụ 5.1</link>, kết quả ở hình 5.4</para>
+        <figure id="id6006805">
+          <media id="id7005448" alt=""><image src="../../media/graphics8-b2fe.png" mime-type="image/png" height="230" width="497"/></media>
+        </figure>
+        <para id="id6006828">Hình 5.4: Kết quả của ví dụ 5.1</para>
+        <para id="id6006834">Trong định nghĩa lớp Point, các thành viên dữ liệu X và Y được chỉ định là protected, điều này cho phép các lớp dẫn xuất từ lớp Point truy cập trực tiếp các thành viên dữ liệu kế thừa. Nếu các thành viên dữ liệu này được chỉ định là private, các hàm thành viên public của Point phải được sử dụng để truy cập dữ liệu, ngay cả bởi các lớp dẫn xuất. </para>
+        <para id="id5085150">Lớp Circle được kế thừa từ lớp Point với kế thừa public (ở dòng 7 file CIRCLE.H), tất cả các thành viên của lớp Point được kế thừa thành lớp Circle. Điều này có nghĩa là giao diện public bao gồm các hàm thành viên public của Point cũng như các hàm thành viên Area(), SetRadius() và GetRadius().</para>
+        <para id="id5085225">Constructor lớp Circle phải bao gồm constructor lớp Point để khởi động phần lớp cơ sở của đối tượng lớp Circle ở dòng 7 file CIRCLE.CPP, dòng này có thể được viết lại như sau:</para>
+        <para id="id5085254">Circle::Circle(float R, float A, float B)</para>
+        <para id="id5085258">: Point(A, B) //Gọi constructor của lớp cơ sở</para>
+        <para id="id5085264">Các giá trị A và B được chuyển từ constructor lớp Circle tới constructor lớp Point để khởi động các thành viên X và Y của lớp cơ sở. Nếu constructor lớp Circle không bao gồm constructor lớp Point thì constructor lớp Point gọi với các giá trị mặc định cho X và Y (nghĩa là 0 và 0). Nếu lớp Point không cung cấp một constructor mặc định thì trình biên dịch phát sinh lỗi.</para>
+        <para id="id5085346">Trong chương trình chính (file CT5_1.CPP) gán một con trỏ lớp dẫn xuất (địa chỉ của đối tượng C) cho con trỏ lớp cơ sở PointPtr và xuất đối tượng C của Circle bằng toán tử chèn dòng của lớp Point (ở dòng 14 và 15). Chú ý rằng chỉ phần Point của đối tượng C của Circle được hiển thị. Nó luôn luôn đúng để gán một con trỏ lớp dẫn xuất cho con trỏ lớp cơ sở bởi vì một đối tượng lớp dẫn xuất là một đối tượng lớp cơ sở. Con trỏ lớp cơ sở chỉ trông thấy phần lớp cơ sở của đối tượng lớp dẫn xuất. Trình biên dịch thực hiện một chuyển đổi ngầm của con trỏ lớp dẫn xuất cho một con trỏ lớp cơ sở. </para>
+        <para id="id5085423">Sau đó chương trình gán một con trỏ lớp dẫn xuất (địa chỉ của đối tượng C) cho con trỏ lớp cơ sở PointPtr và ép PointPtr trở về kiểu Circle *. Kết quả của ép kiểu được gán cho CirclePtr. Đối tượng C của Circle được xuất bằng cách sử dụng toán tử chèn dòng của Circle. Diện tích của đối tượng C được xuất thông qua CirclePtr. Các kết quả này là giá trị diện tích đúng bởi vì các con trỏ luôn luôn được trỏ tới một đối tượng Circle (từ dòng 17 đến 22).</para>
+        <para id="id5085505">Kế tiếp, chương trình gán một con trỏ lớp cơ sở (địa chỉ của đối tượng P) cho con trỏ lớp cơ sở PointPtr và ép PointPtr trở về kiểu Circle *. Kết quả của ép kiểu được gán cho CirclePtr. Đối tượng P được xuất sử dụng toán tử chèn dòng của lớp Circle. Chú ý rằng giá trị xuất của thành viên Radius "kỳ lạ". Việc xuất một Point như một Circle đưa đến một giá trị không hợp lệ cho Radius bởi vì các con trỏ luôn được trỏ đến một đối tượng Point. Một đối tượng Point không có một thành viên Radius. Vì thế, chương trình xuất giá trị "rác" đối với thành viên dữ liệu Radius. Chú ý rằng giá trị của diện tích là 0.0 bởi vì tính toàn này dựa trên giá trị không tồn tại của Radius (từ dòng 23 đến 27).Rõ ràng, truy cập các thành viên dữ liệu mà không phải ở đó thì nguy hiểm. Gọi các hàm thành viên mà không tồn tại có thể phá hủy chương trình.</para>
+      </section>
+      <section id="id-626519002988">
+        <title>Định nghĩa lại các thành viên lớp cơ sở trong một lớp dẫn xuất</title>
+        <para id="id5085638">Một lớp dẫn xuất có thể định nghĩa lại một hàm thành viên lớp cơ sở. Điều này được gọi là overriding. Khi hàm đó được đề cập bởi tên trong lớp dẫn xuất, phiên bản của lớp dẫn xuất được chọn một cách tự động. Toán tử định phạm vi có thể sử dụng để truy cập phiên bản của lớp cơ sở từ lớp dẫn xuất.</para>
+      </section>
+      <section id="id-947678979943">
+        <title>Các lớp cơ sở public, protected và private</title>
+        <para id="id5085663">Khi dẫn xuất một lớp từ một lớp cơ sở, lớp cơ sở có thể được kế thừa là public, protected và private.</para>
+        <para id="id5085701">class &lt;drived_class_name&gt; : &lt;type_of_inheritance&gt; &lt;base_class_name&gt;</para>
+        <para id="id5085733">{………………..</para>
+        <para id="id5085742">};</para>
+        <para id="id5085746">Trong đó type_of_inheritance là public, protected hoặc private. Mặc định là private.</para>
+        <para id="id5085799">Khi dẫn xuất một lớp từ một lớp cơ sở public, các thành viên public của lớp cơ sở trở thành các thành viên public của lớp dẫn xuất, và các thành viên protected của lớp cơ sở trở thành các thành viên protected của lớp dẫn xuất. Các thành viên private của lớp cơ sở không bao giờ được truy cập trực tiếp từ một lớp dẫn xuất.</para>
+        <para id="id5085873">Khi dẫn xuất một lớp từ một lớp cơ sở protected, các thành viên public và protected của lớp cơ sở trở thành các thành viên protected của lớp dẫn xuất. Khi dẫn xuất một lớp từ một lớp cơ sở private, các thành viên public và protected của lớp cơ sở trở thành các thành viên private của lớp dẫn xuất.</para>
+        <para id="id5085961">Bảng sau (hình 5.6)tổng kết khả năng truy cập các thành viên lớp cơ sở trong một lớp dẫn xuất dựa trên thuộc tính xác định truy cập thành viên của các thành viên trong lớp cơ sở và kiểu kế thừa.</para>
+        <table id="id5085974" summary="">
+          <tgroup cols="5">
+            <colspec colnum="1" colname="c1"/>
+            <colspec colnum="2" colname="c2"/>
+            <colspec colnum="3" colname="c3"/>
+            <colspec colnum="4" colname="c4"/>
+            <colspec colnum="5" colname="c5"/>
+            <tbody>
+              <row>
+                <entry namest="c1" nameend="c4">Kiểu kế thừa</entry>
+                <entry/>
+              </row>
+              <row>
+                <entry>Kế thừa public</entry>
+                <entry>Kế thừa protected</entry>
+                <entry namest="c3" nameend="c4">Kế thừa private</entry>
+                <entry/>
+              </row>
+              <row>
+                <entry>public</entry>
+                <entry>public trong lớp dẫn xuất.Có thể truy cập trực tiếp bởi các hàm thành viên không tĩnh, các hàm friend và các hàm không thành viên.</entry>
+                <entry>protected trong lớp dẫn xuất.Có thể truy cập trực tiếp bởi các hàm thành viên không tĩnh, các hàm friend.</entry>
+                <entry namest="c4" nameend="c5">private trong lớp dẫn xuất.Có thể truy cập trực tiếp bởi các hàm thành viên không tĩnh, các hàm friend.</entry>
+              </row>
+              <row>
+                <entry>protected</entry>
+                <entry>protected trong lớp dẫn xuất.Có thể truy cập trực tiếp bởi các hàm thành viên không tĩnh, các hàm friend.</entry>
+                <entry>protected trong lớp dẫn xuất.Có thể truy cập trực tiếp bởi các hàm thành viên không tĩnh, các hàm friend.</entry>
+                <entry namest="c4" nameend="c5">private trong lớp dẫn xuất.Có thể truy cập trực tiếp bởi các hàm thành viên không tĩnh, các hàm friend.</entry>
+              </row>
+              <row>
+                <entry>private</entry>
+                <entry>Dấu trong lớp dẫn xuất.Có thể truy cập trực tiếp bởi các hàm thành viên không tĩnh, các hàm friend thông qua các hàm thành viên public và protected của lớp cơ sở.</entry>
+                <entry>Dấu trong lớp dẫn xuất.Có thể truy cập trực tiếp bởi các hàm thành viên không tĩnh, các hàm friend thông qua các hàm thành viên public và protected của lớp cơ sở.</entry>
+                <entry namest="c4" nameend="c5">Dấu trong lớp dẫn xuất.Có thể truy cập trực tiếp bởi các hàm thành viên không tĩnh, các hàm friend thông qua các hàm thành viên public và protected của lớp cơ sở.</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+        <para id="id6357785">Hình 5.7: Tổng kết khả năng truy cập thành viên lớp cơ sở trong lớp dẫn xuất.</para>
+      </section>
+      <section id="id-602955554112">
+        <title>Các contructor và destructor lớp dẫn xuất</title>
+        <para id="id6357802">Bởi vì một lớp dẫn xuất kết thừa các thành viên lớp cơ sở của nó (ngoại trừ constructor và destructor), khi một đối tượng của lớp dẫn xuất được khởi động, constructor lớp cơ sở phải được gọi để khởi động các thành viên lớp cơ sở của đối tượng lớp dẫn xuất. Một bộ khởi tạo lớp cơ sở (sử dụng cú pháp giống như bộ khởi tạo thành viên) có thể được cung cấp trong constructor lớp dẫn xuất để gọi tường minh constructor lớp cơ sở, mặt khác constructor lớp dẫn xuất sẽ gọi constructor mặc định lớp cơ sở.</para>
+        <para id="id6357831">Các constructor lớp cơ sở và các toán tử gán lớp cơ sở không được kế thừa bởi lớp dẫn xuất.Tuy nhiên, các constructor và các toán tử gán lớp dẫn xuất có thể gọi các constructor và các toán tử gán lớp cơ sở.</para>
+        <para id="id6357845">Một constructor lớp dẫn xuất luôn gọi constructor lớp cơ sở của nó đầu tiên để khởi tạo các thành viên lớp cơ sở của lớp dẫn xuất. Nếu constructor lớp dẫn bị bỏ qua, constructor mặc định lớp dẫn gọi constructor lớp cơ sở. Các destructor được gọi theo thứ tự ngược lại thứ tự gọi các constructor, vì thế destructor lớp dẫn xuất được gọi trước destructor lớp cơ sở của nó.</para>
+        <para id="id6357861"><link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CSource%5CCT5_4.zip">Ví dụ 5.4:</link> Minh họa thứ tự các contructor và destructor lớp cơ sở và lớp dẫn xuất được gọi và project có tên là CT5_4.PRJ</para>
+        <para id="id6357883"><media id="id7006174" alt=""><image src="../../media/graphics9-1930.png" mime-type="image/png" height="17" width="14"/></media>File POINT.H</para>
+        <para id="id6357918">1: //POINT.H</para>
+        <para id="id6357923">2: //Định nghĩa lớp Point</para>
+        <para id="id6357928">3: #ifndef POINT_H</para>
+        <para id="id6357933">4: #define POINT_H</para>
+        <para id="id6357938">5:</para>
+        <para id="id6357942">6: class Point</para>
+        <para id="id6357947">7: {</para>
+        <para id="id6357952">8: public:</para>
+        <para id="id6357957">9: Point(float A= 0.0, float B= 0.0);</para>
+        <para id="id6357962">10: ~Point();</para>
+        <para id="id6357967">11: protected:</para>
+        <para id="id6357971">12: float X, Y;</para>
+        <para id="id6357976">13: };</para>
+        <para id="id6357981">14:</para>
+        <para id="id6357986">15: #endif</para>
+        <para id="id6357990"><figure id="id6357994"><media id="id7006371" alt=""><image src="../../media/graphics10-1c7c.png" mime-type="image/png" height="17" width="14"/></media></figure>File POINT.CPP</para>
+        <para id="id6358022">1: //POINT.CPP</para>
+        <para id="id6358027">2: //Định nghĩa các hàm thành viên lớp Point</para>
+        <para id="id6358033">3: #include &lt;iostream.h&gt;</para>
+        <para id="id6358038">4: #include "point.h"</para>
+        <para id="id6358043">5:</para>
+        <para id="id6358048">6: Point::Point(float A, float B)</para>
+        <para id="id6358053">7: {</para>
+        <para id="id6358057">8: X = A;</para>
+        <para id="id6358062">9: Y = B;</para>
+        <para id="id6358067">10: cout &lt;&lt; "Point constructor: "</para>
+        <para id="id6358073">11:            &lt;&lt; '[' &lt;&lt; X &lt;&lt; ", " &lt;&lt; Y &lt;&lt; ']' &lt;&lt; endl;</para>
+        <para id="id6358079">12: }</para>
+        <para id="id6358084">13:</para>
+        <para id="id6358088">14: Point::~Point()</para>
+        <para id="id6358093">15: {</para>
+        <para id="id6358098">16: cout &lt;&lt; "Point destructor: "</para>
+        <para id="id6358104">17:            &lt;&lt; '[' &lt;&lt; X &lt;&lt; ", " &lt;&lt; Y &lt;&lt; ']' &lt;&lt; endl;</para>
+        <para id="id6358110">18: }</para>
+        <para id="id6358115"><media id="id7006594" alt=""><image src="../../media/graphics11-1930.png" mime-type="image/png" height="17" width="14"/></media>File CIRCLE.H</para>
+        <para id="id6358150">1: //CIRCLE.H</para>
+        <para id="id6358155">2: //Định nghĩa lớp Circle</para>
+        <para id="id6358160">3: #ifndef CIRCLE_H</para>
+        <para id="id6358165">4: #define CIRCLE_H</para>
+        <para id="id6358170">5:</para>
+        <para id="id6358174">6: #include "point.h"</para>
+        <para id="id6358179">7: #include &lt;iomanip.h&gt;</para>
+        <para id="id6358184">8:</para>
+        <para id="id6358189">9: class Circle : public Point</para>
+        <para id="id6358194">10: {</para>
+        <para id="id6358198">11: public:</para>
+        <para id="id6358203">12: Circle(float R = 0.0, float A = 0, float B = 0);</para>
+        <para id="id6358208">13: ~Circle();</para>
+        <para id="id6358213">14: private:</para>
+        <para id="id6358218">15: float Radius;</para>
+        <para id="id6358223">16: };</para>
+        <para id="id6358228">17:</para>
+        <para id="id6358232">18: #endif</para>
+        <para id="id6358237"><figure id="id6358240"><media id="id7006824" alt=""><image src="../../media/graphics12-1c7c.png" mime-type="image/png" height="17" width="14"/></media></figure>File CIRCLE.CPP</para>
+        <para id="id6358268">1: //CIRCLE.CPP</para>
+        <para id="id6358273">2: //Định nghĩa các hàm thành viên lớp Circle</para>
+        <para id="id6358280">3: #include "circle.h"</para>
+        <para id="id6358285">4:</para>
+        <para id="id6358289">5: Circle::Circle(float R, float A, float B): Point(A, B)</para>
+        <para id="id6358295">6: {</para>
+        <para id="id6358300">7: Radius = R;</para>
+        <para id="id6358304">8: cout &lt;&lt; "Circle constructor: Radius is "</para>
+        <para id="id6358311">9:            &lt;&lt; Radius &lt;&lt; " [" &lt;&lt; A &lt;&lt; ", " &lt;&lt; B &lt;&lt; ']' &lt;&lt; endl;</para>
+        <para id="id6358317">10: }</para>
+        <para id="id6358322">11:</para>
+        <para id="id6358326">12: Circle::~Circle()</para>
+        <para id="id6358331">13: {</para>
+        <para id="id6358336">14: cout &lt;&lt; "Circle destructor: Radius is "</para>
+        <para id="id6358342">15:            &lt;&lt; Radius &lt;&lt; " [" &lt;&lt; X &lt;&lt; ", " &lt;&lt; Y &lt;&lt; ']' &lt;&lt; endl;</para>
+        <para id="id6358348">16: }</para>
+        <para id="id6358353"><figure id="id6358357"><media id="id7007034" alt=""><image src="../../media/graphics13-1c7c.png" mime-type="image/png" height="17" width="14"/></media></figure>File CT5_4.CPP</para>
+        <para id="id6358385">1: //CT5_4.CPP</para>
+        <para id="id6358390">2: //Chương trình 5.4</para>
+        <para id="id6358395">3: #include &lt;iostream.h&gt;</para>
+        <para id="id6358400">4: #include "point.h"</para>
+        <para id="id6358405">5: #include "circle.h"</para>
+        <para id="id6358410">6: int main()</para>
+        <para id="id6358415">7: {</para>
+        <para id="id6358419">8: {</para>
+        <para id="id6358424">9: Point P(1.1, 2.2);</para>
+        <para id="id6358429">10: }</para>
+        <para id="id6358434">11: cout &lt;&lt; endl;</para>
+        <para id="id6358439">12: Circle C1(4.5, 7.2, 2.9);</para>
+        <para id="id6358444">13: cout &lt;&lt; endl;</para>
+        <para id="id6358449">14: Circle C2(10, 5, 5);</para>
+        <para id="id6358454">15: cout &lt;&lt; endl;</para>
+        <para id="id6358458">16: return 0;</para>
+        <para id="id6358463">17: }</para>
+        <para id="id6358468">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT5_4.EXE">chạy ví dụ 5.4</link>, kết quả ở hình 5.8</para>
+        <figure id="id6358491">
+          <media id="id7007267" alt=""><image src="../../media/graphics14-8723.png" mime-type="image/png" height="250" width="512"/></media>
+        </figure>
+        <para id="id6358516">Hình 5.8: Kết quả của ví dụ 5.4</para>
+      </section>
+      <section id="id-143179034701">
+        <title>Chuyển đổi ngầm định đối tượng lớp dẫn xuất sang đối tượng lớp cơ sở</title>
+        <para id="id6358532">Mặc dù một đối tượng lớp dẫn xuất cũng là một đối tượng lớp cơ sở, kiểu lớp dẫn xuất và kiểu lớp cơ sở thì khác nhau. Các đối tượng lớp dẫn xuất có thể được xử lý như các đối tượng lớp cơ sở. Điều này có ý nghĩa bởi vì lớp dẫn xuất có các thành viên tương ứng với mỗi thành viên của lớp cơ sở. Phép gán theo chiều hướng ngược lại là không cho phép bởi vì gán một đối tượng lớp cơ sở cho đối tượng lớp dẫn xuất sẽ cho phép thêm các thành viên lớp dẫn xuất không xác định. </para>
+        <para id="id6358559">Một con trỏ trỏ tới một đối tượng lớp dẫn xuất có thể được chuyển đổi ngầm định thành một con trỏ trỏ tới một đối tượng lớp cơ sở bởi vì một đối tượng lớp dẫn xuất là một đối tượng lớp cơ sở.</para>
+        <para id="id6358572">Có bốn cách để trộn và đối sánh các con trỏ lớp cơ sở và các con trỏ lớp dẫn xuất với các đối tượng lớp cơ sở và các đối tượng lớp dẫn xuất:</para>
+        <para id="id6358583"> Tham chiếu tới một đối tượng lớp cơ sở với một con trỏ lớp cơ sở thì không phức tạp.</para>
+        <para id="id6358597"> Tham chiếu tới một đối tượng lớp dẫn xuất với một con trỏ lớp dẫn xuất thì không phức tạp.</para>
+        <para id="id6358611"> Tham chiếu tới đối tượng lớp dẫn xuất với một con trỏ lớp cơ sở thì an toàn bởi vì đối tượng lớp dẫn xuất cũng là một đối tượng lớp cơ sở của nó. Như vậy đoạn mã chỉ có thể tham chiếu tới các thành viên lớp cơ sở. Nếu đoạn mã tham chiếu tới các thành viên lớp dẫn xuất thông qua con trỏ lớp cơ sở, trình biên dịch sẽ báo một lỗi về cú pháp.</para>
+        <para id="id6358631"> Tham chiếu tới một đối tượng lớp cơ sở với một con trỏ lớp dẫn xuất thì có lỗi cú pháp. Đầu tiên con trỏ lớp dẫn xuất phải được ép sang con trỏ lớp cơ sở.</para>
+      </section>
+    </section>
+    <section id="id-9864515238">
+      <title>ĐA KẾ THỪA (MULTIPLE INHERITANCE)</title>
+      <para id="id6358658">Một lớp có thể được dẫn xuất từ nhiều lớp cơ sở, sự dẫn xuất như vậy được gọi là đa kế thừa. Đa kế thừa có nghĩa là một lớp dẫn xuất kế thừa các thành viên của các lớp cơ sở khác nhau. Khả năng mạnh này khuyến khích các dạng quan trọng của việc sử dụng lại phần mềm, nhưng có thể sinh ra các vấn đề nhập nhằng.</para>
+      <para id="id6358673"><link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CSource%5CCT5_7.zip">Ví dụ 5.7:</link> Lớp Circle và project có tên là CT5_8.PRJ (gồm các file DIRIVED.CPP, CT5_8.CPP).</para>
+      <para id="id6358694"><media id="id7007491" alt=""><image src="../../media/graphics15-1930.png" mime-type="image/png" height="17" width="14"/></media>File BASE1.H</para>
+      <para id="id6358729">1: //BASE1.H</para>
+      <para id="id6358733">2: //Định nghĩa lớp Base1</para>
+      <para id="id6358739">3: #ifndef BASE1_H</para>
+      <para id="id6358743">4: #define BASE1_H</para>
+      <para id="id6358748">5:</para>
+      <para id="id6358752">6: class Base1</para>
+      <para id="id6016470">7: {</para>
+      <para id="id6016474">8: protected:</para>
+      <para id="id6016479">9: int Value;</para>
+      <para id="id6016483">10: public:</para>
+      <para id="id6016488">11: Base1(int X)</para>
+      <para id="id6016492">12: {</para>
+      <para id="id6016497">13: Value = X;</para>
+      <para id="id6016501">14: }</para>
+      <para id="id6016506">15: int GetData() const</para>
+      <para id="id6016510">16: {</para>
+      <para id="id6016515">17: return Value;</para>
+      <para id="id6016519">18: }</para>
+      <para id="id6016524">19: };</para>
+      <para id="id6016528">20:</para>
+      <para id="id6016532">21: #endif</para>
+      <para id="id6016537"><media id="id7007744" alt=""><image src="../../media/graphics16-1930.png" mime-type="image/png" height="17" width="14"/></media>File BASE2.H</para>
+      <para id="id6016571">1: //BASE2.H</para>
+      <para id="id6016576">2: //Định nghĩa lớp Base2</para>
+      <para id="id6016581">3: #ifndef BASE2_H</para>
+      <para id="id6016586">4: #define BASE2_H</para>
+      <para id="id6016590">5:</para>
+      <para id="id6016594">6: class Base2</para>
+      <para id="id6016599">7: {</para>
+      <para id="id6016603">8: protected:</para>
+      <para id="id6016608">9: char Letter;</para>
+      <para id="id6016612">10: public:</para>
+      <para id="id6016617">11: Base2(char C)</para>
+      <para id="id6016621">12: {</para>
+      <para id="id6016626">13: Letter = C;</para>
+      <para id="id6016630">14: }</para>
+      <para id="id6016634">15: char GetData() const</para>
+      <para id="id6016639">16: {</para>
+      <para id="id6016644">17: return Letter;</para>
+      <para id="id6016648">18: }</para>
+      <para id="id6016652">19: };</para>
+      <para id="id6016657">20:</para>
+      <para id="id6016661">21: #endif</para>
+      <para id="id6016665"><media id="id7007999" alt=""><image src="../../media/graphics17-1930.png" mime-type="image/png" height="17" width="14"/></media>File DERIVED.H</para>
+      <para id="id6016700">1: //DERIVED.H</para>
+      <para id="id6016705">2: //Định nghĩa lớp Derived mà kế thừa từ nhiều lớp cơ sở (Base1 &amp; Base2)</para>
+      <para id="id6016712">3: #ifndef DERIVED_H</para>
+      <para id="id6016717">4: #define DERIVED_H</para>
+      <para id="id6016721">5: </para>
+      <para id="id6016726">6: #include "base1.h"</para>
+      <para id="id6016730">7: #include "base2.h"</para>
+      <para id="id6016735">8:</para>
+      <para id="id6016739">9: class Derived : public Base1, public Base2</para>
+      <para id="id6016744">10: {</para>
+      <para id="id6016749">11: private:</para>
+      <para id="id6016753">12: float Real;</para>
+      <para id="id6016758">13: public:</para>
+      <para id="id6016762">14: Derived(int, char, float);</para>
+      <para id="id6016767">15: float GetReal() const;</para>
+      <para id="id6016772">16: friend ostream &amp; operator &lt;&lt;(ostream &amp;Output, const Derived &amp;D);</para>
+      <para id="id6016777">17: };</para>
+      <para id="id6016782">18:</para>
+      <para id="id6016786">19: #endif</para>
+      <para id="id6016790"><media id="id7008235" alt=""><image src="../../media/graphics18-1c7c.png" mime-type="image/png" height="17" width="14"/></media>File DERIVED.CPP</para>
+      <para id="id6016825">1: //DERIVED.H</para>
+      <para id="id6016829">2: //Định nghĩa lớp Derived kế thừa từ nhiều lớp cơ sở (Base1 &amp; Base2)</para>
+      <para id="id6016836">3: #ifndef DERIVED_H</para>
+      <para id="id6016841">4: #define DERIVED_H</para>
+      <para id="id6016846">5: </para>
+      <para id="id6016850">6: #include "base1.h"</para>
+      <para id="id6016854">7: #include "base2.h"</para>
+      <para id="id6016859">8:</para>
+      <para id="id6016863">9: class Derived : public Base1, public Base2</para>
+      <para id="id6016868">10: {</para>
+      <para id="id6016873">11: private:</para>
+      <para id="id6016877">12: float Real;</para>
+      <para id="id6016882">13: public:</para>
+      <para id="id6016886">14: Derived(int, char, float);</para>
+      <para id="id6016891">15: float GetReal() const;</para>
+      <para id="id6016896">16: friend ostream &amp; operator &lt;&lt;(ostream &amp;Output, const Derived &amp;D);</para>
+      <para id="id6016901">17: };</para>
+      <para id="id6016906">18:</para>
+      <para id="id6016910">19: #endif</para>
+      <para id="id6016914"><media id="id7008470" alt=""><image src="../../media/graphics19-1c7c.png" mime-type="image/png" height="17" width="14"/></media>File CT5_8.CPP</para>
+      <para id="id6016949">1: //CT5_8.CPP</para>
+      <para id="id6016953">2: //Chương trình 5.8</para>
+      <para id="id6016958">3: #include &lt;iostream.h&gt;</para>
+      <para id="id6016963">4: #include "base1.h"</para>
+      <para id="id6016968">5: #include "base2.h"</para>
+      <para id="id6016972">6: #include "derived.h"</para>
+      <para id="id6016977">7:</para>
+      <para id="id6016981">8: int main()</para>
+      <para id="id6016986">9: {</para>
+      <para id="id6016990">10: Base1 B1(10), *Base1Ptr;</para>
+      <para id="id6016995">11: Base2 B2('Z'), *Base2Ptr;</para>
+      <para id="id6017000">12: Derived D(7, 'A', 3.5);</para>
+      <para id="id6017004">13: cout &lt;&lt; "Object B1 contains integer "</para>
+      <para id="id6017010">14:      &lt;&lt; B1.GetData() &lt;&lt; endl</para>
+      <para id="id6017016">15:      &lt;&lt; "Object B2 contains character "</para>
+      <para id="id6017022">16:      &lt;&lt; B2.GetData() &lt;&lt; endl</para>
+      <para id="id6017028">17:      &lt;&lt; "Object D contains:" &lt;&lt; endl &lt;&lt; D &lt;&lt; endl &lt;&lt; endl;</para>
+      <para id="id6017034">18: cout &lt;&lt; "Data members of Derived can be"</para>
+      <para id="id6017040">19:     &lt;&lt; " accessed individually:" &lt;&lt; endl</para>
+      <para id="id6017048">20:      &lt;&lt; " Integer: " &lt;&lt; D.Base1::GetData() &lt;&lt; endl</para>
+      <para id="id6017054">21:      &lt;&lt; " Character: " &lt;&lt; D.Base2::GetData() &lt;&lt; endl</para>
+      <para id="id6017060">22:      &lt;&lt; "Real number: " &lt;&lt; D.GetReal() &lt;&lt; endl &lt;&lt; endl;</para>
+      <para id="id6017065">23: cout &lt;&lt; "Derived can be treated as an "</para>
+      <para id="id6017071">24:      &lt;&lt; "object of either base class:" &lt;&lt; endl;</para>
+      <para id="id6017078">25: Base1Ptr = &amp;D;</para>
+      <para id="id6017083">26: cout &lt;&lt; "Base1Ptr-&gt;GetData() yields "</para>
+      <para id="id6017088">27:      &lt;&lt; Base1Ptr-&gt;GetData() &lt;&lt; endl ;</para>
+      <para id="id6017094">28: Base2Ptr = &amp;D;</para>
+      <para id="id6017098">29: cout &lt;&lt; "Base2Ptr-&gt;GetData() yields "</para>
+      <para id="id6017104">30:      &lt;&lt; Base2Ptr-&gt;GetData() &lt;&lt; endl;</para>
+      <para id="id6017109">31: return 0;</para>
+      <para id="id6017114">32: }</para>
+      <para id="id6017118">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT5_8.EXE">chạy ví dụ 5.8</link>, kết quả ở hình 5.13</para>
+      <figure id="id6017142">
+        <media id="id7008876" alt=""><image src="../../media/graphics20-43d2.png" mime-type="image/png" height="282" width="497"/></media>
+      </figure>
+      <para id="id6017166">Hình 5.13: Kết quả của ví dụ 5.8</para>
+      <para id="id6017171">Việc kế thừa nhiều lớp cơ sở tạo ra một loạt các điểm nhập nhằng trong các chương trình C++. Chẳng hạn, trong các chương trình của ví dụ 5.8, nếu thực hiện lệnh:</para>
+      <para id="id6017184">D.GetData();</para>
+      <para id="id6017188">thì trình biên dịch (Borland C++ 3.1) sẽ báo lỗi:</para>
+      <para id="id6017196">Member is ambiguous: ‘Base1::GetData’ and ‘Base1::GetData’</para>
+      <para id="id6017203">Bởi vì lớp Derived kế thừa hai hàm khác nhau có cùng tên là GetData() từ hai lớp cơ sở của nó. Base1::GetData() là hàm thành viên public của lớp cơ sở public, và nó trở thành một hàm thành viên public của Derived. Base2::GetData() là hàm thành viên public của lớp cơ sở public, và nó trở thành một hàm thành viên public của Derived. Do đó trình biên dịch không thể xác định hàm thành viên GetData() của lớp cơ sở nào để gọi thực hiện. Vì vậy, chúng ta phải sử dụng tên lớp cơ sở và toán tử định phạm vi để xác định hàm thành viên của lớp cơ sở lúc gọi hàm GetData().</para>
+      <para id="id6017307">Cú pháp của một lớp kế thừa nhiều lớp cơ sở:</para>
+      <para id="id6017314">class &lt;drived_class_name&gt; : &lt;type_of_inheritance&gt; &lt;base_class_name1&gt; ,</para>
+      <para id="id6017352">&lt;type_of_inheritance&gt; &lt;base_class_name2&gt;, …</para>
+      <para id="id6017368">{</para>
+      <para id="id6017372">………………..</para>
+      <para id="id6017378">};</para>
+      <para id="id6017382">Trình tự thực hiện constructor trong đa kế thừa: constructor lớp cở sở xuất hiện trước sẽ thực hiện trước và cuối cùng mới tới constructor lớp dẫn xuất. Đối với destructor có trình tự thực hiện theo thứ tự ngược lại.</para>
+    </section>
+    <section id="id-295641028099">
+      <title>CÁC LỚP CƠ SỞ ẢO (VIRTUAL BASE CLASSES)</title>
+      <para id="id6017407">Chúng ta không thể khai báo hai lần cùng một lớp trong danh sách của các lớp cơ sở cho một lớp dẫn xuất. Tuy nhiên vẫn có thể có trường hợp cùng một lớp cơ sở được đề cập nhiều hơn một lần trong các lớp tổ tiên của một lớp dẫn xuất. Điều này phát sinh lỗi vì không có cách nào để phân biệt hai lớp cơ sở gốc.</para>
+      <para id="id6017422">
+        <figure id="id6017427">
+          <media id="id7009118" alt=""><image src="../../media/graphics21-1c7c.png" mime-type="image/png" height="17" width="14"/></media>
+        </figure>
+        <link resource="javascript:if(confirm('http:">Ví dụ 5.9:</link>
+      </para>
+      <para id="id6017468">1: //Chương trình 5.9</para>
+      <para id="id6017477">2: #include &lt;iostream.h&gt;</para>
+      <para id="id6017487">3: class A</para>
+      <para id="id6017491">4: {</para>
+      <para id="id6017496">5: public:</para>
+      <para id="id6017505">6: int X1;</para>
+      <para id="id6017516">7: };</para>
+      <para id="id6017520">8:</para>
+      <para id="id6017525">9: class B : public A</para>
+      <para id="id6017535">10: {</para>
+      <para id="id6017540">11: public:</para>
+      <para id="id6017545">12: float X2;</para>
+      <para id="id6017549">13: };</para>
+      <para id="id6017554">14:</para>
+      <para id="id6017558">15: class C : public A</para>
+      <para id="id6017569">16: {</para>
+      <para id="id6017574">17: public:</para>
+      <para id="id6017579">18: double X3;</para>
+      <para id="id6017583">19: };</para>
+      <para id="id6017588">20:</para>
+      <para id="id6017592">21: class D : public B,public C</para>
+      <para id="id6017598">22: {</para>
+      <para id="id6017602">23: public:</para>
+      <para id="id6017607">24: char X4;</para>
+      <para id="id6017612">25: };</para>
+      <para id="id6017616">26:</para>
+      <para id="id6017621">27: int main()</para>
+      <para id="id6017626">28: {</para>
+      <para id="id6017630">29: D Obj;</para>
+      <para id="id6017635">30: Obj.X2=3.14159F;</para>
+      <para id="id6017640">31: Obj.X1=0; //Nhập nhằng</para>
+      <para id="id6017650">32: Obj.X4='a';</para>
+      <para id="id6017654">33: Obj.X3=1.5;</para>
+      <para id="id6017659">34: cout&lt;&lt;"X1="&lt;&lt;Obj.X1&lt;&lt;endl; //Nhập nhằng</para>
+      <para id="id6017670">35: cout&lt;&lt;"X2="&lt;&lt;Obj.X2&lt;&lt;endl;</para>
+      <para id="id6017675">36: cout&lt;&lt;"X3="&lt;&lt;Obj.X3&lt;&lt;endl;</para>
+      <para id="id6017680">37: cout&lt;&lt;"X4="&lt;&lt;Obj.X4&lt;&lt;endl;</para>
+      <para id="id6017686">38: return 0;</para>
+      <para id="id6017690">39: }</para>
+      <para id="id6017695">Khi biên dịch chương trình ở ví dụ 5.9, trình biên dịch sẽ báo lỗi ở dòng 31 và 34:</para>
+      <para id="id6017704">Member is ambiguous: ‘A::X1’ and ‘A::X1’</para>
+      <figure id="id6017713">
+        <media id="id7009607" alt=""><image src="../../media/graphics22-049f.png" mime-type="image/png" height="140" width="228"/></media>
+      </figure>
+      <para id="id6017738">Hình 5.14</para>
+      <para id="id6017742">Ở đây chúng ta thấy có hai lớp cở sở A cho lớp D, và trình biên dịch không thể nào nhận biết được việc truy cập X1 được kế thừa thông qua B hoặc truy cập X1 được kế thừa thông qua C. Để khắc phục điều này, chúng ta chỉ định một cách tường minh trong lớp D như sau:</para>
+      <para id="id6017788">Obj.C::X1=0;</para>
+      <para id="id6017794">Tuy nhiên, đây cũng chỉ là giải pháp có tính chấp vá, bởi thực chất X1 nào trong trường hợp nào cũng được. Giải pháp cho vấn đề này là khai báo A như lớp cơ sở kiểu virtual cho cả B và C. Khi đó chương trình ở ví dụ 5.9 được viết lại như sau:</para>
+      <para id="id5870743">
+        <figure id="id5870748">
+          <media id="id7009705" alt=""><image src="../../media/graphics23-1c7c.png" mime-type="image/png" height="17" width="14"/></media>
+        </figure>
+        <link resource="javascript:if(confirm('http:">Ví dụ 5.10:</link>
+      </para>
+      <para id="id5870789">#include &lt;iostream.h&gt;</para>
+      <para id="id5870794">class A</para>
+      <para id="id5870798">{</para>
+      <para id="id5870802">public:</para>
+      <para id="id5870808">int X1;</para>
+      <para id="id5870815">};</para>
+      <para id="id5870819">class B : virtual public A</para>
+      <para id="id5870823">{</para>
+      <para id="id5870827">public:</para>
+      <para id="id5870832">float X2;</para>
+      <para id="id5870839">};</para>
+      <para id="id5870843">class C : virtual public A</para>
+      <para id="id5870848">{</para>
+      <para id="id5870852">public:</para>
+      <para id="id5870857">double X3;</para>
+      <para id="id5870864">};</para>
+      <para id="id5870868">class D : public B,public C</para>
+      <para id="id5870873">{</para>
+      <para id="id5870877">public:</para>
+      <para id="id5870882">char X4;</para>
+      <para id="id5870889">};</para>
+      <para id="id5870893">int main()</para>
+      <para id="id5870897">{</para>
+      <para id="id5870902">D Obj;</para>
+      <para id="id5870907">Obj.X2=3.14159F;</para>
+      <para id="id5870913">Obj.X1=0; //OK</para>
+      <para id="id5870918">Obj.X4='a';</para>
+      <para id="id5870924">Obj.X3=1.5;</para>
+      <para id="id5870929">cout&lt;&lt;"X1="&lt;&lt;Obj.X1&lt;&lt;endl; //OK</para>
+      <para id="id5870936">cout&lt;&lt;"X2="&lt;&lt;Obj.X2&lt;&lt;endl;</para>
+      <para id="id5870942">cout&lt;&lt;"X3="&lt;&lt;Obj.X3&lt;&lt;endl;</para>
+      <para id="id5870948">cout&lt;&lt;"X4="&lt;&lt;Obj.X4&lt;&lt;endl;</para>
+      <para id="id5870955">return 0;</para>
+      <para id="id5870960">}</para>
+      <para id="id5870964">Chúng ta chạy ví dụ 5.10, kết quả ở hình 5.15</para>
+      <figure id="id5870975">
+        <media id="id7010128" alt=""><image src="../../media/graphics24-43ab.png" mime-type="image/png" height="90" width="505"/></media>
+      </figure>
+      <para id="id5870999">Hình 5.15: Kết quả của ví dụ 5.10</para>
+      <para id="id5871005">Các lớp cơ sở kiểu virtual, có cùng một kiểu lớp, sẽ được kết hợp để tạo một lớp cơ sở duy nhất có kiểu đó cho bất kỳ lớp dẫn xuất nào kế thừa chúng. Hai lớp cơ sở A ở trên bất giờ sẽ trở thành một lớp cơ sở A duy nhất cho bất kỳ lớp dẫn xuất nào từ B và C. Điều này có nghĩa là D chỉ có một cơ sở của lớp A, vì vậy tránh được sự nhập nhằng.</para>
+    </section>
+    <section id="id-688314705252">
+      <title>BÀI TẬP</title>
+      <para id="id5871046"><media id="id7010206" alt=""><image src="../../media/graphics25-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 1: Xây dựng lớp Stack với các thao tác cần thiết. Từ đó hãy dẫn xuất từ lớp Stack để đổi một số nguyên dương sang hệ đếm bất kỳ.</para>
+      <para id="id5871090"><media id="id7010240" alt=""><image src="../../media/graphics26-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 2: Hãy xây dựng các lớp cần thiết trong phân cấp hình 5.2</para>
+      <para id="id5871131"><media id="id7010272" alt=""><image src="../../media/graphics27-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 3: Hãy xây dựng các lớp cần thiết trong phân cấp hình 5.3 để tính diện tích (hoặc diện tích xung quanh) và thể tích.</para>
+      <para id="id5871175"><media id="id7010305" alt=""><image src="../../media/graphics28-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 4: Viết một phân cấp kế thừa cho các lớp Quadrilateral (hình tứ giác), Trapezoid (hình thang), Parallelogram (hình bình hành), Rectangle (hình chữ nhật), và Square (hình vuông). Trong đó Quadrilateral là lớp cơ sở của phân cấp.</para>
+    </section>
+  </content>
+</document>

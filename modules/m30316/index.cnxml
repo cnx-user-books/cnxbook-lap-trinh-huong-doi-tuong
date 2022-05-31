@@ -1,0 +1,676 @@
+<document xmlns="http://cnx.rice.edu/cnxml" xmlns:md="http://cnx.rice.edu/mdml">
+  <title>Các dạng nhập/xuất</title>
+  <metadata>
+  <md:content-id>m30316</md:content-id><md:title>Các dạng nhập/xuất</md:title>
+  <md:abstract>Phần này trình bày về các dạng nhập/xuất trong lập trình hướng đối tượng</md:abstract>
+  <md:uuid>4cd75546-0d96-4d15-88bb-aabd6b612df2</md:uuid>
+</metadata>
+
+<content>
+    <para id="id5811248">DẪN NHẬP</para>
+    <para id="id5811253">Các thư viện chuẩn C++ cung cấp một tập hợp các khả năng nhập/xuất rộng lớn. Trong chương này chúng ta tìm hiểu một phạm vi của các khả năng đủ để phần lớn các thao tác nhập xuất.</para>
+    <para id="id5811265">Phần lớn các đặc tính nhập xuất mô tả ở đây theo hướng đối tượng. Kiểu này của nhập/xuất thi hành việc sử dụng các đặc tính khác của C++ như các tham chiếu, đa năng hóa hàm và đa năng hóa toán tử.</para>
+    <para id="id5811278">Như chúng ta sẽ thấy, C++ sử dụng nhập/xuất kiểu an toàn (type safe). Mỗi thao tác nhập/xuất được thực hiện một cách tự động theo lối nhạy cảm về kiểu dữ liệu. Mỗi thao tác nhập xuất có được định nghĩa thích hợp để xử lý một kiểu dữ liệu cụ thể thì hàm đó được gọi để xử lý kiểu dữ liệu đó. Nếu không có đối sánh giữa kiểu của dữ liệu hiện tại và một hàm cho việc xử lý kiểu dữ liệu đó, một chỉ dẫn lỗi biên dịch được thiết lập. Vì thế dữ liệu không thích hợp không thể "lách" qua hệ thống.</para>
+    <para id="id5811305">Các người dùng có thể chỉ định nhập/xuất của các kiểu dữ liệu do người dùng định nghĩa cũng như các kiểu dữ liệu chuẩn. Tính mở rộng này là một trong các đặc tính quan trọng của C++. </para>
+    <section id="id-276225444768">
+      <title>CÁC DÒNG(STREAMS)</title>
+      <para id="id5811325">Nhập/xuất C++ xảy ra trong các dòng của các byte. Một dòng đơn giản là một dãy tuần tự các byte. Trong các thao tác nhập, các byte chảy từ thiết bị (chẳng hạn: một bàn phím, một ổ đĩa, một kết nối mạng) tới bộ nhớ chính. Trong các thao tác xuất, các byte chảy từ bộ nhớ chính tới một thiết bị (chẳng hạn: một màn hình, một máy in, một ổ đĩa, một kết nối mạng).</para>
+      <para id="id5811339">Ưùng dụng liên kết với các byte. Các byte có thể biểu diễn các ký tự ASCII, bên trong định dạng dữ liệu thô, các ảnh đồ họa, tiếng nói số, hình ảnh số hoặc bất cứ loại thông tin một ứng dụng có thể đòi hỏi.</para>
+      <para id="id5811348">Công việc của các cơ chế hệ thống nhập/xuất là di chuyển các byte từ các thiết bị tới bộ nhớ và ngược lại theo lối chắc và đáng tin cậy. Như thế các di chuyển thường bao gồm sự di chuyển cơ học như sự quay của một đĩa hoặc một băng từ, hoặc nhấn phím tại một bàn phím. Thời gian các di chuyển này thông thường khổng lồ so với thời gian bộ xử lý thao tác dự liệu nội tại. Vì thế, các thao tác nhập/xuất đòi hỏi có kế hoạch cẩn thận và điều chỉnh để bảo đảm sự thi hành tối đa.</para>
+      <para id="id5811374">C++ cung cấp cả hai khả năng nhập/xuất "mức thấp" (low-level) và "mức cao" (high-level). Các khả năng nhập/xuất mức thấp (nghĩa là nhập/xuất không định dạng) chỉ định cụ thể số byte nào đó phải được di chuyển hoàn toàn từ thiết bị tới bộ nhớ hoặc từ bộ nhớ tới thiết bị. Trong các di chuyển như thế, byte riêng rẽ là mục cần quan tâm. Vì thế các khả năng mức thấp cung cấp tốc độ cao, các di chuyển dung lượng cao, nhưng các khả năng này không phải là tiện lợi lắm cho lập trình viên.</para>
+      <para id="id5811400">Các lập trình viên ưu thích quan điểm nhập/xuất mức cao, nghĩa là nhập/xuất có định dạng, trong đó các byte được nhóm thành các đơn vị có ý nghĩa như các số nguyên, các số chấm động, các ký tự, các chuỗi và các kiểu do người dùng định nghĩa. </para>
+      <section id="id-312209022934">
+        <title>Các file header của thư viện iostream</title>
+        <para id="id5811429"><media id="id1168302597320" alt=""><image src="../../media/graphics1-a1ec.png" mime-type="image/png" height="13" width="13"/></media>Thư viện iostream của C++ cung cấp hàng trăm khả năng của nhập/xuất. Một vài tập tin header chứa các phần của giao diện thư viện.</para>
+        <para id="id5811478"><media id="id1168302363046" alt=""><image src="../../media/graphics2-a1ec.png" mime-type="image/png" height="13" width="13"/></media>Phần lớn chương trình C++ thường include tập tin header &lt;iostream.h&gt; mà chứa các thông tin cơ bản đòi hỏi tất cả các thao tác dòng nhập/xuất. Tập tin header &lt;iostream.h&gt; chứa các đối tượng cin, cout, cerr và clog mà tương ứng với dòng nhập chuẩn, dòng xuất chuẩn, dòng lỗi chuẩn không vùng đệm và dòng lỗi chuẩn vùng đệm. Cả hai khả năng nhập/xuất định dạng và không định dạng được cung cấp.</para>
+        <para id="id5811581"><media id="id1168302374407" alt=""><image src="../../media/graphics3-a1ec.png" mime-type="image/png" height="13" width="13"/></media>Header &lt;iomanip.h&gt; chứa thông tin hữu ích cho việc thực hiện nhập/xuất định dạng với tên gọi là các bộ xử lý dòng biểu hiện bằng tham số (parameterized stream manipulators).</para>
+        <para id="id5811632"><media id="id1168302550166" alt=""><image src="../../media/graphics4-a1ec.png" mime-type="image/png" height="13" width="13"/></media>Header &lt;fstream.h&gt; chứa các thông tin quan trọng cho các thao tác xử lý file do người dùng kiểm soát.</para>
+        <para id="id5811680"><media id="id1168302670950" alt=""><image src="../../media/graphics5-a1ec.png" mime-type="image/png" height="13" width="13"/></media>Header &lt;strstream.h&gt; chứa các thông tin quan trọng cho việc thực hiện các định dạng trong bộ nhớ. Điều này tương tự xử lý file, nhưng các thao tác nhập/xuất tới và từ mảng các ký tự hơn là file.</para>
+        <para id="id5811732"><media id="id1168302351751" alt=""><image src="../../media/graphics6-a1ec.png" mime-type="image/png" height="13" width="13"/></media>Header &lt;stdiostream.h&gt; chứa các thông tin quan trọng cho các chương trình trộn các kiểu nhập/xuất của C và C++. Các chương trình mới phải tránh kiểu nhập/xuất C, nhưng cần thì hiệu chỉnh các chương trình C, hoặc tiến triển chương trình C thành C++.</para>
+      </section>
+      <section id="id-445504704215">
+        <title>Các lớp và các đối tượng của dòng nhập/xuất</title>
+        <para id="id5811796">Thư viện iostream chứa nhiều lớp để xử lý một sự đa dạng rộng của các thao tác nhập/xuất. Lớp istream hỗ trợ các thao tác dòng nhập. Lớp ostream hỗ trợ các thao tác dòng xuất. Lớp iostream hỗ trợ cả hai thao tác dòng nhập và dòng xuất. Lớp istream và lớp ostream đều kế thừa đơn từ lớp cơ sở ios. Lớp iostream được kế thừa thông qua đa kế thừa từ hai lớp istream và ostream. </para>
+        <figure id="id5811906">
+          <media id="id1168302677530" alt=""><image src="../../media/graphics7-5219.png" mime-type="image/png" height="201" width="329"/></media>
+        </figure>
+        <para id="id5748418">Hình 8.1: Một phần của phân cấp lớp dòng nhập/xuất</para>
+        <para id="id5748424">Đa năng hóa toán tử cung cấp một ký hiệu thích hợp cho việc thực hiện nhập/xuất. Toán tử dịch chuyển trái (&lt;&lt;) được đa năng hóa để định rõ dòng xuất và được tham chiếu như là toán tử chèn dòng. Toán tử dịch chuyển phải (&gt;&gt;) được đa năng hóa để định rõ dòng nhập và được tham chiếu như là toán tử trích dòng. Các toán tử này được sử dụng với các đối tượng dòng chuẩn cin, cout, cerr và clog, và bình thường với các đối tượng dòng do người dùng định nghĩa.</para>
+        <para id="id5748502"><media id="id1168302678132" alt=""><image src="../../media/graphics8-a1ec.png" mime-type="image/png" height="13" width="13"/></media>cin là một đối tượng của lớp istream và được nói là "bị ràng buộc tới" (hoặc kết nối tới) thiết bị nhập chuẩn, thông thường là bàn phím. Toán tử trích dòng được sử dụng ở lệnh sau tạo ra một giá trị cho biến nguyên X được nhập từ cin tới bộ nhớ:</para>
+        <para id="id5748578">int X;</para>
+        <para id="id5748582">cin &gt;&gt; X;</para>
+        <para id="id5748587"><media id="id1168302569104" alt=""><image src="../../media/graphics9-a1ec.png" mime-type="image/png" height="13" width="13"/></media>cout là một đối tượng của lớp ostream và được nói là "bị ràng buộc tới" thiết bị xuất chuẩn, thông thường là màn hình. Toán tử chèn dòng được sử dụng ở lệnh sau tạo ra một giá trị cho biến nguyên X được xuất từ bộ nhớ tới thiết bị chuẩn:</para>
+        <para id="id5748653">cout &lt;&lt; X;</para>
+        <para id="id5748658"><media id="id1168302619406" alt=""><image src="../../media/graphics10-a1ec.png" mime-type="image/png" height="13" width="13"/></media>cerr là một đối tượng của lớp ostream và được nói là "bị ràng buộc tới" thiết bị lỗi chuẩn. Việc xuất đối tượng cerr là không vùng đệm. Điều này có nghĩa là mỗi lần chèn tới cerr tạo ra kết xuất của nó xuất hiện ngay tức thì; Điều này thích hợp cho việc thông báo nhanh chóng người dùng khi có sự cố.</para>
+        <para id="id5748737"><media id="id1168302528330" alt=""><image src="../../media/graphics11-a1ec.png" mime-type="image/png" height="13" width="13"/></media>clog là một đối tượng của lớp ostream và được nói là "bị ràng buộc tới" thiết bị lỗi chuẩn. Việc xuất đối tượng cerr là có vùng đệm. Điều này có nghĩa là mỗi lần chèn tới cerr tạo ra kết xuất của nó được giữ trong vùng đệm cho đến khi vùng đệm đầy hoặc vùng đệm được flush.</para>
+        <para id="id5748815">Việc xử lý file của C++ sử dụng các lớp ifstream để thực hiện các thao tác nhập file, ofstream cho các thao tác xuất file, và fstream cho các thao tác nhập/xuất file. Lớp ifstream kế thừa từ istream, ofstream lớp kế thừa từ ostream, và lớp fstream kế thừa từ iostream.</para>
+        <figure id="id5748912">
+          <media id="id1168302624940" alt=""><image src="../../media/graphics12-d42d.png" mime-type="image/png" height="270" width="496"/></media>
+        </figure>
+        <para id="id5748936">Hình 8.2: Một phần của phân cấp lớp dòng nhập/xuất với việc xử lý file.</para>
+      </section>
+    </section>
+    <section id="id-0823181301736">
+      <title>DÒNG XUẤT</title>
+      <para id="id5748952">ostream của C++ cung cấp khả năng để thực hiện xuất định dạng và không định dạng. Các khả năng xuất bao gồm: xuất các kiểu dữ liệu chuẩn với toán tử chèn dòng; xuất các ký tự với hàm thành viên put(); xuất không định dạng với hàm thành viên write; xuất các số nguyên dạng thập phân, bát phân và thập lục phân; xuất các giá trị chấm động với độ chính xác khác nhau, với dấu chấm thập phân, theo ký hiệu khoa học và theo ký hiệu cố định; xuất dữ liệu theo các trường độn thêm các ký tự chỉ định; và xuất các mẫu tự chữ hoa theo ký hiệu khoa học và ký hiệu thập lục phân.</para>
+      <section id="id-0283430031585">
+        <title>Toán tử chèn dòng</title>
+        <para id="id5749008">Dòng xuất có thể được thực hiện với toán tử chèn dòng, nghĩa là toán tử &lt;&lt; đã đa năng hóa. Toán tử &lt;&lt; đã được đa năng hóa để xuất các mục dữ liệu của các kiểu có sẵn, xuất chuỗi, và xuất các giá trị con trỏ. </para>
+        <para id="id5749032"><link resource="javascript:if(confirm('http:">Ví dụ 8.1:</link> Minh họa xuất chuỗi sử dụng một lệnh chèn dòng.</para>
+        <para id="id5749056">1: //Chương trình 8.1:Xuất một chuỗi sử dụng chèn dòng</para>
+        <para id="id5749063">2: #include &lt;iostream.h&gt;</para>
+        <para id="id5749068">3: </para>
+        <para id="id5749072">4: int main()</para>
+        <para id="id5749077">5: {</para>
+        <para id="id5749082">6: cout&lt;&lt;"Welcome to C++!\n";</para>
+        <para id="id5749088">7: return 0;</para>
+        <para id="id5749092">8: }</para>
+        <para id="id5749097">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT8_1.EXE">chạy ví dụ 8.1</link>, kết quả ở hình 8.3</para>
+        <figure id="id5749120">
+          <media id="id1168302404807" alt=""><image src="../../media/graphics13-3ef1.png" mime-type="image/png" height="49" width="462"/></media>
+        </figure>
+        <para id="id5749144">Hình 8.3: Kết quả của ví dụ 8.1</para>
+        <para id="id5749150"><link resource="javascript:if(confirm('http:">Ví dụ 8.2:</link> Minh họa xuất chuỗi sử dụng nhiều lệnh chèn dòng.</para>
+        <para id="id5749174">1: //Chương trình 8.2:Xuất một chuỗi sử dụng hai chèn dòng</para>
+        <para id="id5749181">2: #include &lt;iostream.h&gt;</para>
+        <para id="id5749186">3: </para>
+        <para id="id5749190">4: int main()</para>
+        <para id="id5749195">5: {</para>
+        <para id="id5749200">6: cout&lt;&lt;"Welcome to"; </para>
+        <para id="id5749206">7: cout&lt;&lt;"C++!\n";</para>
+        <para id="id5749211">8: return 0;</para>
+        <para id="id5749216">9: }</para>
+        <para id="id5749220">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT8_2.EXE">chạy ví dụ 8.2</link>, kết quả ở hình 8.4</para>
+        <figure id="id5749244">
+          <media id="id1168302606071" alt=""><image src="../../media/graphics14-3ef1.png" mime-type="image/png" height="43" width="412"/></media>
+        </figure>
+        <para id="id5749268">Hình 8.4: Kết quả của ví dụ 8.2</para>
+        <para id="id5749273">Hiệu quả của chuỗi thoát \n (newline) cũng đạt được bởi bộ xử lý dòng (stream manipulator) endl (end line). </para>
+        <para id="id5749299">
+          <link resource="javascript:if(confirm('http:">Ví dụ 8.3:</link>
+        </para>
+        <para id="id5749320">1: //Chương trình 8.3:Sử dụng bộ xử lý dòng endl</para>
+        <para id="id5749327">2: #include &lt;iostream.h&gt;</para>
+        <para id="id5749332">3: </para>
+        <para id="id5749336">4: int main()</para>
+        <para id="id5749341">5: {</para>
+        <para id="id5749346">6: cout&lt;&lt;"Welcome to"; </para>
+        <para id="id5749351">7: cout&lt;&lt;"C++!";</para>
+        <para id="id5749356">8: cout&lt;&lt;endl;</para>
+        <para id="id5749361">9: return 0;</para>
+        <para id="id5749366">10: }</para>
+        <para id="id5749370">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT8_3.EXE">chạy ví dụ 8.3</link>, kết quả ở hình 8.5</para>
+        <figure id="id5749393">
+          <media id="id1168302625621" alt=""><image src="../../media/graphics15-3ef1.png" mime-type="image/png" height="47" width="449"/></media>
+        </figure>
+        <para id="id5749418">Hình 8.5: Kết quả của ví dụ 8.3</para>
+        <para id="id5749423">Bộ xử lý dòng endl đưa ra một ký tự newline, và hơn nữa, flush vùng đệm xuất (nghĩa là tạo ra vùng đệm xuất được xuất ngay lập tức kể cả nó chưa đầy). Vùng đệm xuất cũng có thể được flush bằng:</para>
+        <para id="id5749439">cout&lt;&lt;flush;</para>
+        <para id="id5749444"><link resource="javascript:if(confirm('http:">Ví dụ 8.4:</link> Các biểu thức có thể xuất</para>
+        <para id="id5749467">1: //Chương trình 8.4: Xuất giá trị biểu thức.</para>
+        <para id="id5749474">2: #include &lt;iostream.h&gt;</para>
+        <para id="id5749479">3: </para>
+        <para id="id5749483">4: int main()</para>
+        <para id="id5749488">5: {</para>
+        <para id="id5749493">6: cout&lt;&lt;"47 plus 53 is "; </para>
+        <para id="id5749498">7: cout&lt;&lt; (47+53);</para>
+        <para id="id5749504">8: cout&lt;&lt;endl;</para>
+        <para id="id5749509">9: return 0;</para>
+        <para id="id5749513">10: }</para>
+        <para id="id5749518">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT8_4.EXE">chạy ví dụ 8.4</link>, kết quả ở hình 8.6</para>
+        <figure id="id5749541">
+          <media id="id1168302557240" alt=""><image src="../../media/graphics16-0573.png" mime-type="image/png" height="53" width="512"/></media>
+        </figure>
+        <para id="id5749565">Hình 8.6: Kết quả của ví dụ 8.4</para>
+      </section>
+      <section id="id-0538052288629">
+        <title>Nối các toán tử chèn dòng và trích dòng</title>
+        <para id="id5749586">Các toán tử đã đa năng hóa &lt;&lt; và &gt;&gt; có thể được theo dạng nối vào nhau.</para>
+        <para id="id5749606"><link resource="javascript:if(confirm('http:">Ví dụ 8.5:</link> Nối các toán tử đã đa năng hóa</para>
+        <para id="id5749630">1: //Chương trình 8.5: Nối toán tử &lt;&lt; đã đa năng hóa.</para>
+        <para id="id5749636">2: #include &lt;iostream.h&gt;</para>
+        <para id="id5749641">3: </para>
+        <para id="id5749645">4: int main()</para>
+        <para id="id5749650">5: {</para>
+        <para id="id5749655">6: cout&lt;&lt;"47 plus 53 is "&lt;&lt; (47+53)&lt;&lt;endl;</para>
+        <para id="id5749660">7: return 0;</para>
+        <para id="id5749665">8: }</para>
+        <para id="id5749670">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT8_5.EXE">chạy ví dụ 8.5</link>, kết quả ở hình 8.7</para>
+        <figure id="id5749693">
+          <media id="id1168302372904" alt=""><image src="../../media/graphics17-0573.png" mime-type="image/png" height="55" width="525"/></media>
+        </figure>
+        <para id="id5749717">Hình 8.7: Kết quả của ví dụ 8.5</para>
+        <para id="id5749722">Nhiều chèn dòng ở dòng 6 trong ví dụ 8.5 được thực thi nếu có thể viết:</para>
+        <para id="id5749731">(((cout&lt;&lt;"47 plus 53 is ")&lt;&lt; (47+53))&lt;&lt;endl);</para>
+        <para id="id5749736">nghĩa là &lt;&lt; liên kết từ trái qua phải. Loại liên kết của các toán tử chèn dòng được phép bởi vì toán tử đa năng hóa &lt;&lt; trả về một tham chiếu tới đối tượng toán hạng bên trái của nó, nghĩa là cout. Vì thế biểu thức đặt trong ngoặc bên cực trái:</para>
+        <para id="id5749769">(cout&lt;&lt;"47 plus 53 is ")</para>
+        <para id="id5749775">xuất ra một chuỗi đã chỉ định và trả về một tham chiếu tới cout. Điều này cho phép biểu thức đặt trong ngoặc ở giữa được ước lượng:</para>
+        <para id="id5749792">(cout&lt;&lt; (47+53))</para>
+        <para id="id5749797">xuất giá trị nguyên 100 và trả về một tham chiếu tới cout. Sau đó biểu thức đặt trong ngoặc bên cực phải được ước lượng:</para>
+        <para id="id5749814">cout&lt;&lt;endl;</para>
+        <para id="id5749818">xuất một newline, flush cout và trả về một tham chiếu tới cout. Trả về cuối cùng này không được sử dụng.</para>
+        <para id="id5749834">Xuất các biến kiểu char *:</para>
+        <para id="id5749853">Trong nhập/xuất kiểu C, thật cần thiết cho lập trình viên để cung cấp thông tin kiểu. C++ xác định các kiểu dữ liệu một cách tự động – một cải tiến hay hơn C. Đôi khi điều này là một trở ngại. Chẳng hạn, chúng ta biết rằng một chuỗi ký tự là kiểu char *. Mục đích của chúng ta in giá trị của con trỏ đó, nghĩa là địa chỉ bộ nhớ của ký tự đầu tiên của chuỗi đó. Nhưng toán tử &lt;&lt; đã được đa năng hóa để in dữ liệu của kiểu char * như là chuỗi kết thúc ký tự null. Giải pháp là ép con trỏ thành kiểu void *. </para>
+        <para id="id5749884"><link resource="javascript:if(confirm('http:">Ví dụ 8.6</link>: In địa chỉ lưu trong một biến kiểu char *</para>
+        <para id="id5749908">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT8_6.EXE">chạy ví dụ 8.6</link>, kết quả ở hình 8.8</para>
+        <figure id="id5749931">
+          <media id="id1168302647204" alt=""><image src="../../media/graphics18-8dc9.png" mime-type="image/png" height="49" width="487"/></media>
+        </figure>
+        <para id="id5749955">Hình 8.8: Kết quả của ví dụ 8.6</para>
+      </section>
+      <section id="id-487822495662">
+        <title>Xuất ký tự với hàm thành viên put(); Nối với nhau hàm put()</title>
+        <para id="id5749978">Hàm thành viên put() của lớp ostream xuất một ký tự có dạng :</para>
+        <para id="id5749997">ostream&amp; put(char ch);</para>
+        <para id="id5750019">Chẳng hạn:</para>
+        <para id="id5750026">cout.put(‘A’);</para>
+        <para id="id5750030">Gọi put() có thể được nối vào nhau như:</para>
+        <para id="id5750043">cout.put(‘A’).put(‘\n’);</para>
+        <para id="id5750049">Hàm put() cũng có thể gọi với một biểu thức có giá trị là mã ASCII như:</para>
+        <para id="id5750063">cout.put(65);</para>
+      </section>
+    </section>
+    <section id="id-359985027888">
+      <title>DÒNG NHẬP</title>
+      <para id="id5750077">Dòng nhập có thể được thực hiện với toán tử trích, nghĩa là toán tử đã đa năng hóa &gt;&gt;. Bình thường toán tử này bỏ qua các ký tử khoảng trắng (như các blank, tab và newline). trong dòng nhập. Toán tử trích dòng trả về zero (false) khi kết thúc file (end-of-file) được bắt gặp trên một dòng; Ngược lại, toán tử trích dòng trả về một tham chiếu tới đối tượng xuyên qua đó nó được kéo theo. Mỗi dòng chứa một tập các bit trạng thái (state bit) sử dụng để điều khiển trạng thái của dòng (nghĩa là định dạng, ấn định các trạng thái lỗi,…). Trích dòng sinh ra failbit của dòng được thiết lập nếu dữ liệu của kiểu sai được nhập, và sinh ra badbit của dòng được thiết lập nếu thao tác sai.</para>
+      <section id="id-949355189994">
+        <title>Toán tử trích dòng:</title>
+        <para id="id5750132">Để đọc hai số nguyên sử dụng đối tượng cin và toán tử trích dòng đã đa năng hóa &gt;&gt;.</para>
+        <para id="id5750150">
+          <link resource="javascript:if(confirm('http:">Ví dụ 8.7:</link>
+        </para>
+        <para id="id5750172">1: //Chương trình 8.7</para>
+        <para id="id5750177">2: #include &lt;iostream.h&gt;</para>
+        <para id="id5750182">3:</para>
+        <para id="id5750186">4: int main()</para>
+        <para id="id5750191">5: {</para>
+        <para id="id5750196">6: int X, Y;</para>
+        <para id="id5750200">7: cout &lt;&lt; "Enter two integers: ";</para>
+        <para id="id5750206">8: cin &gt;&gt; X &gt;&gt; Y;</para>
+        <para id="id5750211">9: cout &lt;&lt; "Sum of " &lt;&lt; X &lt;&lt; " and " &lt;&lt; Y &lt;&lt; " is: "</para>
+        <para id="id5750217">10:       &lt;&lt; (X + Y) &lt;&lt; endl;</para>
+        <para id="id5750223">11: return 0;</para>
+        <para id="id5750228">12: }</para>
+        <para id="id5750232">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT8_7.EXE">chạy ví dụ 8.7</link>, kết quả ở hình 8.9</para>
+        <figure id="id5750255">
+          <media id="id1168302369906" alt=""><image src="../../media/hinh8.9.png" mime-type="image/png" height="54" width="537"/></media>
+        </figure>
+        <para id="id5750279">Hình 8.9: Kết quả của ví dụ 8.7</para>
+        <para id="id5750285">Một cách phổ biến để nhập một dãy các giá trị là sử dụng toán tử trích dòng trong vòng lặp while. Toán tử trích dòng trả về false (0) khi end-of-file được bắt gặp:</para>
+        <para id="id5750303">
+          <link resource="javascript:if(confirm('http:">Ví dụ 8.8:</link>
+        </para>
+        <para id="id5750324">2: #include &lt;iostream.h&gt;</para>
+        <para id="id5750329">3:</para>
+        <para id="id5750333">4: int main()</para>
+        <para id="id5750338">5: {</para>
+        <para id="id5750343">6: int Grade, HighestGrade = -1;</para>
+        <para id="id5750348">7: cout &lt;&lt; "Enter grade (enter end-of-file to end): ";</para>
+        <para id="id5750354">8: while (cin &gt;&gt; Grade)</para>
+        <para id="id5750360">9: {</para>
+        <para id="id5750364">10: if (Grade &gt; HighestGrade )</para>
+        <para id="id5750369">11: HighestGrade = Grade;</para>
+        <para id="id5750374">12: cout &lt;&lt; "Enter grade (enter end-of-file to end): ";</para>
+        <para id="id5750381">13: }</para>
+        <para id="id5750386">14: cout &lt;&lt;endl&lt;&lt; "Highest grade is:" &lt;&lt; HighestGrade&lt;&lt; endl;</para>
+        <para id="id5750392">15: return 0;</para>
+        <para id="id5750396">16: }</para>
+        <para id="id5750401">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT8_8.EXE">chạy ví dụ 8.8</link>, kết quả ở hình 8.10</para>
+        <figure id="id5750424">
+          <media id="id1168302641236" alt=""><image src="../../media/hinh8.10.png" mime-type="image/png" height="184" width="525"/></media>
+        </figure>
+        <para id="id5750448">Hình 8.10: Kết quả của ví dụ 8.8</para>
+      </section>
+      <section id="id-268611998284">
+        <title>Các hàm thành viên get() và getline()</title>
+        <para id="id5750469">Hàm istream::get() có các dạng sau:</para>
+        <para id="id5750481">(1) int get();</para>
+        <para id="id5750490">(2) istream&amp; get(unsigned char &amp;ch);</para>
+        <para id="id5750508">(3) istream&amp; get(signed char &amp;ch);</para>
+        <para id="id5750526">(4) istream&amp; get(unsigned char * puch, int len, char delim=’\n’);</para>
+        <para id="id5750565">(5) istream&amp; get(signed char * psch, int len, char delim=’\n’);</para>
+        <para id="id5750604">Dạng (1) trích ký tự đơn từ dòng và trả về nó hoặc EOF khi end-of-file trên dòng được bắt gặp.</para>
+        <para id="id5750619">Dạng (2) và (3) trích một ký tự đơn từ dòng và lưu trữ nó vào ch.</para>
+        <para id="id5750632">Dạng (4) và (5) trích các ký tự từ dòng cho đến khi hoặc delim được tìm thấy, giới hạn len đạt đến, hoặc end-of-file được bắt gặp. Các ký tự được lưu trong con trỏ chỉ đến mảng ký tự puch hoặc psch.</para>
+        <para id="id5750665"><link resource="javascript:if(confirm('http:">Ví dụ 8.9:</link> Sử dụng hàm get() dạng (1)</para>
+        <para id="id5750694">1: //Chương trình 8.9</para>
+        <para id="id5750700">2: #include &lt;iostream.h&gt;</para>
+        <para id="id5750705">3: int main()</para>
+        <para id="id5750709">4: {</para>
+        <para id="id5750714">5: int Ch;</para>
+        <para id="id5750719">6: cout &lt;&lt; "Before input, cin.eof() is " &lt;&lt; cin.eof() &lt;&lt; endl</para>
+        <para id="id5750725">7:          &lt;&lt; "Enter a sentence followed by end-of-file:" &lt;&lt; endl;</para>
+        <para id="id5750732">8: while ( ( Ch = cin.get() ) != EOF)</para>
+        <para id="id5750737">9: cout.put(Ch);</para>
+        <para id="id5750742">10: cout &lt;&lt; endl &lt;&lt; "EOF in this system is: " &lt;&lt; Ch &lt;&lt; endl;</para>
+        <para id="id5750748">11: cout &lt;&lt; "After input, cin.eof() is " &lt;&lt; cin.eof() &lt;&lt; endl;</para>
+        <para id="id5750754">12: return 0;</para>
+        <para id="id5750759">13: }</para>
+        <para id="id5750764">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT8_9.EXE">chạy ví dụ 8.9</link>, kết quả ở hình 8.11</para>
+        <figure id="id5750787">
+          <media id="id1168302189322" alt=""><image src="../../media/hinh8.11.png" mime-type="image/png" height="131" width="525"/></media>
+        </figure>
+        <para id="id5750810">Hình 8.11: Kết quả của ví dụ 8.9</para>
+        <para id="id5750816">Trong ví dụ 8.9 trên, chúng ta có sử dụng hàm ios::eof() có dạng sau:</para>
+        <para id="id5750830">int eof();Hàm trả về giá tri khác zero nếu end-of-file bắt gặp.</para>
+        <para id="id5750842"><link resource="javascript:if(confirm('http:">Ví dụ 8.10:</link> Sử dụng hàm get() dạng (5)</para>
+        <para id="id5750871">1: //Chương trình 8.10</para>
+        <para id="id5750876">2: #include &lt;iostream.h&gt;</para>
+        <para id="id5750881">3:</para>
+        <para id="id5750886">4: const int SIZE = 80;</para>
+        <para id="id5750891">5:</para>
+        <para id="id5750895">6: int main()</para>
+        <para id="id5750900">7: {</para>
+        <para id="id5750905">8: char Buffer1[SIZE], Buffer2[SIZE];</para>
+        <para id="id5750909">9: cout &lt;&lt; "Enter a sentence:" &lt;&lt; endl;</para>
+        <para id="id5750915">10: cin &gt;&gt; Buffer1;</para>
+        <para id="id5750920">11: cout &lt;&lt; endl &lt;&lt; "The string read with cin was:" &lt;&lt; endl</para>
+        <para id="id5750926">12:          &lt;&lt; Buffer1 &lt;&lt; endl &lt;&lt; endl;</para>
+        <para id="id5750933">13: cin.get(Buffer2, SIZE);</para>
+        <para id="id5750938">14: cout &lt;&lt; "The string read with cin.get was:" &lt;&lt; endl</para>
+        <para id="id5750944">15:          &lt;&lt; Buffer2 &lt;&lt; endl;</para>
+        <para id="id5750949">16: return 0;</para>
+        <para id="id5750954">17: }</para>
+        <para id="id5750959">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT8_10.EXE">chạy ví dụ 8.10</link>, kết quả ở hình 8.12</para>
+        <figure id="id5750982">
+          <media id="id1168302338963" alt=""><image src="../../media/hinh8.12.png" mime-type="image/png" height="161" width="512"/></media>
+        </figure>
+        <para id="id5751006">Hình 8.12: Kết quả của ví dụ 8.10</para>
+        <para id="id5751012">Hàm istream::getline() có các dạng sau:</para>
+        <para id="id5751023">(1) istream&amp; getline(unsigned char * puch, int len, char delim=’\n’);</para>
+        <para id="id5751061">(2) istream&amp; getline(signed char * psch, int len, char delim=’\n’);</para>
+        <para id="id5751099"><link resource="javascript:if(confirm('http:">Ví dụ 8.11:</link> Sử dụng hàm getline() </para>
+        <para id="id5751127">1: //Chương trình 8.11</para>
+        <para id="id5751132">2: #include &lt;iostream.h&gt;</para>
+        <para id="id5751137">3:</para>
+        <para id="id5751142">4: const SIZE = 80;</para>
+        <para id="id5751146">5:</para>
+        <para id="id5751151">6: int main()</para>
+        <para id="id5751156">7: {</para>
+        <para id="id5751160">8: char Buffer[SIZE];</para>
+        <para id="id5751165">9: cout &lt;&lt; "Enter a sentence:" &lt;&lt; endl;</para>
+        <para id="id5751171">10: cin.getline(Buffer, SIZE);</para>
+        <para id="id5751176">11: cout &lt;&lt; endl &lt;&lt; "The sentence entered is:" &lt;&lt; endl</para>
+        <para id="id5751182">12:          &lt;&lt; Buffer &lt;&lt; endl;</para>
+        <para id="id5751188">13: return 0;</para>
+        <para id="id5751192">14: }</para>
+        <para id="id5751197">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT8_11.EXE">chạy ví dụ 8.11</link>, kết quả ở hình 8.13</para>
+        <figure id="id5751220">
+          <media id="id1168302656959" alt=""><image src="../../media/hinh8.13.png" mime-type="image/png" height="101" width="534"/></media>
+        </figure>
+        <para id="id5751244">Hình 8.13: Kết quả của ví dụ 8.11</para>
+      </section>
+      <section id="id-469486949426">
+        <title>Các hàm thành viên khác của istream</title>
+        <para id="id5751266">Hàm ignore():</para>
+        <para id="id5751277">istream&amp; ignore(int nCount = 1, int delim = EOF);</para>
+        <para id="id5751304">Trích và loại bỏ lên đến nCount ký tự. Việc trích dừng nếu delim được bắt gặp hoặc nếu end-of-file bắt gặp.</para>
+        <para id="id5751324">Hàm putback():</para>
+        <para id="id5751335">istream&amp; putback(char ch);</para>
+        <para id="id5751353">Đặt một ký tự ngược lại dòng nhập.</para>
+        <para id="id5751359">Hàm peek():</para>
+        <para id="id5751370">int peek();</para>
+        <para id="id5751376">Hàm trả về ký tự kế tiếp mà không trích nó từ dòng.</para>
+      </section>
+      <section id="id-942469136181">
+        <title>Nhập/xuất kiểu an toàn</title>
+        <para id="id5751399">C++ cung cấp nhập/xuất kiểu an toàn (type-safe). Các toán tử &lt;&lt; và &gt;&gt; được đa năng hóa để nhận các mục dữ liệu của kiểu cụ thể. Nếu dữ liệu bất ngờ được xử lý, các cờ hiệu lỗi khác nhau được thiết lập mà người dùng có thể kiểm tra để xác định nếu một thao tác nhập/xuất thành công hoặc thất bại. Phần sau chúng ta sẽ khảo sát kỹ hơn.</para>
+      </section>
+    </section>
+    <section id="id-943637235387">
+      <title>NHẬP/XUẤT KHÔNG ĐỊNH DẠNG VỚI READ(),GCOUNT() VÀ WRITE()</title>
+      <para id="id5751442">Nhập/xuất không định dạng được thực hiện với các hàm thành viên istream::read() và ostream::write().</para>
+      <para id="id5751462">Hàm istream::read():</para>
+      <para id="id5751472">istream&amp; read(unsigned char* puch, int nCount);</para>
+      <para id="id5751498">istream&amp; read(signed char* psch, int nCount);</para>
+      <para id="id5751524">Trích các byte từ dòng cho đến khi giới hạn nCount đạt đến hoặc cho đến khi end- of-file đạt đến. Hàm này có ích cho dòng nhập nhị phân. </para>
+      <para id="id5751541">Hàm ostream::write():</para>
+      <para id="id5751551">ostream&amp; write(const unsigned char* puch, int nCount);</para>
+      <para id="id5751604">ostream&amp; write(const signed char* psch, int nCount);</para>
+      <para id="id5751657">Chèn nCount byte vào từ vùng đệm (được trỏ bởi puch và psch) vào dòng. Nếu file được mở ở chế độ text, các ký tự CR có thể được chèn vào. Hàm này có ích cho dòng xuất nhị phân. Chẳng hạn:</para>
+      <para id="id5751687">char Buff[]="HAPPY BIRTHDAY";</para>
+      <para id="id5751692">cout.write(Buff,10);</para>
+      <para id="id5751697">Hàm istream::gcount():</para>
+      <para id="id5751707">int gcount();</para>
+      <para id="id5751711">Hàm trả về số ký tự đã trích bởi hàm nhập không định dạng cuối cùng. </para>
+    </section>
+    <section id="id-265677151481">
+      <title>DÒNG NHẬP/ XUẤT FILE</title>
+      <para id="id5751729">Để thực thi xử lý file trong C++, các chương trình phải include tập tin &lt;iostream.h&gt; và &lt;fstream.h&gt;. Header &lt;fstream.h&gt; gồm định nghĩa cho các lớp dòng ifstream cho nhập (đọc) từ một file, ofstream cho xuất (ghi) tới một file) và fstream cho nhập/xuất (đọc/ghi) tới một file. Các file được mở bằng cách tạo các đối tượng của các lớp dòng này. Cây phả hệ của các lớp này ở hình 8.2.</para>
+      <para id="id5751781"> Constructor của lớp ofstream:</para>
+      <para id="id5751796">(1) ofstream();</para>
+      <para id="id5751804">(2) ofstream(const char* szName,int nMode=ios::out,int nProt=filebuf::openprot);</para>
+      <para id="id5751840">(3) ofstream(int fd);</para>
+      <para id="id5751858">(4) ofstream(filedesc fd, char* pch, int nLength);</para>
+      <para id="id5751906">Trong đó:szName: Tên file được mở.</para>
+      <para id="id5751919">nMode: Một số nguyên chứa các bit mode định nghĩa là kiểu liệy kê của ios. Có thể kết hợp bằng toán tử |. Tham số này có thể một trong các giá trị sau:</para>
+      <table id="id5751941" summary="">
+        <tgroup cols="2">
+          <colspec colnum="1" colname="c1"/>
+          <colspec colnum="2" colname="c2"/>
+          <tbody>
+            <row>
+              <entry>Mode</entry>
+              <entry>Ý nghĩa</entry>
+            </row>
+            <row>
+              <entry>ios::app</entry>
+              <entry>Hàm di chuyển con trỏ file tới end-of-file. Khi các byte mới được ghi lên file, chúng luôn luôn nối thêm vào cuối, ngay cả vị trí được di chuyển với hàm ostream::seekp().</entry>
+            </row>
+            <row>
+              <entry>ios::ate</entry>
+              <entry>Hàm di chuyển con trỏ file tới end-of-file. Khi byte mới đầu tiên được ghi lên file, chúng luôn luôn nối thêm vào cuối, nhưng khi các byte kế tiếp được ghi, chúng ghi vào vị trí hiện hành.</entry>
+            </row>
+            <row>
+              <entry>ios::in</entry>
+              <entry>Mở file để đọc.Với dòng ifstream, việc mở file đương nhiên được thực hiện ở chế độ này.</entry>
+            </row>
+            <row>
+              <entry>ios::out</entry>
+              <entry>Mở file để đọc.Với dòng ofstream, việc mở file đương nhiên được thực hiện ở chế độ này.</entry>
+            </row>
+            <row>
+              <entry>ios::trunc</entry>
+              <entry>Xóa file hiện có trên đĩa và tạo file mới cùng tên. Cũng có hiểu đây là chặt cụt file cũ, làm cho kích thước của nó bằng 0, chuẩn bị ghi nội dung mới. Mode này được áp dụng nếu ios::out được chỉ định và ios::app, ios::ate, và ios::in không được chỉ định.</entry>
+            </row>
+            <row>
+              <entry>ios::nocreate</entry>
+              <entry>Nếu file không tồn tại thì thao tác mở thất bại.</entry>
+            </row>
+            <row>
+              <entry>ios::noreplace</entry>
+              <entry>Nếu file tồn tại thì thao tác mở thất bại.</entry>
+            </row>
+            <row>
+              <entry>ios::binary</entry>
+              <entry>Mở file ở chế độ nhị phân (mặc định là ở chế độ văn bản).</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+      <para id="id5752240">nProt: Đặc tả chế độ bảo vệ file.</para>
+      <para id="id5752252">fd: Mã nhận diện file.</para>
+      <para id="id5752262">pch: Con trỏ trỏ tới vùng dành riêng chiều dài nLength. Giá trị NULL (hoặc nLength=0) dẫn đến dòng không vùng đệm.</para>
+      <para id="id5752293">nLength: Chiều dài tính theo byte của vùng dành riêng (0=không vùng đệm).</para>
+      <para id="id5752306">Dạng (1) xây dựng một đối tượng ofstream mà không mở file. </para>
+      <para id="id5752319">Dạng (2) xây dựng một đối tượng ofstream và mở file đã chỉ định.</para>
+      <para id="id5752333">Dạng (3) xây dựng một đối tượng ofstream và gắn (attach) với một file mở.</para>
+      <para id="id5752347">Dạng (4) xây dựng một đối tượng ofstream mà liên kết với đối tượng filebuf. Đối tượng filebuf được gắn tới file mở và vùng dành riêng.</para>
+      <para id="id5752375"> Constructor của lớp ifstream:</para>
+      <para id="id5752389">(1) ifstream();</para>
+      <para id="id5752398">(2) ifstream(const char* szName,int nMode=ios::in,int nProt=filebuf::openprot);</para>
+      <para id="id5752434">(3) ifstream(int fd);</para>
+      <para id="id5752451">(4) ifstream(filedesc fd, char* pch, int nLength);</para>
+      <para id="id5752499">Dạng (1) xây dựng một đối tượng ifstream mà không mở file. </para>
+      <para id="id5752512">Dạng (2) xây dựng một đối tượng ifstream và mở file đã chỉ định.</para>
+      <para id="id5752526">Dạng (3) xây dựng một đối tượng ifstream và gắn (attach) với một file mở.</para>
+      <para id="id5752540">Dạng (4) xây dựng một đối tượng ofstream mà liên kết với đối tượng filebuf. Đối tượng filebuf được gắn tới file mở và vùng dành riêng.</para>
+      <para id="id5752568"> Constructor của lớp fstream:</para>
+      <para id="id5752582">(1) fstream();</para>
+      <para id="id5752591">(2) fstream(const char* szName,int nMode,int nProt=filebuf::openprot);</para>
+      <para id="id5752626">(3) fstream(int fd);</para>
+      <para id="id5752644">(4) fstream(filedesc fd, char* pch, int nLength);</para>
+      <para id="id5752691">Dạng (1) xây dựng một đối tượng fstream mà không mở file. </para>
+      <para id="id5752705">Dạng (2) xây dựng một đối tượng fstream và mở file đã chỉ định.</para>
+      <para id="id5752719">Dạng (3) xây dựng một đối tượng fstream và gắn (attach) với một file mở.</para>
+      <para id="id5752733">Dạng (4) xây dựng một đối tượng ofstream mà liên kết với đối tượng filebuf. Đối tượng filebuf được gắn tới file mở và vùng dành riêng.</para>
+      <para id="id5752760">Nếu chúng ta sử dụng constructor ở dạng (1) thì chúng ta dùng hàm open() để mở file:</para>
+      <para id="id5752774"> Hàm ofstream::open():</para>
+      <para id="id5752788">void open(const char* szName,int nMode=ios::out,int nProt=filebuf::openprot);</para>
+      <para id="id5752841">Hàm ifstream::open():</para>
+      <para id="id5752852">void open(const char* szName,int nMode=ios::in,int nProt=filebuf::openprot);</para>
+      <para id="id5752905">Hàm fstream::open():</para>
+      <para id="id5752916">void open(const char* szName,int nMode,int nProt=filebuf::openprot);</para>
+      <para id="id5752968">Để đóng file chúng ta dùng hàm close(), hàm này ở các lớp ifstream, ofstream, và fstream đều có dạng:</para>
+      <para id="id5752998">void close();</para>
+      <para id="id5753002">Các hàm liên quan đến con trỏ file:</para>
+      <list id="id5753008" list-type="bulleted">
+        <item>Lớp istream:</item>
+      </list>
+      <para id="id5753023">Hàm seekg(): (seek get)</para>
+      <para id="id5753040">(1) istream&amp; seekg(streampos pos);</para>
+      <para id="id5753058">(2) istream&amp; seekg(streamoff off,ios::seek_dir dir);</para>
+      <para id="id5753085">Trong đó:</para>
+      <para id="id5753091">+ pos: Vị trí mới. streampos là tương đương typedef với long.</para>
+      <para id="id5753121">+ off: Giá trị offset mới. là tương đương typedef với long.</para>
+      <para id="id5753145">+ dir: hướng seek. Có một trong các trị sau:</para>
+      <table id="id5753157" summary="">
+        <tgroup cols="2">
+          <colspec colnum="1" colname="c1"/>
+          <colspec colnum="2" colname="c2"/>
+          <tbody>
+            <row>
+              <entry>ios::begin</entry>
+              <entry>Seek từ bắt đầu của dòng.</entry>
+            </row>
+            <row>
+              <entry>ios::cur</entry>
+              <entry>Seek tư øvị trí hiện hành của dòng</entry>
+            </row>
+            <row>
+              <entry>ios::end</entry>
+              <entry>Seek từ cuối của dòng</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+      <para id="id5753242">Hàm tellg(): (tell get)</para>
+      <para id="id5753262">streampos tellg();</para>
+      <para id="id5753267">Hàm trả về vị trí hiện hành của con trỏ file.</para>
+      <list id="id5753274" list-type="bulleted">
+        <item>Lớp ostream:</item>
+      </list>
+      <para id="id5753289">Hàm seekp(): (seek put)</para>
+      <para id="id5753305">(1) ostream&amp; seekp(streampos pos);</para>
+      <para id="id5753324">(2) ostream&amp; seekp(streamoff off,ios::seek_dir dir);</para>
+      <para id="id5753350">Hàm tellp(): (tell put)</para>
+      <para id="id5753370">streampos tellp();</para>
+      <para id="id5753375">Hàm trả về vị trí hiện hành của con trỏ file.</para>
+      <section id="id-910157139929">
+        <title>Nhập/xuất file văn bản</title>
+        <para id="id5753397">Nếu dòng được gắn với file văn bản, việc nhập/xuất file được thực hiện một cách đơn giản bởi các toán tử &gt;&gt; và &lt;&lt;, giống như khi chúng ta làm việc với cin và cout. File văn bản chứa dữ liệu ở dạng mã ASCII, kết thúc bởi ký tự EOF.</para>
+        <para id="id5753434"><link resource="javascript:if(confirm('http:">Ví dụ 8.28:</link> Tạo file văn bản có thể được sử dụng trong hệ thống có thể nhận được các tài khoản để giúp đỡ quản lý tiền nợ bởi các khách hàng tín dụng của công ty. Mỗi khách hàng, chương trình chứa một số tài khoản, tên và số dư (balance).</para>
+        <para id="id5753467">1: //Chương trình 8.28</para>
+        <para id="id5753472">2: #include &lt;iostream.h&gt;</para>
+        <para id="id5753477">3: #include &lt;fstream.h&gt;</para>
+        <para id="id5753482">4: #include &lt;stdlib.h&gt;</para>
+        <para id="id5753487">5:</para>
+        <para id="id5753492">6: int main()</para>
+        <para id="id5753496">7: {</para>
+        <para id="id5753501">8: ofstream OutClientFile("clients.dat", ios::out);</para>
+        <para id="id5753506">9: if (!OutClientFile)</para>
+        <para id="id5753511">10: {</para>
+        <para id="id5753516">11: cerr &lt;&lt; "File could not be opened" &lt;&lt; endl;</para>
+        <para id="id5753522">12: exit(1);</para>
+        <para id="id5753527">13: }</para>
+        <para id="id5753532">14: cout &lt;&lt; "Enter the Account, Name, and Balance." &lt;&lt; endl</para>
+        <para id="id5753538">15:          &lt;&lt; "Enter EOF to end input." &lt;&lt; endl &lt;&lt; "? ";</para>
+        <para id="id5753545">16: int Account;</para>
+        <para id="id5753550">17: char Name[10];</para>
+        <para id="id5753555">18: float Balance;</para>
+        <para id="id5753560">19: while (cin &gt;&gt; Account &gt;&gt; Name &gt;&gt; Balance)</para>
+        <para id="id5753566">20: {</para>
+        <para id="id5753570">21: OutClientFile &lt;&lt; Account &lt;&lt; " " &lt;&lt; Name</para>
+        <para id="id5753576">22:          &lt;&lt; " " &lt;&lt; Balance &lt;&lt; endl;</para>
+        <para id="id5753582">23: cout &lt;&lt; "? ";</para>
+        <para id="id5753587">24: }</para>
+        <para id="id5753592">25: OutClientFile.close();</para>
+        <para id="id5753597">26: return 0;</para>
+        <para id="id5753602">27: }</para>
+        <para id="id5753606">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT8_28.EXE">chạy ví dụ 8.28</link>, kết quả ở hình 8.30</para>
+        <figure id="id5753630">
+          <media id="id1168306064514" alt=""><image src="../../media/hinh8.30.png" mime-type="image/png" height="179" width="551"/></media>
+        </figure>
+        <para id="id5753653">Hình 8.30: Kết quả của ví dụ 8.28</para>
+        <para id="id5753659"><link resource="javascript:if(confirm('http:">Ví dụ 8.29:</link> Đọc file văn bản tạo ở ví dụ 8.28 và xuất ra màn hình.</para>
+        <para id="id5753684">1: //Chương trình 8.29</para>
+        <para id="id5753689">2: #include &lt;iostream.h&gt;</para>
+        <para id="id5753694">3: #include &lt;fstream.h&gt;</para>
+        <para id="id5753699">4: #include &lt;iomanip.h&gt;</para>
+        <para id="id5753704">5: #include &lt;stdlib.h&gt;</para>
+        <para id="id5753709">6:</para>
+        <para id="id5753714">7: void OutputLine(int, char*, float);</para>
+        <para id="id5753718">8:</para>
+        <para id="id5753722">9: int main()</para>
+        <para id="id5753727">10: {</para>
+        <para id="id5753732">11: ifstream InClientFile("clients.dat", ios::in);</para>
+        <para id="id5753737">12: if (!InClientFile)</para>
+        <para id="id5753742">13: {</para>
+        <para id="id5753747">14: cerr &lt;&lt; "File could not be opened" &lt;&lt; endl;</para>
+        <para id="id5753753">15: exit(1);</para>
+        <para id="id5753758">16: }</para>
+        <para id="id5753762">17: int Account;</para>
+        <para id="id5753767">18: char Name[10];</para>
+        <para id="id5753772">19: float Balance;</para>
+        <para id="id5753777">20: cout &lt;&lt; setiosflags(ios::left) &lt;&lt; setw(10) &lt;&lt; "Account"</para>
+        <para id="id5753783">21:      &lt;&lt; setw(13) &lt;&lt; "Name" &lt;&lt; "Balance" &lt;&lt; endl;</para>
+        <para id="id5753789">22: while (InClientFile &gt;&gt; Account &gt;&gt; Name &gt;&gt; Balance)</para>
+        <para id="id5753795">23: OutputLine(Account, Name, Balance);</para>
+        <para id="id5753800">24: InClientFile.close();</para>
+        <para id="id5753804">25: return 0;</para>
+        <para id="id5753809">26: }</para>
+        <para id="id5753814">27:</para>
+        <para id="id5753819">28: void OutputLine(int Acct, char *Name, float Bal)</para>
+        <para id="id5753824">29: {</para>
+        <para id="id5753829">30: cout &lt;&lt; setiosflags(ios::left) &lt;&lt; setw(10) &lt;&lt; Acct </para>
+        <para id="id5753835">31:   &lt;&lt; setw(13) &lt;&lt; Name &lt;&lt; setw(7) &lt;&lt; etprecision(2)</para>
+        <para id="id5753842">32:&lt;&lt; setiosflags(ios::showpoint | ios::right) &lt;&lt; Bal &lt;&lt; endl;</para>
+        <para id="id5753848">33: }</para>
+        <para id="id5753853">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT8_29.EXE">chạy ví dụ 8.29</link>, kết quả ở hình 8.31</para>
+        <figure id="id5753876">
+          <media id="id1168302505324" alt=""><image src="../../media/hinh8.31.png" mime-type="image/png" height="129" width="508"/></media>
+        </figure>
+        <para id="id5753900">Hình 8.31: Kết quả của ví dụ 8.29</para>
+        <para id="id5753905">Do lớp ifstream dẫn xuất từ lớp istream nên chúng ta có thể dùng các hàm istream::get(), istream::getline().</para>
+        <para id="id5753936"><link resource="javascript:if(confirm('http:">Ví dụ 8.30:</link> Đọc file văn bản tạo ở ví dụ 8.28 bằng hàm istream::getline() và xuất ra màn hình.</para>
+        <para id="id5753967">1: //Chương trình 8.30</para>
+        <para id="id5753972">2: #include &lt;iostream.h&gt;</para>
+        <para id="id5753977">3: #include &lt;fstream.h&gt;</para>
+        <para id="id5753982">4: #include &lt;iomanip.h&gt;</para>
+        <para id="id5753987">5: #include &lt;stdlib.h&gt;</para>
+        <para id="id5753992">6:</para>
+        <para id="id5753996">7: #define MAXLINE 256</para>
+        <para id="id5754001">8:</para>
+        <para id="id5754006">9: int main()</para>
+        <para id="id5754010">10: {</para>
+        <para id="id5754015">11: ifstream InClientFile("clients.dat", ios::in);</para>
+        <para id="id5754020">12: if (!InClientFile)</para>
+        <para id="id5754025">13: {</para>
+        <para id="id5754030">14: cerr &lt;&lt; "File could not be opened" &lt;&lt; endl;</para>
+        <para id="id5754036">15: exit(1);</para>
+        <para id="id5754041">16: }</para>
+        <para id="id5754046">17: char Line[MAXLINE];</para>
+        <para id="id5754051">18: while (!InClientFile.eof())</para>
+        <para id="id5754056">19: {</para>
+        <para id="id5754060">20: InClientFile.getline(Line,MAXLINE-1);</para>
+        <para id="id5754065">21: cout&lt;&lt;Line&lt;&lt;endl;</para>
+        <para id="id5754070">22: }</para>
+        <para id="id5754075">23: InClientFile.close();</para>
+        <para id="id5754080">24: return 0;</para>
+        <para id="id5754084">25: }</para>
+        <para id="id5754089">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT8_30.EXE">chạy ví dụ 8.30</link>, kết quả ở hình 8.32.(nội dung tập tin <link resource="javascript:if(confirm('http:">clients.dat</link>)</para>
+        <figure id="id5754130">
+          <media id="id1168302396131" alt=""><image src="../../media/hinh8.32.png" mime-type="image/png" height="117" width="525"/></media>
+        </figure>
+        <para id="id5754154">Hình 8.32: Kết quả của ví dụ 8.30</para>
+      </section>
+      <section id="id-436214467947">
+        <title>Nhập/xuất file nhị phân</title>
+        <para id="id5754169">Đối với file nhị phân (còn gọi là file truy cập ngẫu nhiên), chúng ta mở ở chế độ ios::binary. Đối với file nhị phân, chúng ta có thể dùng hàm istream::get() và ostream::put() để đọc và ghi từng byte một. Để đọc và ghi nhiều byte cùng lúc chúng ta có thể dùng istream::read() và ostream::write().</para>
+        <para id="id5754329"><link resource="javascript:if(confirm('http:">Ví dụ 8.31:</link> Lấy lại <link resource="javascript:if(confirm('http:">ví  dụ 8.28</link> nhưng lưu dữ liệu dưới dạng nhị phân.</para>
+        <para id="id5754371">1: //Chương trình 8.31</para>
+        <para id="id5754377">2: #include &lt;iostream.h&gt;</para>
+        <para id="id5754382">3: #include &lt;fstream.h&gt;</para>
+        <para id="id5754387">4: #include &lt;stdlib.h&gt;</para>
+        <para id="id5754392">5:</para>
+        <para id="id5754396">6: typedef struct</para>
+        <para id="id5754401">7: {</para>
+        <para id="id5754405">8: int Account;</para>
+        <para id="id5754410">9: char Name[10];</para>
+        <para id="id5754415">10: float Balance;</para>
+        <para id="id5754420">11: }Client;</para>
+        <para id="id5754425">12:</para>
+        <para id="id5754429">13: int main()</para>
+        <para id="id5754434">14: {</para>
+        <para id="id5754438">15: ofstream OutClientFile("credit.dat", ios::out|ios::binary);</para>
+        <para id="id5754444">16: if (!OutClientFile)</para>
+        <para id="id5754449">17: {</para>
+        <para id="id5754454">18: cerr &lt;&lt; "File could not be opened" &lt;&lt; endl;</para>
+        <para id="id5754460">19: exit(1);</para>
+        <para id="id5754465">20: }</para>
+        <para id="id5754469">21: cout &lt;&lt; "Enter the Account, Name, and Balance." &lt;&lt; endl</para>
+        <para id="id5754476">22:          &lt;&lt; "Enter EOF to end input." &lt;&lt; endl &lt;&lt; "? ";</para>
+        <para id="id5754483">23: Client C;</para>
+        <para id="id5754488">24: while (cin &gt;&gt; C.Account &gt;&gt; C.Name &gt;&gt; C.Balance)</para>
+        <para id="id5754494">25: {</para>
+        <para id="id5754498">26: OutClientFile.write((char *)&amp;C,sizeof(Client));</para>
+        <para id="id5754504">27: cout &lt;&lt; "? ";</para>
+        <para id="id5754509">28: }</para>
+        <para id="id5754513">29: OutClientFile.close();</para>
+        <para id="id5754518">30: return 0;</para>
+        <para id="id5754523">31: }</para>
+        <para id="id5754528">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT8_31.EXE">chạy ví dụ 8.31</link>, kết quả ở hình 8.33 (nội dung tập tin <link resource="javascript:if(confirm('http:">credit.dat</link>)</para>
+        <figure id="id5754569">
+          <media id="id1168306384690" alt=""><image src="../../media/graphics19-4641.png" mime-type="image/png" height="168" width="513"/></media>
+        </figure>
+        <para id="id5754593">Hình 8.33: Kết quả của ví dụ 8.31</para>
+        <para id="id5754599"><link resource="javascript:if(confirm('http:">Ví dụ 8.32: </link>Đọc file tạo ở <link resource="javascript:if(confirm('http:">ví dụ 8.31</link> và xuất ra màn hình.</para>
+        <para id="id5754641">1: //Chương trình 8.32</para>
+        <para id="id5754646">2: #include &lt;iostream.h&gt;</para>
+        <para id="id5754651">3: #include &lt;fstream.h&gt;</para>
+        <para id="id5754656">4: #include &lt;iomanip.h&gt;</para>
+        <para id="id5754661">5: #include &lt;stdlib.h&gt;</para>
+        <para id="id5754666">6:</para>
+        <para id="id5754670">7: typedef struct</para>
+        <para id="id5754675">8: {</para>
+        <para id="id5754680">9: int Account;</para>
+        <para id="id5754684">10: char Name[10];</para>
+        <para id="id5754689">11: float Balance;</para>
+        <para id="id5754694">12: }Client;</para>
+        <para id="id5754699">13:</para>
+        <para id="id5754703">14: void OutputLine(Client);</para>
+        <para id="id5754708">15:</para>
+        <para id="id5754713">16: int main()</para>
+        <para id="id5754718">17: {</para>
+        <para id="id5754722">18: ifstream InClientFile("credit.dat", ios::in|ios::binary);</para>
+        <para id="id5754728">19: if (!InClientFile)</para>
+        <para id="id5754733">20: {</para>
+        <para id="id5754738">21: cerr &lt;&lt; "File could not be opened" &lt;&lt; endl;</para>
+        <para id="id5754744">22: exit(1);</para>
+        <para id="id5754749">23: }</para>
+        <para id="id5754753">24: cout &lt;&lt; setiosflags(ios::left) &lt;&lt; setw(10) &lt;&lt; "Account"</para>
+        <para id="id5754759">25:          &lt;&lt; setw(13) &lt;&lt; "Name" &lt;&lt; "Balance" &lt;&lt; endl;</para>
+        <para id="id5754765">26: Client C;</para>
+        <para id="id5754770">27: while (InClientFile.read((char *)&amp;C,sizeof(Client)))</para>
+        <para id="id5754776">28: OutputLine(C);</para>
+        <para id="id5754781">29: InClientFile.close();</para>
+        <para id="id5754786">30: return 0;</para>
+        <para id="id5754791">31: }</para>
+        <para id="id5754795">32:</para>
+        <para id="id5754800">33: void OutputLine(Client C)</para>
+        <para id="id5754805">34: {</para>
+        <para id="id5754809">35: cout &lt;&lt; setiosflags(ios::left) &lt;&lt; setw(10) &lt;&lt; C.Account</para>
+        <para id="id5754815">36:          &lt;&lt; setw(13) &lt;&lt; C.Name &lt;&lt; setw(7) &lt;&lt; setprecision(2)</para>
+        <para id="id5754822">37:          &lt;&lt; setiosflags(ios::showpoint | ios::right)&lt;&lt; C.Balance &lt;&lt; endl;</para>
+        <para id="id5754829">38: }</para>
+        <para id="id5754834">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT8_32.EXE">chạy ví dụ 8.32</link>, kết quả ở hình 8.34</para>
+        <figure id="id5754857">
+          <media id="id1168302562474" alt=""><image src="../../media/graphics20-40e4.png" mime-type="image/png" height="127" width="500"/></media>
+        </figure>
+        <para id="id5754881">Hình 8.34: Kết quả của ví dụ 8.32</para>
+      </section>
+      <section id="id-927516358132">
+        <title>BÀI TẬP</title>
+        <para id="id5754895"><media id="id1168306371283" alt=""><image src="../../media/ani_ball.png" mime-type="image/png" height="14" width="14"/></media>Bài 1: Cài đặt toán tử &gt;&gt; và &lt;&lt; cho kiểu dữ liệu mảng để nhập và xuất.</para>
+        <para id="id5754934"><figure id="id5754938"><media id="id1168306065420" alt=""><image src="../../media/ani_ball.png" mime-type="image/png" height="14" width="14"/></media></figure>Bài 2: Cài đặt thêm toán tử &gt;&gt; và &lt;&lt; cho lớp Time trong bài 5 của chương 4.</para>
+        <para id="id5754971"><media id="id1168306078814" alt=""><image src="../../media/ani_ball.png" mime-type="image/png" height="14" width="14"/></media>Bài 3: Cài đặt thêm toán tử &gt;&gt; và &lt;&lt; cho lớp Date trong bài 6 của chương 4.</para>
+        <para id="id5755010"><figure id="id5755014"><media id="id1168306167985" alt=""><image src="../../media/ani_ball.png" mime-type="image/png" height="14" width="14"/></media></figure>Bài 4: Viết chương trình kiểm tra các giá trị nguyên nhập vào dạng hệ 10, hệ 8 và hệ 16.</para>
+        <para id="id5755047"><figure id="id5755050"><media id="id1168306116103" alt=""><image src="../../media/ani_ball.png" mime-type="image/png" height="14" width="14"/></media></figure>Bài 5: Viết chương trình in bảng mã ASCII cho các ký tự có mã ASCII từ 33 đến 126. Chương trình in gồm giá trị ký tự, giá trị hệ 10, giá trị hệ 8 và giá trị hệ 16.</para>
+        <para id="id5755086"><media id="id1168302373178" alt=""><image src="../../media/ani_ball.png" mime-type="image/png" height="14" width="14"/></media>Bài 6: Viết chương trình in các giá trị nguyên dương luôn có dấu + ở phía trước.</para>
+        <para id="id5755126"><media id="id1168302349663" alt=""><image src="../../media/ani_ball.png" mime-type="image/png" height="14" width="14"/></media>Bài 7: Viết chương trình tương tự như lệnh COPY của DOS để sao chép nội dung của file .</para>
+        <para id="id5755166"><media id="id1168302326936" alt=""><image src="../../media/ani_ball.png" mime-type="image/png" height="14" width="14"/></media>Bài 8: Viết chương trình cho biết kích thước file.</para>
+        <para id="id5755203"><media id="id1168302535675" alt=""><image src="../../media/ani_ball.png" mime-type="image/png" height="14" width="14"/></media>Bài 9: Viết chương trình đếm số lượng từ có trong một file văn bản tiếng Anh.</para>
+      </section>
+    </section>
+  </content>
+</document>

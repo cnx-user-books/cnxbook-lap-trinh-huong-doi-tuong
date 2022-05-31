@@ -1,0 +1,1209 @@
+<document xmlns="http://cnx.rice.edu/cnxml" xmlns:md="http://cnx.rice.edu/mdml">
+  <title>Các mở rộng của c++</title>
+  <metadata>
+  <md:content-id>m29882</md:content-id><md:title>Các mở rộng của c++</md:title>
+  <md:abstract>Phần này trình bày về các mở rộng của c++</md:abstract>
+  <md:uuid>52c4d8c4-f7f7-4d96-a717-2dbebac0accb</md:uuid>
+</metadata>
+
+<content>
+    <para id="id5559765">LỊCH SỬ CỦA C++</para>
+    <para id="id5559770">Vào những năm đầu thập niên 1980, người dùng biết C++ với tên gọi "C with Classes" được mô tả trong hai bài báo của Bjarne Stroustrup (thuộc AT&amp;T Bell Laboratories) với nhan đề "Classes: An Abstract Data Type Facility for the C Language" và "Adding Classes to C : AnExercise in Language Evolution". Trong công trình này, tác giả đã đề xuất khái niệm lớp, bổ sung việc kiểm tra kiểu tham số của hàm, các chuyển đổi kiểu và một số mở rộng khác vào ngôn ngữ C. Bjarne Stroustrup nghiên cứu mở rộng ngôn ngữ C nhằm đạt đến một ngôn ngữ mô phỏng (simulation language) với những tính năng hướng đối tượng.</para>
+    <para id="id5559774">Trong năm 1983, 1984, ngôn ngữ "C with Classes" được thiết kế lại, mở rộng hơn rồi một trình biên dịch ra đời. Và chính từ đó, xuất hiện tên gọi "C++". Bjarne Stroustrup mô tả ngôn ngữ C++ lần đầu tiên trong bài báo có nhan đề "Data Abstraction in C". Sau một vài hiệu chỉnh C++ được công bố rộng rãi trong quyển "The C++ Programming Language" của Bjarne Stroustrup xuất hiện đánh dấu sự hiện diện thực sự của C++, người lập tình chuyên nghiệp từ đây đã có một ngôn ngữ đủ mạnh cho các dữ án thực tiễn của mình.</para>
+    <para id="id5578598">Về thực chất C++ giống như C nhưng bổ sung thêm một số mở rộng quan trọng, đặc biệt là ý tưởng về đối tượng, lập trình định hướng đối tượng.Thật ra các ý tưởng về cấu trúc trong C++ đã xuất phát vào các năm 1970 từ Simula 70 và Algol 68. Các ngôn ngữ này đã đưa ra các khái niệm về lớp và đơn thể. Ada là một ngôn ngữ phát triển từ đó, nhưng C++ đã khẳng định vai trò thực sự của mình.</para>
+    <section id="id-543465986083">
+      <title>CÁC MỞ RỘNG CỦA C++</title>
+      <section id="id-272858950666">
+        <title>Các từ khóa mới của C++ </title>
+        <para id="id6602460">Để bổ sung các tính năng mới vào C, một số từ khóa (keyword) mới đã được đưa vào C++ ngoài các từ khóa có trong C. Các chương trình bằng C nào sử dụng các tên trùng với các từ khóa cần phải thay đổi trước khi chương trình được dịch lại bằng C++. Các từ khóa mới này là : </para>
+        <table id="id5152866" summary="">
+          <tgroup cols="6">
+            <colspec colnum="1" colname="c1"/>
+            <colspec colnum="2" colname="c2"/>
+            <colspec colnum="3" colname="c3"/>
+            <colspec colnum="4" colname="c4"/>
+            <colspec colnum="5" colname="c5"/>
+            <colspec colnum="6" colname="c6"/>
+            <tbody>
+              <row>
+                <entry>asm</entry>
+                <entry>catch</entry>
+                <entry>class</entry>
+                <entry>delete</entry>
+                <entry>friend</entry>
+                <entry>inline</entry>
+              </row>
+              <row>
+                <entry>new</entry>
+                <entry>operator</entry>
+                <entry>private</entry>
+                <entry>protected</entry>
+                <entry>public</entry>
+                <entry>template</entry>
+              </row>
+              <row>
+                <entry>this</entry>
+                <entry>throw</entry>
+                <entry>try</entry>
+                <entry>virtual</entry>
+                <entry> </entry>
+                <entry> </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+      </section>
+      <section id="id-999257585186">
+        <title>Cách ghi chú thích</title>
+        <para id="id5730891"> C++ chấp nhận hai kiểu chú thích. Các lập trình viên bằng C đã quen với cách chú thích bằng /*…*/. Trình biên dịch sẽ bỏ qua mọi thứ nằm giữa /*…*/.</para>
+        <para id="id5730899"><link resource="javascript:if(confirm('http:">Ví dụ 2.1</link>: Trong chương trình sau :</para>
+        <para id="id5707557">#include &lt;iostream.h&gt;</para>
+        <para id="id5309692">int main()</para>
+        <para id="id5309696">{</para>
+        <para id="id5309700">int I;</para>
+        <para id="id5723637">for(I = 0; I &lt; 10 ; ++ I) // 0 - 9</para>
+        <para id="id5723648">cout&lt;&lt;I&lt;&lt;"\n";// In ra</para>
+        <para id="id6027350">return 0;</para>
+        <para id="id6140841">}</para>
+        <para id="id6140845">Mọi thứ nằm giữa /*…*/ từ dòng 1 đến dòng 3 đều được chương trình bỏ qua. Chương trình này còn minh họa cách chú thích thứ hai. Đó là cách chú thích bắt đầu bằng // ở dòng 8 và dòng 9. Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT2_1.EXE">chạy ví dụ 2.1</link>, kết quả ở hình 2.1.</para>
+        <figure id="id6087227">
+          <media id="id1163995294477" alt=""><image src="../../media/graphics1-5847.png" mime-type="image/png" height="187" width="287"/></media>
+        </figure>
+        <para id="id5718237">Hình 2.1: Kết quả của ví dụ 2.1</para>
+        <para id="id5718243">Nói chung, kiểu chú thích /*…*/ được dùng cho các khối chú thích lớn gồm nhiều dòng, còn kiểu // được dùng cho các chú thích một dòng.</para>
+      </section>
+      <section id="id-594170122755">
+        <title>Dòng nhập/xuất chuẩn</title>
+        <para id="id5718249">Trong chương trình C, chúng ta thường sử dụng các hàm nhập/xuất dữ liệu là printf() và scanf(). Trong C++ chúng ta có thể dùng dòng nhập/xuất chuẩn (standard input/output stream) để nhập/xuất dữ liệu thông qua hai biến đối tượng của dòng (stream object) là cout và cin.</para>
+        <para id="id6502200"><link resource="javascript:if(confirm('http:">Ví dụ 2.2:</link> Chương trình nhập vào hai số. Tính tổng và hiệu của hai số vừa nhập.</para>
+        <para id="id6213561">//Chuong trinh 2.2</para>
+        <para id="id6213566">#include &lt;iostream.h&gt;</para>
+        <para id="id6213571">int main()</para>
+        <para id="id6213575">{</para>
+        <para id="id6037782">int X, Y;</para>
+        <para id="id6037788">cout&lt;&lt; "Nhap vao mot so X:";</para>
+        <para id="id6037794">cin&gt;&gt;X;</para>
+        <para id="id6027313">cout&lt;&lt; "Nhap vao mot so Y:";</para>
+        <para id="id6027319">cin&gt;&gt;Y;</para>
+        <para id="id6027325">cout&lt;&lt;"Tong cua chung:"&lt;&lt;X+Y&lt;&lt;"\n";</para>
+        <para id="id6162892">cout&lt;&lt;"Hieu cua chung:"&lt;&lt;X-Y&lt;&lt;"\n";</para>
+        <para id="id6162898">return 0;</para>
+        <para id="id6162903">}</para>
+        <para id="id6025478">Để thực hiện dòng xuất chúng ta sử dụng biến cout (console output) kết hợp với toán tử chèn (insertion operator) &lt;&lt; như ở các dòng 5, 7, 9 và 10. Còn dòng nhập chúng ta sử dụng biến cin (console input) kết hợp với toán tử trích (extraction operator) &gt;&gt; như ở các dòng 6 và 8. Khi sử dụng cout hay cin, chúng ta phải kéo file iostream.h như dòng 1. Chúng ta sẽ tìm hiểu kỹ về dòng nhập/xuất ở chương 8. Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT2_2.EXE">chạy ví dụ 2.2</link> , kết quả ở hình 2.2.</para>
+        <figure id="id6213976">
+          <media id="id1163999787089" alt=""><image src="../../media/graphics2-73a5.png" mime-type="image/png" height="85" width="492"/></media>
+        </figure>
+        <para id="id5849634">Hình 2.2: Kết quả của ví dụ 2.2</para>
+        <figure id="id5849643">
+          <media id="id1164001004408" alt=""><image src="../../media/graphics3-a38b.png" mime-type="image/png" height="330" width="579"/></media>
+        </figure>
+        <para id="id5086590">Hình 2.3: Dòng nhập/xuất dữ liệu</para>
+      </section>
+      <section id="id-495085976446">
+        <title>Cách chuyển đổi kiểu dữ liệu</title>
+        <para id="id6691372">Hình thức chuyển đổi kiểu trong C tương đối tối nghĩa, vì vậy C++ trang bị thêm một cách chuyển đổi kiểu giống như một lệnh gọi hàm.</para>
+        <para id="id6691384">
+          <link resource="javascript:if(confirm('http:">Ví dụ 2.3:</link>
+        </para>
+        <para id="id3321018">#include &lt;iostream.h&gt;</para>
+        <para id="id6095077">int main()</para>
+        <para id="id6095082">{</para>
+        <para id="id6095086">int X = 200;</para>
+        <para id="id6095091">long Y = (long) X; //Chuyen doi kieu theo cach cua C</para>
+        <para id="id6691428">long Z = long(X); //Chuyen doi kieu theo cach moi cua C++</para>
+        <para id="id6691436">cout&lt;&lt; "X = "&lt;&lt;X&lt;&lt;"\n";</para>
+        <para id="id6691442">cout&lt;&lt; "Y = "&lt;&lt;Y&lt;&lt;"\n";</para>
+        <para id="id6688588">cout&lt;&lt; "Z = "&lt;&lt;Z&lt;&lt;"\n";</para>
+        <para id="id6688593">return 0;</para>
+        <para id="id6688598">}</para>
+        <para id="id6688602">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT2_3.EXE">chạy ví dụ 2.3</link> , kết quả ở hình 2.4.</para>
+        <figure id="id6688561">
+          <media id="id1163999662029" alt=""><image src="../../media/graphics4-0457.png" mime-type="image/png" height="67" width="493"/></media>
+        </figure>
+        <para id="id6212675">Hình 2.4: Kết quả của ví dụ 2.3</para>
+      </section>
+      <section id="id-855136293835">
+        <title>Vị trí khai báo biến</title>
+        <para id="id5865305">Trong chương trình C đòi hỏi tất cả các khai báo bên trong một phạm vi cho trước phải được đặt ở ngay đầu của phạm vi đó. Điều này có nghĩa là tất cả các khai báo toàn cục phải đặt trước tất cả các hàm và các khai báo cục bộ phải được tiến hành trước tất cả các lệnh thực hiện. Ngược lại C++ cho phép chúng ta khai báo linh hoạt bất kỳ vị trí nào trong một phạm vi cho trước (không nhất thiết phải ngay đầu của phạm vi), chúng ta xen kẽ việc khai báo dữ liệu với các câu lệnh thực hiện.</para>
+        <para id="id5860450"><link resource="javascript:if(confirm('http:">Ví dụ 2.4: </link>Chương trình mô phỏng một máy tính đơn giản</para>
+        <para id="id6213595">1: #include &lt;iostream.h&gt;2: int main()3: {4:    int X;5:    cout&lt;&lt; "Nhap vao so thu nhat:";6:    cin&gt;&gt;X;7:    int Y;</para>
+        <para id="id4622695">8:    cout&lt;&lt; "Nhap vao so thu hai:";9:    cin&gt;&gt;Y;10:    char Op;11:    cout&lt;&lt;"Nhap vao toan tu (+-*/):";12:    cin&gt;&gt;Op;13:    switch(Op)14:    {15:       case ‘+’:</para>
+        <para id="id6212620">16:          cout&lt;&lt;"Ket qua:"&lt;&lt;X+Y&lt;&lt;"\n";</para>
+        <para id="id6212626">17:          break;</para>
+        <para id="id6212631">18:       case ‘-’:</para>
+        <para id="id6118444">19:          cout&lt;&lt;"Ket qua:"&lt;&lt;X-Y&lt;&lt;"\n";</para>
+        <para id="id6118449">20:          break;</para>
+        <para id="id6118454">21:       case ‘*’:</para>
+        <para id="id5695864">22:          cout&lt;&lt;"Ket qua:"&lt;&lt;long(X)*Y&lt;&lt;"\n";</para>
+        <para id="id5695870">23:          break;</para>
+        <para id="id5695875">24:       case ‘/’: </para>
+        <para id="id5695837">25:          if (Y)</para>
+        <para id="id5695842">26:             cout&lt;&lt;"Ket qua:"&lt;&lt;float(X)/Y&lt;&lt;"\n";</para>
+        <para id="id5695848">27:          else</para>
+        <para id="id5695853">28:             cout&lt;&lt;"Khong the chia duoc!" &lt;&lt;"\n"; 9; 9; </para>
+        <para id="id6152211">29:          break;</para>
+        <para id="id6152219">30:       default :</para>
+        <para id="id6152224">31:          cout&lt;&lt;"Khong hieu toan tu nay!"&lt;&lt;"\n";</para>
+        <para id="id6214007">32:    }</para>
+        <para id="id6214011">33:    return 0;</para>
+        <para id="id6214015">34: }</para>
+        <para id="id6214019">Trong chương trình chúng ta xen kẻ khai báo biến với lệnh thực hiện ở dòng 4 đến dòng 12. Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT2_4.EXE">chạy ví dụ 2.4</link>, kết quả ở hình 2.5.</para>
+        <figure id="id6024590">
+          <media id="id2199286" alt=""><image src="../../media/graphics5-0bd9.png" mime-type="image/png" height="85" width="492"/></media>
+        </figure>
+        <para id="id6027370">Hình 2.5: Kết quả của ví dụ 2.4</para>
+        <para id="id6027376">Khi khai báo một biến trong chương trình, biến đó sẽ có hiệu lực trong phạm vi của chương trình đó kể từ vị trí nó xuất hiện. Vì vậy chúng ta không thể sử dụng một biến được khai báo bên dưới nó. </para>
+      </section>
+      <section id="id-249271938698">
+        <title>Các biến const</title>
+        <para id="id5874694">Trong ANSI C, muốn định nghĩa một hằng có kiểu nhất định thì chúng ta dùng biến const (vì nếu dùng #define thì tạo ra các hằng không có chứa thông tin về kiểu). Trong C++, các biến const linh hoạt hơn một cách đáng kể:</para>
+        <para id="id4063787">C++ xem const cũng như #define nếu như chúng ta muốn dùng hằng có tên trong chương trình. Chính vì vậy chúng ta có thể dùng const để quy định kích thước của một mảng như đoạn mã sau:</para>
+        <para id="id6602095">const int ArraySize = 100;</para>
+        <para id="id6602099">int X[ArraySize];</para>
+        <para id="id6602103">Khi khai báo một biến const trong C++ thì chúng ta phải khởi tạo một giá trị ban đầu nhưng đối với ANSI C thì không nhất thiết phải làm như vậy (vì trình biên dịch ANSI C tự động gán trị zero cho biến const nếu chúng ta không khởi tạo giá trị ban đầu cho nó).</para>
+        <para id="id6056087">Phạm vi của các biến const giữa ANSI C và C++ khác nhau. Trong ANSI C, các biến const được khai báo ở bên ngoài mọi hàm thì chúng có phạm vi toàn cục, điều này nghĩa là chúng có thể nhìn thấy cả ở bên ngoài file mà chúng được định nghĩa, trừ khi chúng được khai báo là static. Nhưng trong C++, các biến const được hiểu mặc định là static. </para>
+      </section>
+      <section id="id-466471927878">
+        <title>Về struct, union và enum</title>
+        <para id="id6024442">Trong C++, các struct và union thực sự các các kiểu class. Tuy nhiên có sự thay đổi đối với C++. Đó là tên của struct và union được xem luôn là tên kiểu giống như khai báo bằng lệnh typedef vậy. </para>
+        <table id="id6295441" summary="">
+          <tgroup cols="2">
+            <colspec colnum="1" colname="c1"/>
+            <colspec colnum="2" colname="c2"/>
+            <tbody>
+              <row>
+                <entry>Trong C, chúng ta có thể có đoạn mã sau :struct Complex{float Real;float Imaginary;};…………………..struct Complex C;</entry>
+                <entry>Trong C++, vấn đề trở nên đơn giản hơn:struct Complex{float Real;float Imaginary;};…………………..Complex C;</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+        <para id="id5723574">Quy định này cũng áp dụng cho cả union và enum. Tuy nhiên để tương thích với C, C++ vẫn chấp nhận cú pháp cũ.</para>
+        <para id="id6204170">Một kiểu union đặc biệt được thêm vào C++ gọi là union nặc danh (anonymous union). Nó chỉ khai báo một loạt các trường(field) dùng chung một vùng địa chỉ bộ nhớ. Một union nặc danh không có tên tag, các trường có thể được truy xuất trực tiếp bằng tên của chúng. Chẳng hạn như đoạn mã sau: </para>
+        <para id="id4622667">union </para>
+        <para id="id4622672">{</para>
+        <para id="id6499699">int Num;</para>
+        <para id="id6499703">float Value;</para>
+        <para id="id6499707">};</para>
+        <para id="id6499711">Cả hai Num và Value đều dùng chung một vị trí và không gian bộ nhớ. Tuy nhiên không giống như kiểu union có tên, các trường của union nặc danh thì được truy xuất trực tiếp, chẳng hạn như sau:</para>
+        <para id="id6122170">Num = 12;</para>
+        <para id="id5736420">Value = 30.56;</para>
+      </section>
+      <section id="id-853177048987">
+        <title>Toán tử định phạm vi</title>
+        <para id="id6502238">Toán tử định phạm vi (scope resolution operator) ký hiệu là ::, nó được dùng truy xuất một phần tử bị che bởi phạm vi hiện thời.</para>
+        <para id="id5707490">
+          <link resource="javascript:if(confirm('http:">Ví dụ 2.5 :</link>
+        </para>
+        <para id="id5726574">1: #include &lt;iostream.h&gt;</para>
+        <para id="id5726579">2: int X = 5;</para>
+        <para id="id5726584">3: int main()</para>
+        <para id="id5726588">4: {</para>
+        <para id="id6688612">5:    int X = 16;</para>
+        <para id="id6688616">6:    cout&lt;&lt; "Bien X ben trong = "&lt;&lt;X&lt;&lt;"\n";</para>
+        <para id="id6688622">7:    cout&lt;&lt; "Bien X ben ngoai = "&lt;&lt;::X&lt;&lt;"\n";</para>
+        <para id="id6688628">8:    return 0;</para>
+        <para id="id4622632">9: }</para>
+        <para id="id4622636">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT2_5.EXE">chạy ví dụ 2.5</link>, kết quả ở hình 2.6</para>
+        <figure id="id5309671">
+          <media id="id1164001676408" alt=""><image src="../../media/graphics6-dcfb.png" mime-type="image/png" height="67" width="616"/></media>
+        </figure>
+        <para id="id6211246">Hình 2.6: Kết quả của ví dụ 2.5</para>
+        <para id="id6029347">Toán tử định phạm vi còn được dùng trong các định nghĩa hàm của các phương thức trong các lớp, để khai báo lớp chủ của các phương thức đang được định nghĩa đó. Toán tử định phạm vi còn có thể được dùng để phân biệt các thành phần trùng tên của các lớp cơ sở khác nhau. </para>
+      </section>
+      <section id="id-586123823337">
+        <title>Toán tử new và delete</title>
+        <para id="id6140872">Trong các chương trình C, tất cả các cấp phát động bộ nhớ đều được xử lý thông qua các hàm thư viện như malloc(), calloc() và free(). C++ định nghĩa một phương thức mới để thực hiện việc cấp phát động bộ nhớ bằng cách dùng hai toán tử new và delete. Sử dụng hai toán tử này sẽ linh hoạt hơn rất nhiều so với các hàm thư viện của C. </para>
+        <table id="id6056073" summary="">
+          <tgroup cols="2">
+            <colspec colnum="1" colname="c1"/>
+            <colspec colnum="2" colname="c2"/>
+            <tbody>
+              <row>
+                <entry>Đoạn chương trình sau dùng để cấp phát vùng nhớ động theo lối cổ điển của C.int *P;P = malloc(sizeof(int));if (P==NULL)printf("Khong con du bo nho de cap phat\n");else{*P = 290;printf("%d\n", *P);free(P);}</entry>
+                <entry>Trong C++, chúng ta có thể viết lại đoạn chương trình trên như sau:int *P;P = new int;if (P==NULL)cout&lt;&lt;"Khong con du bo nho de cap phat\n";else{*P = 290;cout&lt;&lt;*P&lt;&lt;"\n";delete P;}</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+        <para id="id5583982">Chúng ta nhận thấy rằng, cách viết của C++ sáng sủa và dễ sử dụng hơn nhiều. Toán tử new thay thế cho hàm malloc() hay calloc() của C có cú pháp như sau :</para>
+        <para id="id6063657">new type_name</para>
+        <para id="id3756513">new ( type_name ) </para>
+        <para id="id3756530">new type_name initializer</para>
+        <para id="id6130205">new ( type_name ) initializer</para>
+        <para id="id6602400">Trong đó :</para>
+        <para id="id6602406">type_name: Mô tả kiểu dữ liệu được cấp phát. Nếu kiểu dữ liệu mô tả phức tạp, nó có thể được đặt bên trong các dấu ngoặc.</para>
+        <para id="id6602421">initializer: Giá trị khởi động của vùng nhớ được cấp phát.</para>
+        <para id="id5857567">Nếu toán tử new cấp phát không thành công thì nó sẽ trả về giá trị NULL.</para>
+        <para id="id5726545">Còn toán tử delete thay thế hàm free() của C, nó có cú pháp như sau :</para>
+        <para id="id5726564">delete pointer</para>
+        <para id="id4162208">delete [] pointer</para>
+        <para id="id4162221">Chúng ta có thể vừa cấp phát vừa khởi động như sau :</para>
+        <para id="id6024561">int *P;</para>
+        <para id="id6024565">P = new int(100);</para>
+        <para id="id6024569">if (P!=NULL)</para>
+        <para id="id6024574">{</para>
+        <para id="id6024578">cout&lt;&lt;*P&lt;&lt;"\n";</para>
+        <para id="id5033241">delete P;</para>
+        <para id="id5033246">}</para>
+        <para id="id5033250">else</para>
+        <para id="id5033254">cout&lt;&lt;"Khong con du bo nho de cap phat\n";</para>
+        <para id="id5033260">Để cấp phát một mảng, chúng ta làm như sau :</para>
+        <para id="id5431510">int *P;</para>
+        <para id="id5431515">P = new int[10]; //Cấp phát mảng 10 số nguyên</para>
+        <para id="id5431521">if (P!=NULL)</para>
+        <para id="id5431525">{</para>
+        <para id="id5431529">for(int I = 0;I&lt;10;++)</para>
+        <para id="id5867417">P[I]= I;</para>
+        <para id="id5867422">for(I = 0;I&lt;10;++)</para>
+        <para id="id5867426">cout&lt;&lt;P[I]&lt;&lt;"\n";</para>
+        <para id="id5867431">delete []P;</para>
+        <para id="id5867435">}else cout&lt;&lt;"Khong con du bo nho de cap phat\n";</para>
+        <para id="id5867442">Chú ý: Đối với việc cấp phát mảng chúng ta không thể vừa cấp phát vừa khởi động giá trị cho chúng, chẳng hạn đoạn chương trình sau là sai :</para>
+        <para id="id5850100">int *P;</para>
+        <para id="id5850105">P = new (int[10])(3); //Sai !!!</para>
+        <para id="id6688637"><link resource="javascript:if(confirm('http:">Ví dụ 2.6:</link> Chương trình tạo một mảng động, khởi động mảng này với các giá trị ngẫu nhiên và sắp xếp chúng.</para>
+        <para id="id6043675">1: #include &lt;iostream.h&gt;</para>
+        <para id="id6043679">2: #include &lt;time.h&gt;</para>
+        <para id="id6043683">3: #include &lt;stdlib.h&gt;</para>
+        <para id="id6043687">4: int main()</para>
+        <para id="id6043692">5: {</para>
+        <para id="id6043696">6:    int N;</para>
+        <para id="id6043701">7:    cout&lt;&lt;"Nhap vao so phan tu cua mang:";</para>
+        <para id="id6029428">8:    cin&gt;&gt;N;</para>
+        <para id="id6029435">9:    int *P=new int[N];</para>
+        <para id="id6029440">10:    if (P==NULL)</para>
+        <para id="id6029445">11:    {</para>
+        <para id="id6029449">12:       cout&lt;&lt;"Khong con bo nho de cap phat\n";</para>
+        <para id="id6118414">13:       return 1;</para>
+        <para id="id6118419">14:    }</para>
+        <para id="id6118423">15:    srand((unsigned)time(NULL));</para>
+        <para id="id6118429">16:    for(int I=0;I&lt;N;++I)</para>
+        <para id="id6118434">17:      P[I]=rand()%100; //Tạo các số ngẫu nhiên từ 0 đến 99</para>
+        <para id="id6382940">18:    cout&lt;&lt;"Mang truoc khi sap xep\n";</para>
+        <para id="id6382947">19:    for(I=0;I&lt;N;++I)</para>
+        <para id="id6382951">20:       cout&lt;&lt;P[I]&lt;&lt;" ";</para>
+        <para id="id6382955">21:    for(I=0;I&lt;N-1;++I)</para>
+        <para id="id6382959">22:       for(int J=I+1;J&lt;N;++J)</para>
+        <para id="id5694012">23:          if (P[I]&gt;P[J])</para>
+        <para id="id5694017">24:          {</para>
+        <para id="id5694022">25:             int Temp=P[I];</para>
+        <para id="id5694028">26:             P[I]=P[J];</para>
+        <para id="id5694037">27:             P[J]=Temp;</para>
+        <para id="id6061184">28:          }</para>
+        <para id="id6061190">29:    cout&lt;&lt;"\nMang sau khi sap xep\n";</para>
+        <para id="id6061196">30:    for(I=0;I&lt;N;++I)</para>
+        <para id="id6061200">31:       cout&lt;&lt;P[I]&lt;&lt;" ";</para>
+        <para id="id6061204">32:    delete []P;</para>
+        <para id="id6061208">33:    return 0;</para>
+        <para id="id6688845">34:  }</para>
+        <para id="id6688849">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT2_6.EXE">chạy ví dụ 2.6</link>, kết quả ở hình 2.7</para>
+        <figure id="id6688870">
+          <media id="id1164001780463" alt=""><image src="../../media/graphics7-2cb1.png" mime-type="image/png" height="106" width="492"/></media>
+        </figure>
+        <para id="id6281977">Hình 2.7: Kết quả của ví dụ 2.6</para>
+        <para id="id6281983"><link resource="javascript:if(confirm('http:">Ví dụ 2.7:</link> Chương trình cộng hai ma trận trong đó mỗi ma trận được cấp phát động.</para>
+        <para id="id5865359">Chúng ta có thể xem mảng hai chiều như mảng một chiều như hình 2.8</para>
+        <figure id="id5865370">
+          <media id="id1163991717898" alt=""><image src="../../media/graphics8-035a.png" mime-type="image/png" height="242" width="582"/></media>
+        </figure>
+        <para id="id3782585">Hình 2.8: Mảng hai chiều có thể xem như mảng một chiều.</para>
+        <para id="id3782591">Gọi X là mảng hai chiều có kích thước m dòng và n cột. </para>
+        <para id="id6211943">A là mảng một chiều tương ứng.</para>
+        <para id="id6211950">Nếu X[i][j] chính là A[k] thì k = i*n + j</para>
+        <para id="id6211958">Chúng ta có chương trình như sau :</para>
+        <para id="id6211964">1: #include &lt;iostream.h&gt;</para>
+        <para id="id6211972">2: #include &lt;conio.h&gt;</para>
+        <para id="id6281995">3: //prototype</para>
+        <para id="id6281999">4: void AddMatrix(int * A,int *B,int*C,int M,int N);</para>
+        <para id="id6282004">5: int AllocMatrix(int **A,int M,int N);</para>
+        <para id="id6282008">6: void FreeMatrix(int *A);</para>
+        <para id="id6282012">7: void InputMatrix(int *A,int M,int N,char Symbol);</para>
+        <para id="id6282018">8: void DisplayMatrix(int *A,int M,int N);</para>
+        <para id="id6282022">9: </para>
+        <para id="id6028271">10: int main()</para>
+        <para id="id6028276">11: {</para>
+        <para id="id6028280">12:     int M,N;</para>
+        <para id="id6028285">13:     int *A = NULL,*B = NULL,*C = NULL;</para>
+        <para id="id6028291">14:</para>
+        <para id="id6028295">15:     clrscr();</para>
+        <para id="id6028300">16:     cout&lt;&lt;"Nhap so dong cua ma tran:";</para>
+        <para id="id6027244">17:     cin&gt;&gt;M;</para>
+        <para id="id6027248">18:     cout&lt;&lt;"Nhap so cot cua ma tran:";</para>
+        <para id="id6027255">19:     cin&gt;&gt;N;</para>
+        <para id="id6027260">20:     //Cấp phát vùng nhớ cho ma trận A</para>
+        <para id="id6688939">21:     if (!AllocMatrix(&amp;A,M,N))</para>
+        <para id="id6688943">22:     { //endl: Xuất ra kí tự xuống dòng (‘\n’)</para>
+        <para id="id6688957">23:         cout&lt;&lt;"Khong con du bo nho!"&lt;&lt;endl; </para>
+        <para id="id6688963">24:         return 1;</para>
+        <para id="id6688968">25:     }</para>
+        <para id="id6037882">26:     //Cấp phát vùng nhớ cho ma trận B</para>
+        <para id="id6037895">27:     if (!AllocMatrix(&amp;B,M,N))</para>
+        <para id="id6037903">28:     {</para>
+        <para id="id6037908">29:         cout&lt;&lt;"Khong con du bo nho!"&lt;&lt;endl;</para>
+        <para id="id6037914">30:         FreeMatrix(A);//Giải phóng vùng nhớ A</para>
+        <para id="id5857607">31:         return 1;</para>
+        <para id="id5857613">32:     }</para>
+        <para id="id5857617">33:     //Cấp phát vùng nhớ cho ma trận C</para>
+        <para id="id5857631">34:     if (!AllocMatrix(&amp;C,M,N))</para>
+        <para id="id5033364">35:     {</para>
+        <para id="id5033368">36:         cout&lt;&lt;"Khong con du bo nho!"&lt;&lt;endl;</para>
+        <para id="id5033377">37:         FreeMatrix(A);//Giải phóng vùng nhớ A</para>
+        <para id="id5033391">38:         FreeMatrix(B);//Giải phóng vùng nhớ B</para>
+        <para id="id6282198">39:         return 1;</para>
+        <para id="id6282203">40:     }</para>
+        <para id="id6282208">41:     cout&lt;&lt;"Nhap ma tran thu 1"&lt;&lt;endl;</para>
+        <para id="id6282214">42:     InputMatrix(A,M,N,'A');</para>
+        <para id="id6282219">43:     cout&lt;&lt;"Nhap ma tran thu 2"&lt;&lt;endl;</para>
+        <para id="id6282228">44:     InputMatrix(B,M,N,'B');</para>
+        <para id="id6282234">45:     clrscr();</para>
+        <para id="id5548843">46:     cout&lt;&lt;"Ma tran thu 1"&lt;&lt;endl;</para>
+        <para id="id5548848">47:     DisplayMatrix(A,M,N);</para>
+        <para id="id5548853">48:     cout&lt;&lt;"Ma tran thu 2"&lt;&lt;endl;</para>
+        <para id="id5548859">49:     DisplayMatrix(B,M,N);</para>
+        <para id="id5548864">50:     AddMatrix(A,B,C,M,N);</para>
+        <para id="id5548870">51:     cout&lt;&lt;"Tong hai ma tran"&lt;&lt;endl;</para>
+        <para id="id5548876">52:     DisplayMatrix(C,M,N);</para>
+        <para id="id5548881">53:     FreeMatrix(A);//Giải phóng vùng nhớ A</para>
+        <para id="id4063824">54:     FreeMatrix(B);//Giải phóng vùng nhớ B</para>
+        <para id="id4063838">55:     FreeMatrix(C);//Giải phóng vùng nhớ C</para>
+        <para id="id4063851">56:     return 0;</para>
+        <para id="id5648777">57: }</para>
+        <para id="id5648782">68: //Cộng hai ma trận</para>
+        <para id="id5648794">69: void AddMatrix(int *A,int *B,int*C,int M,int N)</para>
+        <para id="id5648799">70: {</para>
+        <para id="id5648804">71:     for(int I=0;I&lt;M*N;++I)</para>
+        <para id="id5648809">72:     C[I] = A[I] + B[I];</para>
+        <para id="id5648817">73: }</para>
+        <para id="id6118843">74: //Cấp phát vùng nhớ cho ma trận</para>
+        <para id="id6118856">75: int AllocMatrix(int **A,int M,int N)</para>
+        <para id="id6118860">76: {</para>
+        <para id="id6118865">77:     *A = new int [M*N];</para>
+        <para id="id6118870">78:     if (*A == NULL)</para>
+        <para id="id6118875">79:         return 0;</para>
+        <para id="id6118880">80:     return 1;</para>
+        <para id="id6118885">81: }</para>
+        <para id="id6095104">82: //Giải phóng vùng nhớ</para>
+        <para id="id6095117">83: void FreeMatrix(int *A)</para>
+        <para id="id6095124">84: {</para>
+        <para id="id6095128">85:     if (A!=NULL)</para>
+        <para id="id6095133">86:         delete [] A;</para>
+        <para id="id6095139">87: }</para>
+        <para id="id6095143">88: //Nhập các giá trị của ma trận</para>
+        <para id="id6382997">89: void InputMatrix(int *A,int M,int N,char Symbol)</para>
+        <para id="id6383002">90: {</para>
+        <para id="id6383006">91:     for(int I=0;I&lt;M;++I)</para>
+        <para id="id6383011">92:     for(int J=0;J&lt;N;++J)</para>
+        <para id="id6383016">93     {</para>
+        <para id="id6383021">94:         cout&lt;&lt;Symbol&lt;&lt;"["&lt;&lt;I&lt;&lt;"]["&lt;&lt;J&lt;&lt;"]=";</para>
+        <para id="id6383030">95:         cin&gt;&gt;A[I*N+J];</para>
+        <para id="id6383035">96:     }</para>
+        <para id="id6383040">97: }</para>
+        <para id="id5719555">100: //Hiển thị ma trận</para>
+        <para id="id5719567">101: void DisplayMatrix(int *A,int M,int N)</para>
+        <para id="id5719571">102: {</para>
+        <para id="id5719576">103:    for(int I=0;I&lt;M;++I)</para>
+        <para id="id5719581">104:    {</para>
+        <para id="id5719585">105:      for(int J=0;J&lt;N;++J)</para>
+        <para id="id5719591">106:     {</para>
+        <para id="id5719595">107:      out.width(7);//canh le phai voi chieu dai 7 ky tu</para>
+        <para id="id5719608">108:      cout&lt;&lt;A[I*N+J];</para>
+        <para id="id5719613">109:     }</para>
+        <para id="id6029865">110:    cout&lt;&lt;endl;</para>
+        <para id="id6029870">111:    }</para>
+        <para id="id6029874">112: }</para>
+        <para id="id6029879">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT2_7.EXE">chạy ví du 2.7</link> , kết quả ở hình 2.9</para>
+        <figure id="id6029902">
+          <media id="id6342838" alt=""><image src="../../media/graphics9-77c8.png" mime-type="image/png" height="296" width="490"/></media>
+        </figure>
+        <para id="id6601412">Hình 2.9: Kết quả của ví dụ 2.7</para>
+        <para id="id6601418">Một cách khác để cấp phát mảng hai chiều A gồm M dòng và N cột như sau:</para>
+        <para id="id6601443">int ** A = new int *[M];</para>
+        <para id="id6601447">int * Tmp = new int[M*N];</para>
+        <para id="id6601451">for(int I=0;I&lt;M;++I)</para>
+        <para id="id6601456">{</para>
+        <para id="id6601460">A[I]=Tmp;</para>
+        <para id="id6601464">Tmp+=N;</para>
+        <para id="id6601469">}</para>
+        <para id="id6601473">//Thao tác trên mảng hai chiều A</para>
+        <para id="id6601478">…………………..</para>
+        <para id="id6601483">delete [] *A;</para>
+        <para id="id6601488">delete [] A;</para>
+        <para id="id6601492">Toán tử new còn có một thuận lợi khác, đó là tất cả các lỗi cấp phát động đều có thể bắt được bằng một hàm xử lý lỗi do người dùng tự định nghĩa. C++ có định nghĩa một con trỏ (pointer) trỏ đến hàm đặc biệt. Khi toán tử new được sử dụng để cấp phát động và một lỗi xảy ra do cấp phát, C++ tự gọi đến hàm được chỉ bởi con trỏ này. Định nghĩa của con trỏ này như sau:</para>
+        <para id="id5527980">typedef void (*pvf)();</para>
+        <para id="id5527988">pvf _new_handler(pvf p);</para>
+        <para id="id5527992">Điều này có nghĩa là con trỏ _new_handler là con trỏ trỏ đến hàm không có tham số và không trả về giá trị. Sau khi chúng ta định nghĩa hàm như vậy và gán địa chỉ của nó cho _new_handler chúng ta có thể bắt được tất cả các lỗi do cấp phát động.</para>
+        <para id="id5528018">
+          <link resource="javascript:if(confirm('http:">Ví dụ 2.8:</link>
+        </para>
+        <para id="id5528039">1: #include &lt;iostream.h&gt;</para>
+        <para id="id5528044">2: #include &lt;stdlib.h&gt;</para>
+        <para id="id5528048">3: #include &lt;new.h&gt;</para>
+        <para id="id5528053">4:</para>
+        <para id="id5528057">5: void MyHandler();</para>
+        <para id="id5528065">6:</para>
+        <para id="id5528069">7: unsigned long I = 0; 9; </para>
+        <para id="id5528074">8: void main()</para>
+        <para id="id5528078">9: {</para>
+        <para id="id5528083">10:    int *A;</para>
+        <para id="id5528088">11:    _new_handler = MyHandler;</para>
+        <para id="id6131586">12:    for( ; ; ++I)</para>
+        <para id="id6131591">13:       A = new int;</para>
+        <para id="id6131596">14: </para>
+        <para id="id6131600">15: }</para>
+        <para id="id6131605">16:</para>
+        <para id="id6131609">17: void MyHandler()</para>
+        <para id="id6131613">18: {</para>
+        <para id="id6131618">19:    cout&lt;&lt;"Lan cap phat thu "&lt;&lt;I&lt;&lt;endl;</para>
+        <para id="id6131624">20:    cout&lt;&lt;"Khong con du bo nho!"&lt;&lt;endl;</para>
+        <para id="id6131630">21:    exit(1);</para>
+        <para id="id6131635">22: }</para>
+        <para id="id6131639">Sử dụng con trỏ _new_handler chúng ta phải include file new.h như ở dòng 3. Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT2_8.EXE">chạy ví dụ 2.8</link>, kết quả ở hình 2.10.</para>
+        <figure id="id6131670">
+          <media id="id1164000513040" alt=""><image src="../../media/graphics10-bd88.png" mime-type="image/png" height="53" width="469"/></media>
+        </figure>
+        <para id="id6131694">Hình 2.10: Kết quả của ví dụ 2.8</para>
+        <para id="id6131700">Thư viện cũng còn có một hàm được định nghĩa trong new.h là hàm có prototype sau :</para>
+        <para id="id6131709">void ( * set_new_handler(void (* my_handler)() ))();</para>
+        <para id="id6131717">Hàm set_new_handler() dùng để gán một hàm cho _new_handler.</para>
+        <para id="id5528222">
+          <link resource="javascript:if(confirm('http:">Ví dụ 2.9:</link>
+        </para>
+        <para id="id5528243">1: #include &lt;iostream.h&gt;</para>
+        <para id="id5528251">2: #include &lt;new.h&gt;</para>
+        <para id="id5528256">3: #include &lt;stdlib.h&gt;</para>
+        <para id="id5528260">4:</para>
+        <para id="id5528264">5: void MyHandler();</para>
+        <para id="id5528269">6:</para>
+        <para id="id5528273">7: int main(void)</para>
+        <para id="id5528278">8: {</para>
+        <para id="id5528282">9:</para>
+        <para id="id5528286">10:    char *Ptr;</para>
+        <para id="id5528291">11:</para>
+        <para id="id5528295">12:    set_new_handler(MyHandler);</para>
+        <para id="id5528301">13:    Ptr = new char[64000u];</para>
+        <para id="id5528306">14:    set_new_handler(0); //Thiết lập lại giá trị mặc định</para>
+        <para id="id5528320">15:    return 0;</para>
+        <para id="id5528328">16: }</para>
+        <para id="id5528333">17:</para>
+        <para id="id5528337">18: void MyHandler()</para>
+        <para id="id5528342">19: {</para>
+        <para id="id5528346">20:    cout &lt;&lt;endl&lt;&lt;"Khong con du bo nho";</para>
+        <para id="id5528352">21:    exit(1);</para>
+        <para id="id5528357">22 }</para>
+        <para id="id5528361">Chúng ta <link resource="javascript:if(confirm('http:">chạy ví dụ 2.9</link>, kết quả ở hình 2.11</para>
+        <figure id="id6104472">
+          <media id="id1164000958466" alt=""><image src="../../media/graphics11-23db.png" mime-type="image/png" height="36" width="497"/></media>
+        </figure>
+        <para id="id6104495">Hình 2.11: Kết quả của ví dụ 2.9</para>
+      </section>
+      <section id="id-210938537244">
+        <title>Hàm inline</title>
+        <para id="id6104509">Một chương trình có cấu trúc tốt sử dụng các hàm để chia chương trình thành các đơn vị độc lập có logic riêng. Tuy nhiên, các hàm thường phải chứa một loạt các xử lý điểm vào (entry point): tham số phải được đẩy vào stack, một lệnh gọi phải được thực hiện và sau đó việc quay trở về cũng phải được thực hiện bằng cách giải phóng các tham số ra khỏi stack. Khi các xử lý điểm vào chậm chạp thường các lập trình viên C phải sử dụng cách chép lập lại các đoạn chương trình nếu muốn tăng hiệu quả.</para>
+        <para id="id6104536">Để tránh khỏi phải xử lý điểm vào, C++ trang bị thêm từ khóa inline để loại việc gọi hàm. Khi đó trình biên dịch sẽ không biên dịch hàm này như một đoạn chương trình riêng biệt mà nó sẽ được chèn thẳng vào các chỗ mà hàm này được gọi. Điều này làm giảm việc xử lý điểm vào mà vẫn cho phép một chương trình được tổ chức dưới dạng có cấu trúc. Cú pháp của hàm inline như sau :</para>
+        <para id="id6104568">inline data_type function_name ( parameters )</para>
+        <para id="id6104587">{</para>
+        <para id="id6104591">……………………………..</para>
+        <para id="id6104596">}</para>
+        <para id="id6104600">Trong đó:data_type: Kiểu trả về của hàm.</para>
+        <para id="id6104609">Function_name:Tên của hàm.</para>
+        <para id="id6104615">Parameters: Các tham số của hàm.</para>
+        <para id="id6104620"><link resource="javascript:if(confirm('http:">Ví dụ 2.10: </link>Tính thể tích của hình lập phương</para>
+        <para id="id6104644">1: #include &lt;iostream.h&gt;</para>
+        <para id="id6104649">2: inline float Cube(float S)</para>
+        <para id="id6104653">3: {</para>
+        <para id="id6104657">4: return S*S*S;</para>
+        <para id="id6104662">5: } </para>
+        <para id="id6104666">6: </para>
+        <para id="id6104670">7: int main()</para>
+        <para id="id6104675">8: {</para>
+        <para id="id6104679">9:     cout&lt;&lt;"Nhap vao chieu dai canh cua hinh lap phuong:";</para>
+        <para id="id6104686">10:    float Side;</para>
+        <para id="id6444369">11:    cin&gt;&gt;Side;</para>
+        <para id="id6444374">12:    cout&lt;&lt;"The tich cua hinh lap phuong = "&lt;&lt;Cube(Side);</para>
+        <para id="id6444384">13:    return 0;</para>
+        <para id="id6444388">14: }</para>
+        <para id="id6444393">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT2_10.EXE">chạy ví dụ 2.10</link>, kết quả ở hình 2.12</para>
+        <figure id="id6444416">
+          <media id="id1163998903835" alt=""><image src="../../media/graphics12-504a.png" mime-type="image/png" height="59" width="510"/></media>
+        </figure>
+        <para id="id6444440">Hình 2.12: Kết quả của ví dụ 2.10</para>
+        <para id="id6444446"><figure id="id6444450"><media id="id4242071" alt=""><image src="../../media/graphics13-f2aa.png" mime-type="image/png" height="17" width="17"/></media></figure>Chú ý:</para>
+        <para id="id6444479"><figure id="id6444484"><media id="id1164002022519" alt=""><image src="../../media/graphics14-0eb8.png" mime-type="image/png" height="9" width="9"/></media></figure>Sử dụng hàm inline sẽ làm cho chương trình lớn lên vì trình biên dịch chèn đoạn chương trình vào các chỗ mà hàm này được gọi. Do đó thường các hàm inline thường là các hàm nhỏ, ít phức tạp.</para>
+        <para id="id6444528"><figure id="id6444533"><media id="id7240588" alt=""><image src="../../media/graphics15-0eb8.png" mime-type="image/png" height="9" width="9"/></media></figure>Các hàm inline phải được định nghĩa trước khi sử dụng. Ở ví dụ 2.10 chúng ta sửa lại như sau thì chương trình sẽ bị báo lỗi:</para>
+        <para id="id6444569">#include &lt;iostream.h&gt;</para>
+        <para id="id6444574">float Cube(float S);</para>
+        <para id="id6444578">int main()</para>
+        <para id="id6444583">{</para>
+        <para id="id6444587">    cout&lt;&lt;"Nhap vao chieu dai canh cua hinh lap phuong:";</para>
+        <para id="id6444594">    float Side;</para>
+        <para id="id6444598">    cin&gt;&gt;Side;</para>
+        <para id="id6444603">    cout&lt;&lt;"The tich cua hinh lap phuong = "&lt;&lt;Cube(Side);</para>
+        <para id="id6142206">    return 0;</para>
+        <para id="id6142211">}</para>
+        <para id="id6142215">inline float Cube(float S)</para>
+        <para id="id6142220">{</para>
+        <para id="id6142224">   return S*S*S;</para>
+        <para id="id6142228">}</para>
+        <para id="id6142233"><media id="id1163998375611" alt=""><image src="../../media/graphics16-0eb8.png" mime-type="image/png" height="9" width="9"/></media>Các hàm đệ quy không được là hàm inline.</para>
+      </section>
+      <section id="id-0936212191512">
+        <title>Các giá trị tham số mặc định</title>
+        <para id="id6142279">Một trong các đặc tính nổi bật nhất của C++ là khả năng định nghĩa các giá trị tham số mặc định cho các hàm. Bình thường khi gọi một hàm, chúng ta cần gởi một giá trị cho mỗi tham số đã được định nghĩa trong hàm đó, chẳng hạn chúng ta có đoạn chương trình sau:</para>
+        <para id="id6142294">void MyDelay(long Loops); //prototype</para>
+        <para id="id6142299">………………………………..</para>
+        <para id="id6142303">void MyDelay(long Loops)</para>
+        <para id="id6142307">{</para>
+        <para id="id6142312">for(int I = 0; I &lt; Loops; ++I)</para>
+        <para id="id6142316">;</para>
+        <para id="id6142321">} </para>
+        <para id="id6142325">Mỗi khi hàm MyDelay() được gọi chúng ta phải gởi cho nó một giá trị cho tham số Loops. Tuy nhiên, trong nhiều trường hợp chúng ta có thể nhận thấy rằng chúng ta luôn luôn gọi hàm MyDelay() với cùng một giá trị Loops nào đó. Muốn vậy chúng ta sẽ dùng giá trị mặc định cho tham số Loops, giả sử chúng ta muốn giá trị mặc định cho tham số Loops là 1000. Khi đó đoạn mã trên được viết lại như sau :</para>
+        <para id="id6142379">void MyDelay(long Loops = 1000); //prototype</para>
+        <para id="id6142384">………………………………..</para>
+        <para id="id6142388">void MyDelay(long Loops)</para>
+        <para id="id6142392">{</para>
+        <para id="id6142397">for(int I = 0; I &lt; Loops; ++I)</para>
+        <para id="id6142402">;</para>
+        <para id="id6142406">} </para>
+        <para id="id6142410">Mỗi khi gọi hàm MyDelay() mà không gởi một tham số tương ứng thì trình biên dịch sẽ tự động gán cho tham số Loops giá trị 1000.</para>
+        <para id="id6142431">MyDelay(); // Loops có giá trị là 1000</para>
+        <para id="id6142437">MyDelay(5000); // Loops có giá trị là 5000</para>
+        <para id="id6142443">Giá trị mặc định cho tham số có thể là một hằng, một hàm, một biến hay một biểu thức.</para>
+        <para id="id6142452"><link resource="javascript:if(confirm('http:">Ví dụ 2.11: </link>Tính thể tích của hình hộp</para>
+        <para id="id6142475">1: #include &lt;iostream.h&gt;</para>
+        <para id="id6142480">2: int BoxVolume(int Length = 1, int Width = 1, int Height = 1);</para>
+        <para id="id6142484">3:</para>
+        <para id="id6142488">4: int main()</para>
+        <para id="id6142492">5: {</para>
+        <para id="id6142497">6:   cout &lt;&lt; "The tich hinh hop mac dinh: "</para>
+        <para id="id6142503">7:   &lt;&lt; BoxVolume() &lt;&lt; endl &lt;&lt; endl </para>
+        <para id="id6142508">8:   &lt;&lt; "The tich hinh hop voi chieu dai=10,do rong=1,chieu cao=1:"</para>
+        <para id="id6142518">9:   &lt;&lt; BoxVolume(10) &lt;&lt; endl &lt;&lt; endl</para>
+        <para id="id6142524">10:  &lt;&lt; "The tich hinh hop voi chieu dai=10,do rong=5,chieu cao=1:"</para>
+        <para id="id6142530">11:  &lt;&lt; BoxVolume(10, 5) &lt;&lt; endl &lt;&lt; endl</para>
+        <para id="id6142536">12:  &lt;&lt; "The tich hinh hop voi chieu dai=10,do rong=5,chieu cao=2:"</para>
+        <para id="id6142542">13:  &lt;&lt; BoxVolume(10, 5, 2)&lt;&lt; endl;</para>
+        <para id="id6142548">14:    return 0;</para>
+        <para id="id6142553">15: }</para>
+        <para id="id6142557">16: //Tính thể tích của hình hộp</para>
+        <para id="id6142570">17: int BoxVolume(int Length, int Width, int Height)</para>
+        <para id="id6142575">18: {</para>
+        <para id="id6142580">19:    return Length * Width * Height;</para>
+        <para id="id6142585">20: }</para>
+        <para id="id6142590">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT2_11.EXE">chạy ví dụ 2.11</link>, kết quả ở hình 2.13</para>
+        <figure id="id6142613">
+          <media id="id1163995604421" alt=""><image src="../../media/graphics17-b5cf.png" mime-type="image/png" height="117" width="473"/></media>
+        </figure>
+        <para id="id6142637">Hình 2.13: Kết quả của ví dụ 2.11</para>
+        <para id="id6142643"><figure id="id6142647"><media id="id1163992239719" alt=""><image src="../../media/graphics18-f2aa.png" mime-type="image/png" height="17" width="17"/></media></figure>Chú ý:</para>
+        <para id="id5702844"><figure id="id5702848"><media id="id2966712" alt=""><image src="../../media/graphics19-0eb8.png" mime-type="image/png" height="9" width="9"/></media></figure>Các tham số có giá trị mặc định chỉ được cho trong prototype của hàm và không được lặp lại trong định nghĩa hàm (Vì trình biên dịch sẽ dùng các thông tin trong prototype chứ không phải trong định nghĩa hàm để tạo một lệnh gọi).</para>
+        <para id="id5702883"><figure id="id5702887"><media id="id5530342" alt=""><image src="../../media/graphics20-0eb8.png" mime-type="image/png" height="9" width="9"/></media></figure>Một hàm có thể có nhiều tham số có giá trị mặc định. Các tham số có giá trị mặc định cần phải được nhóm lại vào các tham số cuối cùng (hoặc duy nhất) của một hàm. Khi gọi hàm có nhiều tham số có giá trị mặc định, chúng ta chỉ có thể bỏ bớt các tham số theo thứ tự từ phải sang trái và phải bỏ liên tiếp nhau, chẳng hạn chúng ta có đoạn chương trình như sau:</para>
+        <para id="id5702922">int MyFunc(int a= 1, int b , int c = 3, int d = 4); //prototype sai!!!</para>
+        <para id="id5702929">int MyFunc(int a, int b = 2 , int c = 3, int d = 4); //prototype đúng</para>
+        <para id="id5702937">………………………..</para>
+        <para id="id5702943">MyFunc(); // Lỗi do tham số a không có giá trị mặc định</para>
+        <para id="id5702950">MyFunc(1);// OK, các tham số b, c và d lấy giá trị mặc định</para>
+        <para id="id5702958">MyFunc(5, 7); // OK, các tham số c và d lấy giá trị mặc định</para>
+        <para id="id5702967">MyFunc(5, 7, , 8); // Lỗi do các tham số bị bỏ phải liên tiếp nhau</para>
+      </section>
+      <section id="id-872825835943">
+        <title>Phép tham chiếu</title>
+        <para id="id5702983">Trong C, hàm nhận tham số là con trỏ đòi hỏi chúng ta phải thận trọng khi gọi hàm. Chúng ta cần viết hàm hoán đổi giá trị giữa hai số như sau:</para>
+        <para id="id5702995">void Swap(int *X, int *Y); </para>
+        <para id="id5703001">{</para>
+        <para id="id5703007">int Temp = *X;</para>
+        <para id="id5703012">*X = *Y;</para>
+        <para id="id5703018">*Y = *Temp; </para>
+        <para id="id5703024">} </para>
+        <para id="id5703030">Để hoán đổi giá trị hai biến A và B thì chúng ta gọi hàm như sau:</para>
+        <para id="id5703047">Swap(&amp;A, &amp;B);</para>
+        <para id="id5703053">Rõ ràng cách viết này không được thuận tiện lắm. Trong trường hợp này, C++ đưa ra một kiểu biến rất đặc biệt gọi là biến tham chiếu (reference variable). Một biến tham chiếu giống như là một bí danh của biến khác. Biến tham chiếu sẽ làm cho các hàm có thay đổi nội dung các tham số của nó được viết một cách thanh thoát hơn. Khi đó hàm Swap() được viết như sau:</para>
+        <para id="id5703075">void Swap(int &amp;X, int &amp;Y); </para>
+        <para id="id5703082">{</para>
+        <para id="id5703087">int Temp = X;</para>
+        <para id="id5703093">X = Y;</para>
+        <para id="id5703099">Y = Temp ; </para>
+        <para id="id5703104">} </para>
+        <para id="id5703110">Chúng ta gọi hàm như sau :</para>
+        <para id="id5703116">Swap(A, B);</para>
+        <para id="id5703122">Với cách gọi hàm này, C++ tự gởi địa chỉ của A và B làm tham số cho hàm Swap(). Cách dùng biến tham chiếu cho tham số của C++ tương tự như các tham số được khai báo là Var trong ngôn ngữ Pascal. Tham số này được gọi là tham số kiểu tham chiếu (reference parameter). Như vậy biến tham chiếu có cú pháp như sau :</para>
+        <para id="id5703162">data_type &amp; variable_name;</para>
+        <para id="id5703180">Trong đó:</para>
+        <para id="id5703186">data_type: Kiểu dữ liệu của biến.</para>
+        <para id="id5703193">variable_name: Tên của biến</para>
+        <para id="id5703200">Khi dùng biến tham chiếu cho tham số chỉ có địa chỉ của nó được gởi đi chứ không phải là toàn bộ cấu trúc hay đối tượng đó như hình 2.14, điều này rất hữu dụng khi chúng ta gởi cấu trúc và đối tượng lớn cho một hàm. </para>
+        <figure id="id5703218">
+          <media id="id3784909" alt=""><image src="../../media/graphics21-9b9a.png" mime-type="image/png" height="180" width="517"/></media>
+        </figure>
+        <para id="id5703242">Hình 2.14: Một tham số kiểu tham chiếu nhận một tham chiếu tới một biến được chuyển cho tham số của hàm.</para>
+        <para id="id5703253"><link resource="javascript:if(confirm('http:">Ví dụ 2.12: </link>Chương trình hoán đổi giá trị của hai biến.</para>
+        <para id="id5703278">#include &lt;iostream.h&gt;</para>
+        <para id="id5703285">//prototype</para>
+        <para id="id5703293">void Swap(int &amp;X,int &amp;Y);</para>
+        <para id="id5703298">int main()</para>
+        <para id="id5703302">{</para>
+        <para id="id5703306">   int X = 10, Y = 5;</para>
+        <para id="id5703311">   cout&lt;&lt;"Truoc khi hoan doi: X = "&lt;&lt;X&lt;&lt;",Y = "&lt;&lt;Y&lt;&lt;endl;</para>
+        <para id="id5703317">   Swap(X,Y);</para>
+        <para id="id5703321"> cout&lt;&lt;"Sau khi hoan doi: X = "&lt;&lt;X&lt;&lt;",Y = "&lt;&lt;Y&lt;&lt;endl;</para>
+        <para id="id5703330">   return 0;</para>
+        <para id="id5703335">}</para>
+        <para id="id5703339">void Swap(int &amp;X,int &amp;Y)</para>
+        <para id="id5703344">{</para>
+        <para id="id5703348">    int Temp=X;</para>
+        <para id="id5703352">    X=Y;</para>
+        <para id="id5703357">    Y=Temp;</para>
+        <para id="id5703361">}</para>
+        <para id="id5703365">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT2_12.EXE">chạy ví dụ 2.12</link>, kết quả ở hình 2.15</para>
+        <figure id="id5703388">
+          <media id="id1164000604783" alt=""><image src="../../media/graphics22-8a72.png" mime-type="image/png" height="53" width="461"/></media>
+        </figure>
+        <para id="id6141572">Hình 2.15: Kết quả của ví dụ 2.12</para>
+        <para id="id6141577">Đôi khi chúng ta muốn gởi một tham số nào đó bằng biến tham chiếu cho hiệu quả, mặc dù chúng ta không muốn giá trị của nó bị thay đổi thì chúng ta dùng thêm từ khóa const như sau :</para>
+        <para id="id6141592">int MyFunc(const int &amp; X);</para>
+        <para id="id6141599">Hàm MyFunc() sẽ chấp nhận một tham số X gởi bằng tham chiếu nhưng const xác định rằng X không thể bị thay đổi.</para>
+        <para id="id6141631">Biến tham chiếu có thể sử dụng như một bí danh của biến khác (bí danh đơn giản như một tên khác của biến gốc), chẳng hạn như đoạn mã sau :</para>
+        <para id="id6141643">int Count = 1;</para>
+        <para id="id6141648">int &amp; Ref = Count;  //Tạo biến Ref như là một bí danh của biến Count</para>
+        <para id="id6141658">++Ref; //Tăng biến Count lên 1 (sử dụng bí danh của biến Count)</para>
+        <para id="id6141666">Các biến tham chiếu phải được khởi động trong phần khai báo của chúng và chúng ta không thể gán lại một bí danh của biến khác cho chúng. Chẳng hạn đoạn mã sau là sai:</para>
+        <para id="id6141679">int X = 1;</para>
+        <para id="id6141684">int &amp; Y; //Lỗi: Y phải được khởi động. </para>
+        <para id="id6141693">Khi một tham chiếu được khai báo như một bí danh của biến khác, mọi thao tác thực hiện trên bí danh chính là thực hiện trên biến gốc của nó. Chúng ta có thể lấy địa chỉ của biến tham chiếu và có thể so sánh các biến tham chiếu với nhau (phải tương thích về kiểu tham chiếu). </para>
+        <para id="id6141708"><link resource="javascript:if(confirm('http:">Ví dụ 2.13:</link> Mọi thao tác trên trên bí danh chính là thao tác trên biến gốc của nó.</para>
+        <para id="id6141734">#include &lt;iostream.h&gt;</para>
+        <para id="id6141742">int main()</para>
+        <para id="id6141746">{</para>
+        <para id="id6141750">   int X = 3;</para>
+        <para id="id6141755">   int &amp;Y = X; //Y la bí danh của X</para>
+        <para id="id6141767">   int Z = 100;</para>
+        <para id="id6141772">   cout&lt;&lt;"X="&lt;&lt;X&lt;&lt;endl&lt;&lt;"Y="&lt;&lt;Y&lt;&lt;endl;</para>
+        <para id="id6141777">   Y *= 3;</para>
+        <para id="id6141782">   cout&lt;&lt;"X="&lt;&lt;X&lt;&lt;endl&lt;&lt;"Y="&lt;&lt;Y&lt;&lt;endl;</para>
+        <para id="id6141787">   Y = Z;</para>
+        <para id="id6141791">   cout&lt;&lt;"X="&lt;&lt;X&lt;&lt;endl&lt;&lt;"Y="&lt;&lt;Y&lt;&lt;endl;</para>
+        <para id="id6141796">   return 0;</para>
+        <para id="id6141801">}</para>
+        <para id="id6141805">Chúng ta c<link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT2_13.EXE">hạy ví dụ 2.13</link>, kết quả ở hình 2.16</para>
+        <figure id="id6141828">
+          <media id="id1163995684299" alt=""><image src="../../media/graphics23-110f.png" mime-type="image/png" height="111" width="472"/></media>
+        </figure>
+        <para id="id6141852">Hình 2.16: Kết quả của ví dụ 2.13</para>
+        <para id="id6141857"><link resource="javascript:if(confirm('http:">Ví dụ 2.14:</link> Lấy địa chỉ của biến tham chiếu</para>
+        <para id="id6141881">#include &lt;iostream.h&gt;</para>
+        <para id="id6141889">int main()</para>
+        <para id="id6141894">{</para>
+        <para id="id6141898">   int X = 3;</para>
+        <para id="id6141903">   int &amp;Y = X; //Y la bí danh của X</para>
+        <para id="id6141913">   cout&lt;&lt;"Dia chi cua X = "&lt;&lt;&amp;X&lt;&lt;endl;</para>
+        <para id="id6141919">   cout&lt;&lt;"Dia chi cua bi danh Y= "&lt;&lt;&amp;Y&lt;&lt;endl;</para>
+        <para id="id6141925">   return 0;</para>
+        <para id="id6141930">}</para>
+        <para id="id6141934">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT2_14.EXE">chạy ví dụ 2.14</link>, kết quả ở hình 2.17</para>
+        <figure id="id6141958">
+          <media id="id1163998390426" alt=""><image src="../../media/graphics24-f4f1.png" mime-type="image/png" height="59" width="521"/></media>
+        </figure>
+        <para id="id6141981">Hình 2.17: Kết quả của ví dụ 2.14</para>
+        <para id="id6141987">Chúng ta có thể tạo ra biến tham chiếu với việc khởi động là một hằng, chẳng hạn như đoạn mã sau :</para>
+        <para id="id6141997">int &amp; Ref = 45;</para>
+        <para id="id6142002">Trong trường hợp này, trình biên dịch tạo ra một biến tạm thời chứa trị hằng và biến tham chiếu chính là bí danh của biến tạm thời này. Điều này gọi là tham chiếu độc lập (independent reference).</para>
+        <para id="id6142016">Các hàm có thể trả về một tham chiếu, nhưng điều này rất nguy hiểm. Khi hàm trả về một tham chiếu tới một biến cục bộ của hàm thì biến này phải được khai báo là static, ngược lại tham chiếu tới nó thì khi hàm kết thúc biến cục bộ này sẽ bị bỏ qua. Chẳng hạn như đoạn chương trình sau:</para>
+        <para id="id6142040">int &amp; MyFunc()</para>
+        <para id="id6142045">{</para>
+        <para id="id6142049">static int X = 200; //Nếu không khai báo là static thì điều này rất nguy hiểm.</para>
+        <para id="id6142056">return X;</para>
+        <para id="id6142060">}</para>
+        <para id="id6142065">Khi một hàm trả về một tham chiếu, chúng ta có thể gọi hàm ở phía bên trái của một phép gán.</para>
+        <para id="id6142074">
+          <link resource="javascript:if(confirm('http:">Ví dụ 2.15:</link>
+        </para>
+        <para id="id6142096">1: #include &lt;iostream.h&gt;</para>
+        <para id="id6142105">2: </para>
+        <para id="id6142109">3: int X = 4;</para>
+        <para id="id6142114">4: //prototype</para>
+        <para id="id6142123">5: int &amp; MyFunc();</para>
+        <para id="id6142129">6: </para>
+        <para id="id6142133">7: int main()</para>
+        <para id="id6142138">8: {</para>
+        <para id="id6142143">9:     cout&lt;&lt;"X="&lt;&lt;X&lt;&lt;endl;</para>
+        <para id="id6142148">10:    cout&lt;&lt;"X="&lt;&lt;MyFunc()&lt;&lt;endl;</para>
+        <para id="id6142154">11:    MyFunc() = 20; //Nghĩa là X = 20</para>
+        <para id="id6142164">12:    cout&lt;&lt;"X="&lt;&lt;X&lt;&lt;endl;</para>
+        <para id="id6142170">13:    return 0;</para>
+        <para id="id6689494">14: }</para>
+        <para id="id6689499">15:</para>
+        <para id="id6689504">16: int &amp; MyFunc()</para>
+        <para id="id6689508">17: {</para>
+        <para id="id6689513">18:    return X;</para>
+        <para id="id6689518">19: }</para>
+        <para id="id6689523">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT2_15.EXE">chạy ví dụ 2.15</link>, kết quả ở hình 2.18</para>
+        <figure id="id6689546">
+          <media id="id1163994001604" alt=""><image src="../../media/graphics25-734f.png" mime-type="image/png" height="70" width="518"/></media>
+        </figure>
+        <para id="id6689570">Hình 2.18: Kết quả của ví dụ 2.15</para>
+        <para id="id6689576"><figure id="id6689580"><media id="id1163992623214" alt=""><image src="../../media/graphics26-f2aa.png" mime-type="image/png" height="17" width="17"/></media></figure>Chú ý:</para>
+        <para id="id6689609"><figure id="id6689614"><media id="id1163996356624" alt=""><image src="../../media/graphics27-0eb8.png" mime-type="image/png" height="9" width="9"/></media></figure>Mặc dù biến tham chiếu trông giống như là biến con trỏ nhưng chúng không thể là biến con trỏ do đó chúng không thể được dùng cấp phát động.</para>
+        <para id="id6689645"><figure id="id6689649"><media id="id8340786" alt=""><image src="../../media/graphics28-0eb8.png" mime-type="image/png" height="9" width="9"/></media></figure>Chúng ta không thể khai báo một biến tham chiếu chỉ đến biến tham chiếu hoặc biến con trỏ chỉ đến biến tham chiếu. Tuy nhiên chúng ta có thể khai báo một biến tham chiếu về biến con trỏ như đoạn mã sau:</para>
+        <para id="id6689684">int X;</para>
+        <para id="id6689688">int *P = &amp;X;</para>
+        <para id="id6689693">int * &amp; Ref = P;</para>
+      </section>
+      <section id="id-618303563269">
+        <title>Phép đa năng hóa (Overloading) </title>
+        <para id="id6689707">Với ngôn ngữ C++, chúng ta có thể đa năng hóa các hàm và các toán tử (operator). Đa năng hóa là phương pháp cung cấp nhiều hơn một định nghĩa cho tên hàm đã cho trong cùng một phạm vi. Trình biên dịch sẽ lựa chọn phiên bản thích hợp của hàm hay toán tử dựa trên các tham số mà nó được gọi. </para>
+        <section id="id-0575836533747">
+          <title>Đa năng hóa các hàm (Functions overloading) </title>
+          <para id="id6689730">Trong ngôn ngữ C cũng như mọi ngôn ngữ máy tính khác, mỗi hàm đều phải có một tên phân biệt. Đôi khi đây là một điều phiền toái. Chẳng hạn như trong ngôn ngữ C, có rất nhiều hàm trả về trị tuyệt đối của một tham số là số, vì cần thiết phải có tên phân biệt nên C phải có hàm riêng cho mỗi kiểu dữ liệu số, do vậy chúng ta có tới ba hàm khác nhau để trả về trị tuyệt đối của một tham số:</para>
+          <para id="id6689746">int abs(int i);</para>
+          <para id="id6689751">long labs(long l);</para>
+          <para id="id6689755">double fabs(double d);</para>
+          <para id="id6689760">Tất cả các hàm này đều cùng thực hiện một chứa năng nên chúng ta thấy điều này nghịch lý khi phải có ba tên khác nhau. C++ giải quyết điều này bằng cách cho phép chúng ta tạo ra các hàm khác nhau có cùng một tên. Đây chính là đa năng hóa hàm. Do đó trong C++ chúng ta có thể định nghĩa lại các hàm trả về trị tuyệt đối để thay thế các hàm trên như sau :</para>
+          <para id="id6689776">int abs(int i);</para>
+          <para id="id6689781">long abs(long l);</para>
+          <para id="id6689786">double abs(double d);</para>
+          <para id="id6689791">
+            <link resource="javascript:if(confirm('http:">Ví dụ 2.16:</link>
+          </para>
+          <para id="id6689812">1: #include &lt;iostream.h&gt;</para>
+          <para id="id6689821">2: #include &lt;math.h&gt;</para>
+          <para id="id6689830">3: </para>
+          <para id="id6689835">4: int MyAbs(int X);</para>
+          <para id="id6689840">5: long MyAbs(long X);</para>
+          <para id="id6689845">6: double MyAbs(double X);</para>
+          <para id="id6689850">7:</para>
+          <para id="id6689854">8: int main()</para>
+          <para id="id6689859">9: {</para>
+          <para id="id6689864">10:    int X = -7;</para>
+          <para id="id6689869">11:    long Y = 200000l;</para>
+          <para id="id6689875">12:    double Z = -35.678;</para>
+          <para id="id6689880">13:    cout&lt;&lt;"Tri tuyet doi cua so nguyen (int) "&lt;&lt;X&lt;&lt;" la "</para>
+          <para id="id6689887">14:        &lt;&lt;MyAbs(X)&lt;&lt;endl;</para>
+          <para id="id6689892">15:    cout&lt;&lt;"Tri tuyet doi cua so nguyen (long int) "&lt;&lt;Y&lt;&lt;" la "</para>
+          <para id="id6689899">16:        &lt;&lt;MyAbs(Y)&lt;&lt;endl;</para>
+          <para id="id6689904">17:    cout&lt;&lt;"Tri tuyet doi cua so thuc "&lt;&lt;Z&lt;&lt;" la "</para>
+          <para id="id6689910">18:        &lt;&lt;MyAbs(Z)&lt;&lt;endl;</para>
+          <para id="id6689916">19:    return 0;</para>
+          <para id="id6689921">20: }</para>
+          <para id="id6689926">21:</para>
+          <para id="id6689930">22: int MyAbs(int X)</para>
+          <para id="id6689935">23: {</para>
+          <para id="id6689940">24:    return abs(X);</para>
+          <para id="id6689945">25: }</para>
+          <para id="id6689950">26:</para>
+          <para id="id6689954">27: long MyAbs(long X)</para>
+          <para id="id6689959">28: {</para>
+          <para id="id6689964">29:    return labs(X);</para>
+          <para id="id6689969">30: }</para>
+          <para id="id6689974">31:</para>
+          <para id="id6689978">32: double MyAbs(double X)</para>
+          <para id="id6689983">33: {</para>
+          <para id="id6689988">34:    return fabs(X);</para>
+          <para id="id6689993">35: }</para>
+          <para id="id6689998">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT2_16.EXE">chạy ví dụ 2.16</link> , kết quả ở hình 2.19</para>
+          <figure id="id6690021">
+            <media id="id3477799" alt=""><image src="../../media/graphics29-7f00.png" mime-type="image/png" height="71" width="521"/></media>
+          </figure>
+          <para id="id6690044">Hình 2.19: Kết quả của ví dụ 2.16</para>
+          <para id="id6690050">Trình biên dịch dựa vào sự khác nhau về số các tham số, kiểu của các tham số để có thể xác định chính xác phiên bản cài đặt nào của hàm MyAbs() thích hợp với một lệnh gọi hàm được cho, chẳng hạn như:</para>
+          <para id="id6690070">MyAbs(-7); //Gọi hàm int MyAbs(int) </para>
+          <para id="id6690076">MyAbs(-7l); //Gọi hàm long MyAbs(long) </para>
+          <para id="id6690086">MyAbs(-7.5); //Gọi hàm double MyAbs(double) </para>
+          <para id="id6690092">Quá trình tìm được hàm được đa năng hóa cũng là quá trình được dùng để giải quyết các trường hợp nhập nhằng của C++. Chẳng hạn như nếu tìm thấy một phiên bản định nghĩa nào đó của một hàm được đa năng hóa mà có kiểu dữ liệu các tham số của nó trùng với kiểu các tham số đã gởi tới trong lệnh gọi hàm thì phiên bản hàm đó sẽ được gọi. Nếu không trình biên dịch C++ sẽ gọi đến phiên bản nào cho phép chuyển kiểu dễ dàng nhất.</para>
+          <para id="id6690108">MyAbs(‘c’); //Gọi int MyAbs(int)</para>
+          <para id="id6690114">MyAbs(2.34f); //Gọi double MyAbs(double)</para>
+          <para id="id6690119">Các phép chuyển kiểu có sẵn sẽ được ưu tiên hơn các phép chuyển kiểu mà chúng ta tạo ra (chúng ta sẽ xem xét các phép chuyển kiểu tự tạo ở chương 3).</para>
+          <para id="id6690132">Chúng ta cũng có thể lấy địa chỉ của một hàm đã được đa năng hóa sao cho bằng một cách nào đó chúng ta có thể làm cho trình biên dịch C++ biết được chúng ta cần lấy địa chỉ của phiên bản hàm nào có trong định nghĩa. Chẳng hạn như:</para>
+          <para id="id6690147">int (*pf1)(int);</para>
+          <para id="id6690153">long (*pf2)(long);</para>
+          <para id="id6690159">int (*pf3)(double);</para>
+          <para id="id6690165">pf1 = MyAbs; //Trỏ đến hàm int MyAbs(int)</para>
+          <para id="id6690172">pf2 = MyAbs; //Trỏ đến hàm long MyAbs(long)</para>
+          <para id="id6690179">pf3 = MyAbs; //Lỗi!!! (không có phiên bản hàm nào để đối sánh)</para>
+          <para id="id6690188"><figure id="id5711917"><media id="id1163995718881" alt=""><image src="../../media/graphics30-f2aa.png" mime-type="image/png" height="17" width="17"/></media></figure>Các giới hạn của việc đa năng hóa các hàm:</para>
+          <para id="id5711948">Bất kỳ hai hàm nào trong tập các hàm đã đa năng phải có các tham số khác nhau.</para>
+          <para id="id5711960">Các hàm đa năng hóa với danh sách các tham số cùng kiểu chỉ dựa trên kiểu trả về của hàm thì trình biên dịch báo lỗi. Chẳng hạn như, các khai báo sau là không hợp lệ:</para>
+          <para id="id5711976">void Print(int X);</para>
+          <para id="id5711980">int Print(int X);</para>
+          <para id="id5711985">Không có cách nào để trình biên dịch nhận biết phiên bản nào được gọi nếu giá trị trả về bị bỏ qua. Như vậy các phiên bản trong việc đa năng hóa phải có sự khác nhau ít nhất về kiểu hoặc số tham số mà chúng nhận được.</para>
+          <para id="id5712000">Các khai báo bằng lệnh typedef không định nghĩa kiểu mới. Chúng chỉ thay đổi tên gọi của kiểu đã có. Chúng không ảnh hưởng tới cơ chế đa năng hóa hàm. Chúng ta hãy xem xét đoạn mã sau:</para>
+          <para id="id5712022">typedef char * PSTR;</para>
+          <para id="id5712027">void Print(char * Mess);</para>
+          <para id="id5712032">void Print(PSTR Mess);</para>
+          <para id="id5712036">Hai hàm này có cùng danh sách các tham số, do đó đoạn mã trên sẽ phát sinh lỗi.</para>
+          <para id="id5712045">Đối với kiểu mảng và con trỏ được xem như đồng nhất đối với sự phân biệt khác nhau giữa các phiên bản hàm trong việc đa năng hóa hàm. Chẳng hạn như đoạn mã sau se phát sinh lỗi:</para>
+          <para id="id5712058">void Print(char * Mess);</para>
+          <para id="id5712062">void Print(char Mess[]);</para>
+          <para id="id5712067">Tuy nhiên, đối với mảng nhiều chiều thì có sự phân biệt giữa các phiên bản hàm trong việc đa năng hóa hàm, chẳng hạn như đoạn mã sau hợp lệ:</para>
+          <para id="id5712079">void Print(char Mess[]);</para>
+          <para id="id5712084">void Print(char Mess[][7]);</para>
+          <para id="id5712088">void Print(char Mess[][9][42]);</para>
+          <para id="id5712092">const và các con trỏ (hay các tham chiếu) có thể dùng để phân biệt, chẳng hạn như đoạn mã sau hợp lệ:</para>
+          <para id="id5712110">void Print(char *Mess);</para>
+          <para id="id5712114">void Print(const char *Mess);</para>
+        </section>
+        <section id="id-0484196732664">
+          <title>Đa năng hóa các toán tử (Operators overloading) : </title>
+          <para id="id5712127">Trong ngôn ngữ C, khi chúng ta tự tạo ra một kiểu dữ liệu mới, chúng ta thực hiện các thao tác liên quan đến kiểu dữ liệu đó thường thông qua các hàm, điều này trở nên không thoải mái.</para>
+          <para id="id5712141"><link resource="javascript:if(confirm('http:">Ví dụ 2.17: </link>Chương trình cài đặt các phép toán cộng và trừ số phức</para>
+          <para id="id5712166">1: #include &lt;stdio.h&gt;</para>
+          <para id="id5712175">2: /* Định nghĩa số phức */</para>
+          <para id="id5712184">3: typedef struct</para>
+          <para id="id5712189">4: {</para>
+          <para id="id5712194">5:     double Real;</para>
+          <para id="id5712199">6:     double Imaginary;</para>
+          <para id="id5712205">7: }Complex;</para>
+          <para id="id5712210">8:</para>
+          <para id="id5712214">9:  Complex SetComplex(double R,double I);</para>
+          <para id="id5712220">10: Complex AddComplex(Complex C1,Complex C2);</para>
+          <para id="id5712225">11: Complex SubComplex(Complex C1,Complex C2);</para>
+          <para id="id5712231">12: void DisplayComplex(Complex C);</para>
+          <para id="id5712235">13:</para>
+          <para id="id5712239">14: int main(void)</para>
+          <para id="id5712244">15: {</para>
+          <para id="id5712249">16:    Complex C1,C2,C3,C4;</para>
+          <para id="id5712254">17:</para>
+          <para id="id5712259">18:    C1 = SetComplex(1.0,2.0);</para>
+          <para id="id5712265">19:    C2 = SetComplex(-3.0,4.0);</para>
+          <para id="id5712270">20:    printf("\nSo phuc thu nhat:");</para>
+          <para id="id5712276">21:    DisplayComplex(C1);</para>
+          <para id="id5712282">22:    printf("\nSo phuc thu hai:");</para>
+          <para id="id5712288">23:    DisplayComplex(C2);</para>
+          <para id="id5712293">24:    C3 = AddComplex(C1,C2); //Hơi bất tiện !!! </para>
+          <para id="id5712305">25:    C4 = SubComplex(C1,C2);</para>
+          <para id="id5712310">26:    printf("\nTong hai so phuc nay:");</para>
+          <para id="id5712316">27:    DisplayComplex(C3);</para>
+          <para id="id5712322">28:    printf("\nHieu hai so phuc nay:");</para>
+          <para id="id5712328">29:    DisplayComplex(C4);</para>
+          <para id="id5712333">30:    return 0;</para>
+          <para id="id5712339">31: }</para>
+          <para id="id5712343">32:</para>
+          <para id="id5712348">33: /* Đặt giá trị cho một số phức */</para>
+          <para id="id5712358">34: Complex SetComplex(double R,double I)</para>
+          <para id="id5712362">35: {</para>
+          <para id="id5712367">36:    Complex Tmp;</para>
+          <para id="id5712372">37:</para>
+          <para id="id5712377">38:    Tmp.Real = R;</para>
+          <para id="id5712382">39:    Tmp.Imaginary = I;</para>
+          <para id="id5712388">40:    return Tmp;</para>
+          <para id="id5712393">41: }</para>
+          <para id="id5712398">42: /* Cộng hai số phức */</para>
+          <para id="id5712407">43: Complex AddComplex(Complex C1,Complex C2)</para>
+          <para id="id5712413">44: {</para>
+          <para id="id5712417">45:    Complex Tmp;</para>
+          <para id="id5712423">46:</para>
+          <para id="id5712427">47:    Tmp.Real = C1.Real+C2.Real;</para>
+          <para id="id5712433">48:    Tmp.Imaginary = C1.Imaginary+C2.Imaginary;</para>
+          <para id="id5712439">49:    return Tmp;</para>
+          <para id="id5712444">50: }</para>
+          <para id="id5712449">51:</para>
+          <para id="id5712453">52: /* Trừ hai số phức */</para>
+          <para id="id5712463">53: Complex SubComplex(Complex C1,Complex C2)</para>
+          <para id="id5712469">54: {</para>
+          <para id="id5712473">55:    Complex Tmp;</para>
+          <para id="id5712479">56:</para>
+          <para id="id5712483">57:    Tmp.Real = C1.Real-C2.Real;</para>
+          <para id="id5712489">58:    Tmp.Imaginary = C1.Imaginary-C2.Imaginary;</para>
+          <para id="id5712495">59:    return Tmp;</para>
+          <para id="id5712500">60: }</para>
+          <para id="id5712505">61:</para>
+          <para id="id5712509">62: /* Hiển thị số phức */</para>
+          <para id="id5712519">63: void DisplayComplex(Complex C)</para>
+          <para id="id5712524">64: {</para>
+          <para id="id5712528">65:    printf("(%.1lf,%.1lf)",C.Real,C.Imaginary);</para>
+          <para id="id5712535">66: }</para>
+          <para id="id5712539">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT2_17.EXE">chạy ví dụ 2.17</link>, kết quả ở hình 2.20</para>
+          <figure id="id5712562">
+            <media id="id1163998805404" alt=""><image src="../../media/graphics31-04e7.png" mime-type="image/png" height="91" width="502"/></media>
+          </figure>
+          <para id="id5712587">Hình 2.20: Kết quả của ví dụ 2.17</para>
+          <para id="id5712592">Trong chương trình ở ví dụ 2.17, chúng ta nhận thấy với các hàm vừa cài đặt dùng để cộng và trừ hai số phức 1+2i và –3+4i; người lập trình hoàn toàn không thoải mái khi sử dụng bởi vì thực chất thao tác cộng và trừ là các toán tử chứ không phải là hàm. Để khắc phục yếu điểm này, trong C++ cho phép chúng ta có thể định nghĩa lại chức năng của các toán tử đã có sẵn một cách tiện lợi và tự nhiên hơn rất nhiều. Điều này gọi là đa năng hóa toán tử. Khi đó chương trình ở ví dụ 2.17 được viết như sau:</para>
+          <para id="id5712620">
+            <link resource="javascript:if(confirm('http:">Ví dụ 2.18:</link>
+          </para>
+          <para id="id6187600">1: #include &lt;iostream.h&gt;</para>
+          <para id="id6187609">2: // Định nghĩa số phức</para>
+          <para id="id6187619">3: typedef struct</para>
+          <para id="id6187623">4: {</para>
+          <para id="id6187628">5:     double Real;</para>
+          <para id="id6187633">6:     double Imaginary;</para>
+          <para id="id6187639">7: }Complex;</para>
+          <para id="id6187644">8:</para>
+          <para id="id6187648">9:  Complex SetComplex(double R,double I);</para>
+          <para id="id6187654">10: void DisplayComplex(Complex C);</para>
+          <para id="id6187658">11: Complex operator + (Complex C1,Complex C2);</para>
+          <para id="id6187664">12: Complex operator - (Complex C1,Complex C2);</para>
+          <para id="id6187669">13:</para>
+          <para id="id6187674">14: int main(void)</para>
+          <para id="id6187678">15: {</para>
+          <para id="id6187683">16:    Complex C1,C2,C3,C4;</para>
+          <para id="id6187689">17:</para>
+          <para id="id6187693">18:    C1 = SetComplex(1.0,2.0);</para>
+          <para id="id6187699">19:    C2 = SetComplex(-3.0,4.0);</para>
+          <para id="id6187704">20:    cout&lt;&lt;"\nSo phuc thu nhat:";</para>
+          <para id="id6187711">21:    DisplayComplex(C1);</para>
+          <para id="id6187716">22:    cout&lt;&lt;"\nSo phuc thu hai:";</para>
+          <para id="id6187722">23:    DisplayComplex(C2);</para>
+          <para id="id6187728">24:    C3 = C1 + C2;</para>
+          <para id="id6187733">25:    C4 = C1 - C2;</para>
+          <para id="id6187739">26:    cout&lt;&lt;"\nTong hai so phuc nay:";</para>
+          <para id="id6187745">27:    DisplayComplex(C3);</para>
+          <para id="id6187750">28:    cout&lt;&lt;"\nHieu hai so phuc nay:";</para>
+          <para id="id6187757">29:    DisplayComplex(C4);</para>
+          <para id="id6187762">30:    return 0;</para>
+          <para id="id6187768">31: }</para>
+          <para id="id6187772">32:</para>
+          <para id="id6187777">33: //Đặt giá trị cho một số phức</para>
+          <para id="id6187787">34: Complex SetComplex(double R,double I)</para>
+          <para id="id6187791">35: {</para>
+          <para id="id6187796">36:    Complex Tmp;</para>
+          <para id="id6187801">37:</para>
+          <para id="id6187806">38:    Tmp.Real = R;</para>
+          <para id="id6187811">39:    Tmp.Imaginary = I;</para>
+          <para id="id6187816">40:    return Tmp;</para>
+          <para id="id6187822">41: }</para>
+          <para id="id6187826">42:</para>
+          <para id="id6187831">43: //Cộng hai số phức</para>
+          <para id="id6187840">44: Complex operator + (Complex C1,Complex C2)</para>
+          <para id="id6187846">45: {</para>
+          <para id="id6187850">46:    Complex Tmp;</para>
+          <para id="id6187856">47:</para>
+          <para id="id6187860">48:    Tmp.Real = C1.Real+C2.Real;</para>
+          <para id="id6187866">49:    Tmp.Imaginary = C1.Imaginary+C2.Imaginary;</para>
+          <para id="id6187872">50:    return Tmp;</para>
+          <para id="id6187877">51: }</para>
+          <para id="id6187882">52:</para>
+          <para id="id6187886">53: //Trừ hai số phức</para>
+          <para id="id6187896">54: Complex operator - (Complex C1,Complex C2)</para>
+          <para id="id6187902">55: {</para>
+          <para id="id6187906">56:    Complex Tmp;</para>
+          <para id="id6187912">57:</para>
+          <para id="id6187916">58:    Tmp.Real = C1.Real-C2.Real;</para>
+          <para id="id6187922">59:    Tmp.Imaginary = C1.Imaginary-C2.Imaginary;</para>
+          <para id="id6187928">60:    return Tmp;</para>
+          <para id="id6187934">61: }</para>
+          <para id="id6187938">62:</para>
+          <para id="id6187943">63: //Hiển thị số phức</para>
+          <para id="id6187953">64: void DisplayComplex(Complex C)</para>
+          <para id="id6187957">65: {</para>
+          <para id="id6187962">66:    cout&lt;&lt;"("&lt;&lt;C.Real&lt;&lt;","&lt;&lt;C.Imaginary&lt;&lt;")";</para>
+          <para id="id6187968">67: }</para>
+          <para id="id6187972">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT2_18.EXE">chạy ví dụ 2.18</link>, kết quả ở hình 2.21</para>
+          <figure id="id6187995">
+            <media id="id1163998942100" alt=""><image src="../../media/graphics32-45d1.png" mime-type="image/png" height="86" width="472"/></media>
+          </figure>
+          <para id="id6188020">Hình 2.21: Kết quả của ví dụ 2.18</para>
+          <para id="id6188025">Như vậy trong C++, các phép toán trên các giá trị kiểu số phức được thực hiện bằng các toán tử toán học chuẩn chứ không phải bằng các tên hàm như trong C. Chẳng hạn chúng ta có lệnh sau:</para>
+          <para id="id6188039">C4 = AddComplex(C3, SubComplex(C1,C2));</para>
+          <para id="id6188043">thì ở trong C++, chúng ta có lệnh tương ứng như sau:</para>
+          <para id="id6188051">C4 = C3 + C1 - C2;</para>
+          <para id="id6188055">Chúng ta nhận thấy rằng cả hai lệnh đều cho cùng kết quả nhưng lệnh của C++ thì dễ hiểu hơn. C++ làm được điều này bằng cách tạo ra các hàm định nghĩa cách thực hiện của một toán tử cho các kiểu dữ liệu tự định nghĩa. Một hàm định nghĩa một toán tử có cú pháp sau:</para>
+          <para id="id6188071">data_type operator operator_symbol ( parameters )</para>
+          <para id="id6188096">{ </para>
+          <para id="id6188101">………………………………</para>
+          <para id="id6188105">}</para>
+          <para id="id6188109">Trong đó: data_type: Kiểu trả về.</para>
+          <para id="id6188122">operator_symbol: Ký hiệu của toán tử.</para>
+          <para id="id6188132">parameters: Các tham số (nếu có).</para>
+          <para id="id6188142">Trong chương trình ví dụ 2.18, toán tử + là toán tử gồm hai toán hạng (gọi là toán tử hai ngôi; toán tử một ngôi là toán tử chỉ có một toán hạng) và trình biên dịch biết tham số đầu tiên là ở bên trái toán tử, còn tham số thứ hai thì ở bên phải của toán tử. Trong trường hợp lập trình viên quen thuộc với cách gọi hàm, C++ vẫn cho phép bằng cách viết như sau:</para>
+          <para id="id6188158">C3 = operator + (C1,C2);</para>
+          <para id="id6188162">C4 = operator - (C1,C2);</para>
+          <para id="id6188166">Các toán tử được đa năng hóa sẽ được lựa chọn bởi trình biên dịch cũng theo cách thức tương tự như việc chọn lựa giữa các hàm được đa năng hóa là khi gặp một toán tử làm việc trên các kiểu không phải là kiểu có sẵn, trình biên dịch sẽ tìm một hàm định nghĩa của toán tử nào đó có các tham số đối sánh với các toán hạng để dùng. Chúng ta sẽ tìm hiểu kỹ về việc đa năng hóa các toán tử trong chương 4.</para>
+          <para id="id6188182">Các giới hạn của đa năng hóa toán tử:</para>
+          <para id="id6188189">Chúng ta không thể định nghĩa các toán tử mới.</para>
+          <para id="id6188200">Hầu hết các toán tử của C++ đều có thể được đa năng hóa. Các toán tử sau không được đa năng hóa là :</para>
+          <table id="id6188213" summary="">
+            <tgroup cols="2">
+              <colspec colnum="1" colname="c1"/>
+              <colspec colnum="2" colname="c2"/>
+              <tbody>
+                <row>
+                  <entry>Toán tử</entry>
+                  <entry>Ý nghĩa</entry>
+                </row>
+                <row>
+                  <entry>::</entry>
+                  <entry>Toán tử định phạm vi.</entry>
+                </row>
+                <row>
+                  <entry>.*</entry>
+                  <entry>Truy cập đến con trỏ là trường của struct hay thành viên của class.</entry>
+                </row>
+                <row>
+                  <entry>.</entry>
+                  <entry>Truy cập đến trường của struct hay thành viên của class.</entry>
+                </row>
+                <row>
+                  <entry>?:</entry>
+                  <entry>Toán tử điều kiện</entry>
+                </row>
+                <row>
+                  <entry>sizeof</entry>
+                  <entry> </entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </table>
+          <para id="id6050876">và chúng ta cũng không thể đa năng hóa bất kỳ ký hiệu tiền xử lý nào.</para>
+          <para id="id6050884">Chúng ta không thể thay đổi thứ tự ưu tiên của một toán tử hay không thể thay đổi số các toán hạng của nó.</para>
+          <para id="id6050898">Chúng ta không thể thay đổi ý nghĩa của các toán tử khi áp dụng cho các kiểu có sẵn.</para>
+          <para id="id6050910">Đa năng hóa các toán tử không thể có các tham số có giá trị mặc định.</para>
+          <para id="id6050920">Các toán tử có thể đa năng hoá:</para>
+          <table id="id6050926" summary="">
+            <tgroup cols="6">
+              <colspec colnum="1" colname="c1"/>
+              <colspec colnum="2" colname="c2"/>
+              <colspec colnum="3" colname="c3"/>
+              <colspec colnum="4" colname="c4"/>
+              <colspec colnum="5" colname="c5"/>
+              <colspec colnum="6" colname="c6"/>
+              <tbody>
+                <row>
+                  <entry>+</entry>
+                  <entry>-</entry>
+                  <entry>*</entry>
+                  <entry>/</entry>
+                  <entry>%</entry>
+                  <entry>^</entry>
+                </row>
+                <row>
+                  <entry>!</entry>
+                  <entry>=</entry>
+                  <entry>&lt;</entry>
+                  <entry>&gt;</entry>
+                  <entry>+=</entry>
+                  <entry>-=</entry>
+                </row>
+                <row>
+                  <entry>^=</entry>
+                  <entry>&amp;=</entry>
+                  <entry>|=</entry>
+                  <entry>&lt;&lt;</entry>
+                  <entry>&gt;&gt;</entry>
+                  <entry>&lt;&lt;=</entry>
+                </row>
+                <row>
+                  <entry>&lt;=</entry>
+                  <entry>&gt;=</entry>
+                  <entry>&amp;&amp;</entry>
+                  <entry>||</entry>
+                  <entry>++</entry>
+                  <entry>--</entry>
+                </row>
+                <row>
+                  <entry>()</entry>
+                  <entry>[]</entry>
+                  <entry>new</entry>
+                  <entry>delete</entry>
+                  <entry>&amp;</entry>
+                  <entry>|</entry>
+                </row>
+                <row>
+                  <entry>~</entry>
+                  <entry>*=</entry>
+                  <entry>/=</entry>
+                  <entry>%=</entry>
+                  <entry>&gt;&gt;=</entry>
+                  <entry>==</entry>
+                </row>
+                <row>
+                  <entry>!=</entry>
+                  <entry>,</entry>
+                  <entry>-&gt;</entry>
+                  <entry>-&gt;*</entry>
+                  <entry> </entry>
+                  <entry> </entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </table>
+          <para id="id6051391">Các toán tử được phân loại như sau :</para>
+          <para id="id6051397">Các toán tử một ngôi : * &amp; ~ ! ++ -- sizeof (data_type)</para>
+          <para id="id6051435">Các toán tử này được định nghĩa chỉ có một tham số và phải trả về một giá trị cùng kiểu với tham số của chúng. Đối với toán tử sizeof phải trả về một giá trị kiểu size_t (định nghĩa trong stddef.h)</para>
+          <para id="id6051460">Toán tử (data_type) được dùng để chuyển đổi kiểu, nó phải trả về một giá trị có kiểu là data_type.</para>
+          <para id="id6051479">Các toán tử hai ngôi: * / % + - &gt;&gt; &lt;&lt; &gt; &lt; </para>
+          <para id="id6051515">&gt;= &lt;= == != &amp; | ^ &amp;&amp; || </para>
+          <para id="id6051541">Các toán tử này được định nghĩa có hai tham số.</para>
+          <para id="id6051549">Các phép gán: = += -= *= /= %= &gt;&gt;= &lt;&lt;= ^= |=</para>
+          <para id="id5741438">Các toán tử gán được định nghĩa chỉ có một tham số. Không có giới hạn về kiểu của tham số và kiểu trả về của phép gán.</para>
+          <para id="id5741449">Toán tử lấy thành viên : -&gt;</para>
+          <para id="id5741465">Toán tử lấy phần tử theo chỉ số: []</para>
+          <para id="id5741480">Toán tử gọi hàm: ()</para>
+        </section>
+      </section>
+    </section>
+    <section id="id-874463780018">
+      <title>BÀI TẬP</title>
+      <para id="id5741505"><media id="id8212390" alt=""><image src="../../media/graphics33-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 1: Hãy viết lại chương trình sau bằng cách sử dụng lại các dòng nhập/xuất trong C++.</para>
+      <para id="id5741545">/* Chương trình tìm mẫu chung nhỏ nhất */</para>
+      <para id="id5741551">#include &lt;stdio.h&gt;</para>
+      <para id="id5741556">int main()</para>
+      <para id="id5741560">{</para>
+      <para id="id5741565">int a,b,i,min;</para>
+      <para id="id5741569">printf("Nhap vao hai so:");</para>
+      <para id="id5741574">scanf("%d%d",&amp;a,&amp;b);</para>
+      <para id="id5741579">min=a&gt;b?b:a;</para>
+      <para id="id5741583">for(i = 2;i&lt;min;++i)</para>
+      <para id="id5741588">if (((a%i)==0)&amp;&amp;((b%i)==0)) break;</para>
+      <para id="id5741594">if(i==min) {</para>
+      <para id="id5741598">printf("Khong co mau chung nho nhat");</para>
+      <para id="id5741602">return 0;</para>
+      <para id="id5741607">}</para>
+      <para id="id5741611">printf("Mau chung nho nhat la %d\n",i);</para>
+      <para id="id5741615">return 0;</para>
+      <para id="id5741620">}</para>
+      <para id="id5741624"><media id="id8154401" alt=""><image src="../../media/graphics34-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 2: Viết chương trình nhập vào số nguyên dương h (2&lt;h&lt;23), sau đó in ra các tam giác có chiều cao là h như các hình sau:</para>
+      <para id="id5741666"><figure id="id5741670"><media id="id3798492" alt=""><image src="../../media/graphics35-4216.png" mime-type="image/png" height="188" width="147"/></media></figure>  <figure id="id5741695"><media id="id3997349" alt=""><image src="../../media/graphics36-fe18.png" mime-type="image/png" height="187" width="175"/></media></figure></para>
+      <para id="id5741719"><media id="id1163995161185" alt=""><image src="../../media/graphics37-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 3: Một tam giác vuông có thể có tất cả các cạnh là các số nguyên. Tập của ba số nguyên của các cạnh của một tam giác vuông được gọi là bộ ba Pitago. Đó là tổng bình phương của hai cạnh bằng bình phương của cạnh huyền, chẳng hạn bộ ba Pitago (3, 4, 5). Viết chương trình tìm tất cả các bộ ba Pitago như thế sao cho tất cả các cạnh không quá 500.</para>
+      <para id="id5741764"><media id="id8313852" alt=""><image src="../../media/graphics38-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 4: Viết chương trình in bảng của các số từ 1 đến 256 dưới dạng nhị phân, bát phân và thập lục phân tương ứng.</para>
+      <para id="id5741805"><media id="id2442757" alt=""><image src="../../media/graphics39-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 5: Viết chương trình nhập vào một số nguyên dương n. Kiểm tra xem số nguyên n có thuộc dãy Fibonacci không?</para>
+      <para id="id5741845"><media id="id1163993817893" alt=""><image src="../../media/graphics40-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 6: Viết chương trình nhân hai ma trân Amxn và Bnxp. Mỗi ma trận được cấp phát động và các giá trị của chúng phát sinh ngẫu nhiên (Với m, n và p nhập từ bàn phím).</para>
+      <para id="id5741893"><media id="id1164000675767" alt=""><image src="../../media/graphics41-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 7: Viết chương trình tạo một mảng một chiều động có kích thước là n (n nhập từ bàn phím). Các giá trị của mảng này được phát sinh ngẫu nhiên trên đoạn [a, b] với a và b đều nhập từ bàn phím. Hãy tìm số dương nhỏ nhất và số âm lớn nhất trong mảng; nếu không có số dương nhỏ nhất hoặc số âm lớn nhất thì xuất thông báo "không có số dương nhỏ nhất" hoặc "không có số âm lớn nhất".</para>
+      <para id="id5741939"><media id="id1163999119205" alt=""><image src="../../media/graphics42.png" mime-type="image/png" height="14" width="14"/></media>Bài 8: Anh (chị) hãy viết một hàm tính bình phương của một số. Hàm sẽ trả về giá trị bình phương của tham số và có kiểu cùng kiểu với tham số.</para>
+      <para id="id5741982"><media id="id4955693" alt=""><image src="../../media/graphics43-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 9: Trong ngôn ngữ C, chúng ta có hàm chuyển đổi một chuỗi sang số, tùy thuộc vào dạng của chuỗi chúng ta có các hàm chuyển đổi sau :</para>
+      <para id="id5742023"><figure id="id5742026"><media id="id1163994190068" alt=""><image src="../../media/graphics44-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>int atoi(const char *s);</para>
+      <para id="id5742052">Chuyển đổi một chuỗi s thành số nguyên kiểu int. </para>
+      <para id="id5742059"><figure id="id5742062"><media id="id1163992107604" alt=""><image src="../../media/graphics45-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>long atol(const char *s);</para>
+      <para id="id5742088">Chuyển đổi một chuỗi s thành số nguyên kiểu long. </para>
+      <para id="id5742094"><figure id="id5742097"><media id="id9086610" alt=""><image src="../../media/graphics46-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>double atof(const char *s);</para>
+      <para id="id5742123">Chuyển đổi một chuỗi s thành số thực kiểu double. </para>
+      <para id="id5742130">Anh (chị) hãy viết một hàm có tên là aton (ascii to number) để chuyển đổi chuỗi sang các dạng số tương ứng.</para>
+      <para id="id5742138"><media id="id2296195" alt=""><image src="../../media/graphics47-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 10: Anh chị hãy viết các hàm sau:</para>
+      <para id="id5742176"><figure id="id5742179"><media id="id1163991495710" alt=""><image src="../../media/graphics48-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>Hàm ComputeCircle() để tính diện tích s và chu vi c của một đường tròn bán kính r. Hàm này có prototype như sau: </para>
+      <para id="id5742209">void ComputeCircle(float &amp; s, float &amp;c, float r = 1.0);</para>
+      <para id="id5742216"><figure id="id5742219"><media id="id6515885" alt=""><image src="../../media/graphics49-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>Hàm ComputeRectangle() để tính diện tích s và chu vi p của một hình chữ nhật có chiều cao h và chiều rộng w. Hàm này có prototype như sau: </para>
+      <para id="id5742250">void ComputeRectangle(float &amp; s, float &amp;p, float h = 1.0, float w = 1.0);</para>
+      <para id="id5742257"><figure id="id5742260"><media id="id1164000509529" alt=""><image src="../../media/graphics50-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>Hàm ComputeTriangle() để tính diện tích s và chu vi p của một tam giác có ba cạnh a,b và c. Hàm này có prototype như sau: </para>
+      <para id="id5423526">void ComputeTriangle(float &amp; s, float &amp;p, float a = 1.0, float b = 1.0, float c = 1.0);</para>
+      <para id="id5423534"><figure id="id5423537"><media id="id7923762" alt=""><image src="../../media/graphics51-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>Hàm ComputeSphere() để tính thể tích v và diện tích bề mặt s của một hình cầu có bán kính r. Hàm này có prototype như sau: </para>
+      <para id="id5423567">void ComputeSphere(float &amp; v, float &amp;s, float r = 1.0);</para>
+      <para id="id5423574"><figure id="id5423577"><media id="id1163998264828" alt=""><image src="../../media/graphics52-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>Hàm ComputeCylinder() để tính thể tích v và diện tích bề mặt s của một hình trụ có bán kính r và chiều cao h. Hàm này có prototype như sau: </para>
+      <para id="id5423608">void ComputeCylinder(float &amp; v, float &amp;s, float r = 1.0 , float h = 1.0);</para>
+      <para id="id5423615"><media id="id1163995007840" alt=""><image src="../../media/graphics53-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 11: Anh (chị) hãy viết thêm hai toán tử nhân và chia hai số phức ở ví dụ 2.18 của chương 2.</para>
+      <para id="id5423655"><media id="id5276363" alt=""><image src="../../media/graphics54-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 12: Một cấu trúc Date chứa ngày, tháng và năm như sau:</para>
+      <para id="id5423693">struct Date</para>
+      <para id="id5423697">{</para>
+      <para id="id5423701">int Day; //Có giá trị từ 1  31</para>
+      <para id="id5423712">int Month; //Có giá trị từ 1  12</para>
+      <para id="id5423724">int Year; //Biểu diễn bằng 4 chữ số.</para>
+      <para id="id5423730">};</para>
+      <para id="id5423734">Anh (chị) hãy viết các hàm định nghĩa các toán tử : + - &gt; &gt;= &lt; &lt;= == != trên cấu trúc Date này.</para>
+      <para id="id5423747"><media id="id4339826" alt=""><image src="../../media/graphics55-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 13: Một cấu trúc Point3D biểu diễn tọa độ của một điểm trong không gian ba chiều như sau:</para>
+      <para id="id5423787">struct Point3D</para>
+      <para id="id5423791">{</para>
+      <para id="id5423795">float X;</para>
+      <para id="id5423800">float Y;</para>
+      <para id="id5423804">float Z; </para>
+      <para id="id5423809">};</para>
+      <para id="id5423813">Anh (chị) hãy viết các hàm định nghĩa các toán tử : + - == != trên cấu trúc Point3D này.</para>
+      <para id="id5423826"><media id="id1163995980981" alt=""><image src="../../media/graphics56-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 14: Một cấu trúc Fraction dùng để chứa một phân số như sau:</para>
+      <para id="id5423864">struct Fraction</para>
+      <para id="id5423869">{</para>
+      <para id="id5423873">int Numerator; //Tử số </para>
+      <para id="id5423878">int Denominator; //Mẫu số </para>
+      <para id="id5423883">};</para>
+      <para id="id5423888">Anh (chị) hãy viết các hàm định nghĩa các toán tử : </para>
+      <para id="id5423894">+ - * / &gt; &gt;= &lt; &lt;= == != </para>
+      <para id="id5423899">trên cấu trúc Fraction này.<media id="id1164002724436" alt=""><image src="../../media/graphics57-9e00.png" mime-type="image/png" height="16" width="16"/></media></para>
+    </section>
+  </content>
+</document>

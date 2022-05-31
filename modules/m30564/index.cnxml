@@ -1,0 +1,415 @@
+<document xmlns="http://cnx.rice.edu/cnxml" xmlns:md="http://cnx.rice.edu/mdml">
+  <title>Tính đa hình</title>
+  <metadata>
+  <md:content-id>m30564</md:content-id><md:title>Tính đa hình</md:title>
+  <md:abstract>Phần này trình bày về tính đa hình</md:abstract>
+  <md:uuid>89b5cea3-7706-463d-99af-01885b32bcb9</md:uuid>
+</metadata>
+
+<content>
+    <para id="id5081591">DẪN NHẬP</para>
+    <para id="id5081596">Tính đa hình (polymorphism) là khả năng thiết kế và cài đặt các hệ thống mà có thể mở rộng dễ dàng hơn. Các chương trình có thể được viết để xử lý tổng quát – như các đối tượng lớp cơ sở – các đối tượng của tất cả các lớp tồn tại trong một phân cấp. Khả năng cho phép một chương trình sau khi đã biên dịch có thể có nhiều diễn biến xảy ra là một trong những thể hiện của tính đa hình – tính muôn màu muôn vẻ – của chương trình hướng đối tượng, một thông điệp được gởi đi (gởi đến đối tượng) mà không cần biết đối tượng nhận thuộc lớp nào. Để thực hiện được tính đa hình, các nhà thiết kế C++ cho chúng ta dùng cơ chế kết nối động (dynamic binding) thay cho cơ chế kết nối tĩnh (static binding) ngay khi chương trình biên dịch được dùng trong các ngôn ngữ cổ điển như C, Pascal, … </para>
+    <section id="id-520259138783">
+      <title>PHƯƠNG THỨC ẢO (VIRTUAL FUNCTION)</title>
+      <para id="id5081646">Khi xây dựng các lớp của một chương trình hướng đối tượng để tạo nên một cấu trúc phân cấp hoặc cây phả hệ, người lập trình phải chuẩn bị các hành vi giao tiếp chung của các lớp đó. Hành vi giao tiếp chung sẽ được dùng để thể hiện cùng một hành vi, nhưng có các hành động khác nhau, đó chính là phương thức ảo. Đây là một phương thức tồn tại để có hiệu lực nhưng không có thực trong lớp cơ sở, còn trong các lớp dẫn xuất. Như vậy phương thức ảo chỉ được xây dựng khi có một hệ thống cây phả hệ. Phương thức này sẽ được gọi thực hiện từ thực thể của lớp dẫn xuất nhưng mô tả về chúng trong lớp cơ sở.</para>
+      <para id="id5081679">Chúng ta khai báo phương thức ảo bằng thêm từ khóa virtual ở phía trước. Khi đó các phương thức có cùng tên với phương thức này trong các lớp dẫn xuất cũng là phương thức ảo.</para>
+      <para id="id6452938">
+        <figure id="id6452942">
+          <media id="id1170445291155" alt=""><image src="../../media/graphics1-1c7c.png" mime-type="image/png" height="17" width="14"/></media>
+        </figure>
+        <link resource="javascript:if(confirm('http:">Ví dụ 6.1:</link>
+      </para>
+      <para id="id6452983">1: //Chương trình 6.1</para>
+      <para id="id6452992">2: #include &lt;iostream.h&gt;</para>
+      <para id="id6453002">3: </para>
+      <para id="id6453006">4: class Base</para>
+      <para id="id6453010">5: {</para>
+      <para id="id6453015">6: public:</para>
+      <para id="id6453020">7: virtual void Display()</para>
+      <para id="id6453024">8: {</para>
+      <para id="id6453029">9: cout&lt;&lt;"class Base"&lt;&lt;endl;</para>
+      <para id="id6453034">10: }</para>
+      <para id="id6453039">11: };</para>
+      <para id="id6453044">12:</para>
+      <para id="id6453048">13: class Derived : public Base</para>
+      <para id="id6453052">14: {</para>
+      <para id="id6453057">15: public:</para>
+      <para id="id6453062">16: virtual void Display()</para>
+      <para id="id6453066">17: {</para>
+      <para id="id6453071">18: cout&lt;&lt;"class Derived"&lt;&lt;endl;</para>
+      <para id="id6453077">19: }</para>
+      <para id="id6453081">20: };</para>
+      <para id="id6453086">21:</para>
+      <para id="id6453090">21: void Show(Base *B)</para>
+      <para id="id6453095">22: {</para>
+      <para id="id6453100">23: B-&gt;Display(); //Con trỏ B chỉ đến phương thức Display() nào (của lớp Base</para>
+      <para id="id6453109">24 //hoặc lớp Derived) tùy vào lúc chạy chương trình. </para>
+      <para id="id6453116">25: }</para>
+      <para id="id6453120">26: int main()</para>
+      <para id="id6453125">27: {</para>
+      <para id="id6453130">28: Base *B=new Base;</para>
+      <para id="id6453134">29: Derived *D=new Derived;</para>
+      <para id="id6453139">30: B-&gt;Display(); //Base::Display()</para>
+      <para id="id6453145">31: D-&gt;Display(); //Derived::Display()</para>
+      <para id="id6453152">32: Show(B); //Base::Display()</para>
+      <para id="id6453156">33: Show(D); //Derived::Display()</para>
+      <para id="id6453160">34: return 0;</para>
+      <para id="id6453165">35: }</para>
+      <para id="id6453169">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT6_1.EXE">chạy ví dụ 6.1</link>, kết quả ở hình 6.1</para>
+      <figure id="id6453192">
+        <media id="id1170445199135" alt=""><image src="../../media/graphics2-9830.png" mime-type="image/png" height="95" width="532"/></media>
+      </figure>
+      <para id="id6453216">Hình 6.1: Kết quả của ví dụ 6.1</para>
+      <para id="id6453222">Trong ví dụ 6.1, lớp cơ sở Base có phương thức Display() được khai báo là phương thức ảo. Phương thức này trong lớp dẫn xuất Derived được định nghĩa lại nhưng cũng là một phương thức ảo. Thật ra, không ra không có khai báo virtual cho phương thức Display() của lớp Derived cũng chẳng sao, trình biên dịch vẫn hiểu đó là phương thức ảo. Tuy nhiên, khai báo virtual rõ ràng ở các lớp dẫn xuất làm cho chương trình trong sáng, dễ hiểu hơn. Hai dòng 30 và 31, chúng ta biết chắc phương thức Display() của lớp nào được gọi (của lớp Base hoặc lớp Derived). Nhưng hai dòng 32 và 33, nếu không có cơ chế kết nối động, chúng ta đoán rằng việc gọi hàm Show() sẽ luôn luôn kéo theo phương thức Base::Display(). Quả vậy, bỏ đi khai báo virtual cho phương thức Base::Display(), khi đó dòng lệnh: Show(D);</para>
+      <para id="id6453337">gọi đến Base::Display() vì đối tượng lớp dẫn xuất cũng là đối tượng lớp cơ sở (nghĩa là tdb tự động chuyển đổi kiểu: đối tượng D kiểu Derived chuyển thành kiểu Base.</para>
+      <para id="id6453370">Nhờ khai báo virtual cho phương thức Base::Display() nên sẽ không thực hiện gọi phương thức Base::Display() một cách cứng nhắc trong hàm Show() mà chuẩn bị một cơ chế mềm dẻo cho việc gọi phương thức Display() tùy thuộc vào sự xác định kiểu của tham số vào lúc chạy chương trình.</para>
+      <para id="id6453413">Cơ chế đó ra sao? Khi nhận thấy có khai báo virtual trong lớp cơ sở, trình biên dịch sẽ thêm vào mỗi đối tượng của lớp cơ sở và các lớp dẫn xuất của nó một con trỏ chỉ đến bảng phương thức ảo (virtual function table). Con trỏ đó có tên là vptr (virtual pointer). Bảng phương thức ảo là nơi chứa các con trỏ chỉ đến đoạn chương trình đã biên dịch ứng với các phương thức ảo. Mỗi lớp có một bảng phương thức ảo. Trình biên dịch chỉ lập bảng phương thức ảo khi bắt đầu có việc tạo đối tượng của lớp. Đến khi chương trình chạy, phương thức ảo của đối tượng mới được nối kết và thi hành thông qua con trỏ vptr.</para>
+      <para id="id6453452">Trong ví dụ 6.1, lệnh gọi hàm: Show(D);</para>
+      <para id="id6453463">Đối tượng D thuộc lớp Derived tuy bị chuyển đổi kiểu thành một đối tượng thuộc lớp Base nhưng nó không hoàn toàn giống một đối tượng của Base chính cống như B. Nếu như con trỏ vptr trong B chỉ đến vị trí trên bảng phương thức ảo ứng với phương thức Base::Display(), thì con trỏ vptr trong D vẫn còn chỉ đến phương thức Derived::Display() cho dù D bị chuyển kiểu thành Base. Đó là lý do tại sao lệnh: Show(D);</para>
+      <para id="id6453547">gọi đến phương thức Derived::Display().</para>
+      <para id="id6453559">    Các đặc trưng của phương thức ảo:</para>
+      <para id="id6453564"><figure id="id6453569"><media id="id1170445203367" alt=""><image src="../../media/graphics3-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>Phương thức ảo không thể là các hàm thành viên tĩnh.</para>
+      <para id="id6453596"><figure id="id6453600"><media id="id1170445205649" alt=""><image src="../../media/graphics4-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>Một phương thức ảo có thể được khai báo là friend trong một lớp khác nhưng các hàm friend của lớp thì không thể là phương thức ảo.</para>
+      <para id="id6453642"><figure id="id6453646"><media id="id1170445206837" alt=""><image src="../../media/graphics5-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>Không cần thiết phải ghi rõ từ khóa virtual khi định nghĩa một phương thức ảo trong lớp dẫn xuất (để cũng chẳng ảnh hưởng gì).</para>
+      <para id="id6453682"><figure id="id6453687"><media id="id1170445211556" alt=""><image src="../../media/graphics6-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>Để sự kết nối động được thực hiện thích hợp cho từng lớp dọc theo cây phả hệ, một khi phương thức nào đó đã được xác định là ảo, từ lớp cơ sở đến các lớp dẫn xuất đều phải định nghĩa thống nhất về tên, kiểu trả về và danh sách các tham số. Nếu đối với phương thức ảo ở lớp dẫn xuất, chúng ta lại sơ suất định nghĩa các tham số khác đi một chút thì trình biên dịch sẽ xem đó là phương thức khác. Đây chính là điều kiện để kết nối động.</para>
+      <para id="id6453732">
+        <figure id="id6453736">
+          <media id="id1170445213049" alt=""><image src="../../media/graphics7-1c7c.png" mime-type="image/png" height="17" width="14"/></media>
+        </figure>
+        <link resource="javascript:if(confirm('http:">Ví dụ 6.2:</link>
+      </para>
+      <para id="id6453777">2: #include &lt;iostream.h&gt;</para>
+      <para id="id6453782">3:</para>
+      <para id="id6453786">4: class Base</para>
+      <para id="id6453790">5: {</para>
+      <para id="id6453795">6: public:</para>
+      <para id="id6453800">7: virtual void Print(int A,int B);</para>
+      <para id="id6453804">8: };</para>
+      <para id="id6453809">9:</para>
+      <para id="id5515614">10: class Derived : public Base</para>
+      <para id="id5515618">11: {</para>
+      <para id="id5515623">12: public:</para>
+      <para id="id5515627">13: virtual void Print(int A,double D);</para>
+      <para id="id5515632">14: }; </para>
+      <para id="id5515636">15:</para>
+      <para id="id5515641">16: void Base::Print(int A,int B)</para>
+      <para id="id5515645">17: {</para>
+      <para id="id5515650">18: cout&lt;&lt;"A="&lt;&lt;A&lt;&lt;",B="&lt;&lt;B&lt;&lt;endl;</para>
+      <para id="id5515655">19: }</para>
+      <para id="id5515660">20:</para>
+      <para id="id5515664">21: void Derived::Print(int A,double D)</para>
+      <para id="id5515669">22: {</para>
+      <para id="id5515673">23: cout&lt;&lt;"A="&lt;&lt;A&lt;&lt;",D="&lt;&lt;D&lt;&lt;endl;</para>
+      <para id="id5515679">24: }</para>
+      <para id="id5515683">25: </para>
+      <para id="id5515688">26: void Show(Base *B)</para>
+      <para id="id5515693">27: {</para>
+      <para id="id5515698">28: B-&gt;Print(3,5);</para>
+      <para id="id5515703">29: }</para>
+      <para id="id5515708">30:</para>
+      <para id="id5515712">31: int main()</para>
+      <para id="id5515716">32: {</para>
+      <para id="id5515721">33: Base *B=new Base;</para>
+      <para id="id5515726">34: Derived *D=new Derived;</para>
+      <para id="id5515731">35: Show(B); //Base::Print()</para>
+      <para id="id5515735">36: Show(D); //Base::Print()</para>
+      <para id="id5515740">37: return 0;</para>
+      <para id="id5515744">38: }</para>
+      <para id="id5515749">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT6_2.EXE">chạy ví dụ 6.2</link>, kết quả ở hình 6.2</para>
+      <figure id="id5515772">
+        <media id="id1170445364300" alt=""><image src="../../media/graphics8-c803.png" mime-type="image/png" height="45" width="425"/></media>
+      </figure>
+      <para id="id5515796">Hình 6.2: Kết quả của ví dụ 6.2</para>
+      <para id="id5515801">Trong ví dụ 6.2, trong lớp cơ sở Base và lớp dẫn xuất Derived đều có phương thức ảo Print(). Nhưng quan sát kỹ chúng ta, phương thức Print() trong lớp Derived có tham số thứ hai khác kiểu với phương thức Print() trong lớp Base. Vì thế, chúng ta không thể chờ đợi lệnh ở dòng 36 sẽ gọi đến phương thức Derived::Print(int,double). Phương thức Derived::Print(int,double) nằm ngoài đường dây phương thức ảo nên hàm Show() chỉ luôn gọi đến phương thức Derived::Print(int,int) mà thôi. Do có khai báo virtual đối với phương thức Derived::Print(int,double), chúng ta có thể nói phương thức này sẽ mở đầu cho một đường dây phương thức ảo Print(int,double) mới nếu sau lớp Derived còn có các lớp dẫn xuất của nó.</para>
+    </section>
+    <section id="id-0417680990143">
+      <title>LỚP TRỪU TƯỢNG (ABSTRACT CLASS)</title>
+      <para id="id5515917">Trong quá trình thiết kế chương trình theo hướng đối tượng, để tạo nên một hệ thống phả hệ mang tính kế thừa cao, người lập trình phải đoán trước sự phát triển của cấu trúc, từ đó chọn lựa những thành viên phù hợp cho các lớp ở trên cùng. Rõ ràng đây là một công việc vô cùng khó khăn. Để tránh tình trạng người lập trình xây dựng các đối tượng lãng phí bộ nhớ, ngôn ngữ C++ cho phép chúng ta thiết kế các lớp có các không phương thức ảo không làm gì cả, và cũng không thể tạo ra đối tượng thuộc lớp đó. Những lớp như vậy gọi là lớp trừu tượng.</para>
+      <para id="id5515948">Trong cấu trúc trên hình 6.3, không phải lớp nào cũng thực sự cần đến phương thức Print(), nhưng nó có mặt khắp nơi để tạo ra bộ mặt chung cho mọi lớp trong cấu trúc cây. Phương thức của lớp trên cùng như A::Print() thường là phương thức ảo để có được tính đa hình.</para>
+      <figure id="id5515978">
+        <media id="id1170445477200" alt=""><image src="../../media/graphics9-ac6b.png" mime-type="image/png" height="224" width="463"/></media>
+      </figure>
+      <para id="id5516002">Hình 6.3</para>
+      <para id="id5516007">Nhờ đó, với hàm sau:</para>
+      <para id="id5516012">void Show(A* a)</para>
+      <para id="id5516017">{</para>
+      <para id="id5516021">a-&gt;Print();</para>
+      <para id="id5516026">}</para>
+      <para id="id5516030">chúng ta có thể truyền đối tượng đủ kiểu cho nó (A, B, C, D hoặc E) mà vẫn gọi đến đúng phuơng thức Print() phù hợp dù kiểu của đối tượng lúc biên dịch vẫn còn chưa biết. Với vai trò "lót đường" như vậy, phương thức A::Print() có thể chẳng có nội dung gì cả</para>
+      <para id="id5516079">class A</para>
+      <para id="id5516083">{</para>
+      <para id="id5516088">public:</para>
+      <para id="id5516092">virtual void Print()</para>
+      <para id="id5516097">{</para>
+      <para id="id5516101">}</para>
+      <para id="id5516105">};</para>
+      <para id="id5516109">Khi đó người ta gọi phương thức A::Print() là phương thức ảo rỗng (null virtual function), nó chẳng làm gì hết. Tuy nhiên lớp A vẫn là một lớp bình thường, chúng ta có thể tạo ra một đối tượng thuộc nó, có thể truy cập tới phương thức A::Print(). Để tránh trình trạng vô tình tạo ra đối tượng thuộc lớp này, người ta thường xây dựng lớp trừu tượng, trình biên dịch cho phép tạo ra lớp có các phương thức thuần ảo (pure virtual function) như sau:</para>
+      <para id="id5516150">class A</para>
+      <para id="id5516155">{</para>
+      <para id="id5516159">public:</para>
+      <para id="id5516163">virtual void Print() = 0;</para>
+      <para id="id5516168">};</para>
+      <para id="id5516172">Phương thức ảo Print() bây giờ là phương thức thuần ảo – phương thức có tên được gán bởi giá trị zero. Lớp A chứa phương thức thuần ảo được gọi là lớp trừu tượng.</para>
+      <para id="id5516196">
+        <figure id="id5516200">
+          <media id="id1170445298988" alt=""><image src="../../media/graphics10-1c7c.png" mime-type="image/png" height="17" width="14"/></media>
+        </figure>
+        <link resource="javascript:if(confirm('http:">Ví dụ 6.3:</link>
+      </para>
+      <para id="id5516241">1: //Chương trình 6.3</para>
+      <para id="id5516246">2: #include &lt;iostream.h&gt;</para>
+      <para id="id5516251">3: </para>
+      <para id="id5516256">4: class A</para>
+      <para id="id5516260">5: {</para>
+      <para id="id5516265">6: public:</para>
+      <para id="id5516270">7: virtual void Print()=0; //Phương thức thuần ảo</para>
+      <para id="id5516276">8: };</para>
+      <para id="id5516281">9:</para>
+      <para id="id5516285">10: class B : public A</para>
+      <para id="id5516290">11: {</para>
+      <para id="id5516295">12: public:</para>
+      <para id="id5516300">13: virtual void Print()</para>
+      <para id="id5516304">14: {</para>
+      <para id="id5516309">15: cout&lt;&lt;"Class B"&lt;&lt;endl;</para>
+      <para id="id5516314">16: }</para>
+      <para id="id5516319">17: };</para>
+      <para id="id5516324">18:</para>
+      <para id="id5516328">19: class C : public B</para>
+      <para id="id5516333">20: {</para>
+      <para id="id5516338">21: public:</para>
+      <para id="id5516342">22: virtual void Print()</para>
+      <para id="id5516347">23: {</para>
+      <para id="id5516352">24: cout&lt;&lt;"Class C"&lt;&lt;endl;</para>
+      <para id="id5516357">25: }</para>
+      <para id="id5516362">26: };</para>
+      <para id="id5516366">27:</para>
+      <para id="id5516371">28: void Show(A *a)</para>
+      <para id="id5516376">29: {</para>
+      <para id="id5516381">30: a-&gt;Print();</para>
+      <para id="id5516386">31: }</para>
+      <para id="id5516390">32:</para>
+      <para id="id5516395">33: int main()</para>
+      <para id="id5516399">34: {</para>
+      <para id="id5516404">35: B *b=new B;</para>
+      <para id="id5516409">36: C *c=new C;</para>
+      <para id="id5516414">37: Show(b); //B::Print()</para>
+      <para id="id5516419">38: Show(c); //C::Print()</para>
+      <para id="id5516424">39: return 0;</para>
+      <para id="id5516428">40: }</para>
+      <para id="id5516433">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT6_3.EXE">chạy ví dụ 6.3</link>, kết quả ở hình 6.4</para>
+      <figure id="id5516456">
+        <media id="id1170445610873" alt=""><image src="../../media/graphics11-5ea0.png" mime-type="image/png" height="47" width="437"/></media>
+      </figure>
+      <para id="id5516480">Hình 6.4: Kết quả của ví dụ 6.3</para>
+      <para id="id5516486">Lớp A được tạo ra để làm cơ sở cho việc hình thành các lớp con cháu (B và C). Nhờ có Phương thức ảo Print() từ lớp A cho tới lớp C, tính đa hình được thể hiện.</para>
+      <para id="id5516529"><figure id="id5516532"><media id="id1170445286126" alt=""><image src="../../media/graphics12-f2aa.png" mime-type="image/png" height="17" width="17"/></media></figure>Lưu ý:</para>
+      <para id="id5516562"><figure id="id5516566"><media id="id1170445327699" alt=""><image src="../../media/graphics13-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>Chúng ta không thể tạo ra một đối tượng của lớp trừu tượng, nhưng hoàn toàn có thể tạo ra một con trỏ trỏ đến lớp này (vì con trỏ không phải là đối tượng thuộc lớp) hoặc là một tham chiếu. </para>
+      <para id="id5516600"><figure id="id5516604"><media id="id1170445452394" alt=""><image src="../../media/graphics14-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>Nếu trong lớp kế thừa từ lớp trừu tượng chúng ta không định nghĩa phương thức thuần ảo, do tính kế thừa nó sẽ bao hàm phương thức thuần ảo của lớp cơ sở, nên lớp dẫn xuất này sẽ trở thành lớp trừu tượng.</para>
+      <para id="id5516639"><figure id="id5516643"><media id="id1170445639613" alt=""><image src="../../media/graphics15-a1ec.png" mime-type="image/png" height="13" width="13"/></media></figure>Theo định nghĩa lớp trừu tượng, nếu trong lớp dẫn xuất (từ lớp cơ sở trừu tượng) chúng ta định nghĩa thêm một phương thức thuần ảo khác, lớp này cũng sẽ trở thành lớp trừu tượng.</para>
+    </section>
+    <section id="id-0683232955768">
+      <title>CÁC THÀNH VIÊN ẢO CỦA MỘT LỚP</title>
+      <section id="id-594265765145">
+        <title>Toán tử ảo</title>
+        <para id="id5516700">Toán tử thực chất cũng là một hàm nên chúng ta có thể tạo ra các toán tử ảo trong một lớp. Tuy nhiên do đa năng hóa khi tạo một toán tử cần chú ý đến các kiểu của các toán hạng phải sử dụng kiểu của lớp cơ sở gốc có toán tử ảo.</para>
+        <para id="id5516706"><link resource="javascript:if(confirm('http:">Ví dụ 6.4:</link> Đa năng hóa toán tử với hàm toán tử là phương thức ảo.</para>
+        <para id="id5081720">1: //Chương trình 6.4: Toán tử ảo</para>
+        <para id="id5081726">2: #include &lt;iostream.h&gt;</para>
+        <para id="id5081731">3:</para>
+        <para id="id5081736">4: class A</para>
+        <para id="id5081740">5: {</para>
+        <para id="id5081745">6: protected:</para>
+        <para id="id5081750">7: int X1;</para>
+        <para id="id5081754">8: public:</para>
+        <para id="id5081759">9: A(int I)</para>
+        <para id="id5081764">10: {</para>
+        <para id="id5081768">11: X1=I;</para>
+        <para id="id5081773">12: }</para>
+        <para id="id5081778">13: virtual A&amp; operator + (A&amp; T);</para>
+        <para id="id5081783">14: virtual A&amp; operator = (A&amp; T);</para>
+        <para id="id5081789">15: virtual int GetA()</para>
+        <para id="id5081794">16: {</para>
+        <para id="id5081798">17: return X1;</para>
+        <para id="id5081803">18: }</para>
+        <para id="id5081808">19: virtual int GetB()</para>
+        <para id="id5081813">20: {</para>
+        <para id="id5081818">21: return 0;</para>
+        <para id="id5081822">22: }</para>
+        <para id="id5081827">23: virtual int GetC()</para>
+        <para id="id5081832">24: {</para>
+        <para id="id5081837">25: return 0;</para>
+        <para id="id5081841">26: }</para>
+        <para id="id5081846">27: void Print(char *St)</para>
+        <para id="id5081851">28: {</para>
+        <para id="id5081856">29: cout&lt;&lt;St&lt;&lt;":X1="&lt;&lt;X1&lt;&lt;endl;</para>
+        <para id="id5081861">30: }</para>
+        <para id="id5081866">31: };</para>
+        <para id="id5081870">32:</para>
+        <para id="id5081875">33: class B : public A</para>
+        <para id="id5081880">34: {</para>
+        <para id="id5081884">35: protected:</para>
+        <para id="id5081889">36: int X2;</para>
+        <para id="id5081894">37: public:</para>
+        <para id="id5081898">38: B(int I,int J):A(I)</para>
+        <para id="id5081903">39: {</para>
+        <para id="id5081908">40: X2=J;</para>
+        <para id="id5081913">41: }</para>
+        <para id="id5081917">42: virtual A&amp; operator + (A&amp; T);</para>
+        <para id="id5081923">43: virtual A&amp; operator = (A&amp; T);</para>
+        <para id="id5081929">44: virtual int GetB()</para>
+        <para id="id5081934">45: {</para>
+        <para id="id5081938">46: return X2;</para>
+        <para id="id5081943">47: }</para>
+        <para id="id5081948">48: void Print(char *St)</para>
+        <para id="id5081953">49: {</para>
+        <para id="id5081957">50: cout&lt;&lt;St&lt;&lt;":X1="&lt;&lt;X1&lt;&lt;",X2="&lt;&lt;X2&lt;&lt;endl;</para>
+        <para id="id5081963">51: }</para>
+        <para id="id5081967">52: };</para>
+        <para id="id5081972">53:</para>
+        <para id="id5081976">54: class C : public B</para>
+        <para id="id5081981">55: {</para>
+        <para id="id5081986">56: protected:</para>
+        <para id="id5081991">57: int X3;</para>
+        <para id="id5081995">58: public:</para>
+        <para id="id5082000">59: C(int I,int J,int K):B(I,J)</para>
+        <para id="id5082004">60: {</para>
+        <para id="id5082009">61: X3=K;</para>
+        <para id="id5082014">62: }</para>
+        <para id="id5082018">63: virtual A&amp; operator + (A&amp; T);</para>
+        <para id="id5082024">64: virtual A&amp; operator = (A&amp; T);</para>
+        <para id="id5082030">65: virtual int GetC()</para>
+        <para id="id5082035">66: {</para>
+        <para id="id5082039">67: return X3;</para>
+        <para id="id5082044">68: }</para>
+        <para id="id5082049">69: void Print(char *St)</para>
+        <para id="id5082054">70: {</para>
+        <para id="id5082058">71: cout&lt;&lt;St&lt;&lt;":X1="&lt;&lt;X1&lt;&lt;",X2="&lt;&lt;X2&lt;&lt;",X3="&lt;&lt;X3&lt;&lt;endl;</para>
+        <para id="id5082065">72: }</para>
+        <para id="id5082069">73: };</para>
+        <para id="id5082074">74:</para>
+        <para id="id5082078">75: A&amp; A::operator + (A&amp; T)</para>
+        <para id="id5082084">76: {</para>
+        <para id="id5082089">77: X1+=T.GetA();</para>
+        <para id="id5082094">78: return *this;</para>
+        <para id="id5082098">79: }</para>
+        <para id="id5082103">80:</para>
+        <para id="id5082107">81: A&amp; A::operator = (A&amp; T)</para>
+        <para id="id5082113">82: {</para>
+        <para id="id5082118">83: X1=T.GetA();</para>
+        <para id="id5082122">84: return *this;</para>
+        <para id="id5082127">85: }</para>
+        <para id="id5082132">86:</para>
+        <para id="id5082136">87: A&amp; B::operator + (A&amp; T)</para>
+        <para id="id5082142">88: {</para>
+        <para id="id5082147">89: X1+=T.GetA();</para>
+        <para id="id5082151">90: X2+=T.GetB();</para>
+        <para id="id5082156">91: return *this;</para>
+        <para id="id5082161">92: }</para>
+        <para id="id5082166">93:</para>
+        <para id="id5082170">94: A&amp; B::operator = (A&amp; T)</para>
+        <para id="id5082176">95: {</para>
+        <para id="id5082180">96: X1=T.GetA();</para>
+        <para id="id5082185">97: X2=T.GetB();</para>
+        <para id="id5082190">98: return *this;</para>
+        <para id="id5082195">99: }</para>
+        <para id="id5082199">100:</para>
+        <para id="id5082204">101:A&amp; C::operator + (A&amp; T)</para>
+        <para id="id5082210">102: {</para>
+        <para id="id5082214">103: X1+=T.GetA();</para>
+        <para id="id5082219">104: X2+=T.GetB();</para>
+        <para id="id5082224">105: X3+=T.GetC();</para>
+        <para id="id5082229">106: return *this;</para>
+        <para id="id5082234">107 }</para>
+        <para id="id5082238">108:</para>
+        <para id="id5082243">109: A&amp; C::operator = (A&amp; T)</para>
+        <para id="id5082248">110: {</para>
+        <para id="id5082253">111: X1=T.GetA();</para>
+        <para id="id5082258">112: X2=T.GetB();</para>
+        <para id="id5082263">113: X3=T.GetC();</para>
+        <para id="id5082268">114: return *this;</para>
+        <para id="id5082272">115: }</para>
+        <para id="id5082277">116:</para>
+        <para id="id5082282">117: void AddObject(A&amp; T1,A&amp; T2)</para>
+        <para id="id5082287">118: {</para>
+        <para id="id5082292">119: T1=T1+T2;</para>
+        <para id="id5082296">120: }</para>
+        <para id="id5082301">121:</para>
+        <para id="id5082306">122: int main()</para>
+        <para id="id5082311">123: {</para>
+        <para id="id5082315">124: A a(10);</para>
+        <para id="id5082320">125: B b(10,20);</para>
+        <para id="id5082325">126: C c(10,20,30);</para>
+        <para id="id5082330">127: a.Print("a");</para>
+        <para id="id5082334">128: b.Print("b");</para>
+        <para id="id5082339">129: c.Print("c");</para>
+        <para id="id5082344">130: AddObject(a,b);</para>
+        <para id="id5082349">131: a.Print("a");</para>
+        <para id="id5082354">132: AddObject(b,c);</para>
+        <para id="id5082359">133: b.Print("b");</para>
+        <para id="id5082364">134: AddObject(c,a);</para>
+        <para id="id5082368">135: c.Print("c");</para>
+        <para id="id5082373">136: a=b+c;</para>
+        <para id="id5082378">137: a.Print("a");</para>
+        <para id="id5082383">138: c=c+a;</para>
+        <para id="id5082387">139: c.Print("c");</para>
+        <para id="id5082392">140: return 0;</para>
+        <para id="id5082397">141: }</para>
+        <para id="id5082402">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT6_4.EXE">chạy ví dụ 6.4</link>, kết quả ở hình 6.5</para>
+        <figure id="id5082425">
+          <media id="id1170445451190" alt=""><image src="../../media/graphics16-51dd.png" mime-type="image/png" height="170" width="525"/></media>
+        </figure>
+        <para id="id5082449">Hình 6.5: Kết quả của ví dụ 6.4</para>
+      </section>
+      <section id="id-826737969802">
+        <title>Có constructor và destructor ảo hay không?</title>
+        <para id="id5082471">Khi một đối tượng thuộc lớp có phương thức ảo, để thực hiện cơ chế kết nối động, trình biên dịch sẽ tạo thêm một con trỏ vptr như một thành viên của lớp, con trỏ này có nhiệm vụ quản lý địa chỉ của phương thức ảo. Một lớp chỉ có một bảng phương thức ảo, trong khi đó có thể có nhiều đối tượng thuộc lớp, nên khi một đối tượng khác thuộc cùng lớp tạo ra thì con trỏ vptr đã còn tại. Chính vì vậy bảng phương thức ảo phải được tạo ra trước khi gọi thực hiện constructor, nên constructor không thể là phương thức ảo. Ngược lại do một lớp chỉ có một bảng phương thức ảo nên khi một đối tượng thuộc lớp bị hủy bỏ, bảng phương thức ảo vẫn còn đó, và con trỏ vptr vẫn còn đó. Hơn nữa, destructor được gọi thực hiện trước khi vùng nhớ dành cho đối tượng bị thu hồi, do đó destructor có thể là phương thức ảo. Tuy nhiên, constructor của một lớp có thể gọi phương thức ảo khác. Điều này hoàn toàn không có gì mâu thuẫn với cơ chế kết nối động.</para>
+        <para id="id5082507">
+          <link resource="javascript:if(confirm('http:">Ví dụ 6.5:</link>
+        </para>
+        <para id="id5082528">1: //Chương trình 6.5: Destructor ảo</para>
+        <para id="id5082534">2: #include &lt;iostream.h&gt;</para>
+        <para id="id5082539">3:</para>
+        <para id="id5082543">4: class Base</para>
+        <para id="id5082548">5: {</para>
+        <para id="id5082553">6: public:</para>
+        <para id="id5082558">7: virtual ~Base()</para>
+        <para id="id5082562">8: {</para>
+        <para id="id5082567">9: cout&lt;&lt;"~Base"&lt;&lt;endl;</para>
+        <para id="id5082572">10: }</para>
+        <para id="id5082577">11: };</para>
+        <para id="id5082582">12:</para>
+        <para id="id5082586">13: class Derived:public Base</para>
+        <para id="id5082590">14: {</para>
+        <para id="id5082595">15: public:</para>
+        <para id="id5082600">16: virtual ~Derived()</para>
+        <para id="id5082605">17: {</para>
+        <para id="id5082609">18: cout&lt;&lt;"~Derived"&lt;&lt;endl;</para>
+        <para id="id5082615">18: }</para>
+        <para id="id5082619">19: };</para>
+        <para id="id5082624">20:</para>
+        <para id="id5082628">21: int main()</para>
+        <para id="id5082633">22: {</para>
+        <para id="id5082638">23: Base *B;</para>
+        <para id="id5082643">24: B = new Derived;</para>
+        <para id="id5082648">25: delete B;</para>
+        <para id="id5082652">26: return 0;</para>
+        <para id="id5082657">27: }</para>
+        <para id="id5082662">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT6_5.EXE">chạy ví dụ 6.5</link>, kết quả ở hình 6.6</para>
+        <figure id="id5082685">
+          <media id="id1170445206140" alt=""><image src="../../media/graphics17-7b39.png" mime-type="image/png" height="47" width="451"/></media>
+        </figure>
+        <para id="id5082709">Hình 6.6: Kết quả của ví dụ 6.5</para>
+        <para id="id5082715">Nếu destructor không là phương thức ảo thì khi giải phóng đối tượng B chỉ có destructor của lớp cơ sơ được gọi mà thôi nhưng khi destructor là phương thức ảo thì khi giải phóng đối tượng B (ở dòng 25) destructor của lớp dẫn xuất được gọi thực hiện rồi đến destructor của lớp cơ sơ.</para>
+        <para id="id5082731">BÀI TẬP</para>
+        <para id="id5082735">Bài 1: Hãy xây dựng các lớp cần thiết trong phân cấp hình 5.3 để tính diện tích (hoặc diện tích xung quanh) và thể tích trong đó lớp Shape là lớp cơ sở trừu tượng.</para>
+        <para id="id5082755">Bài 2: Hãy sửa đổi hệ thống lương của chương trình ở ví dụ 6.6 bằng thêm các thành viên dữ liệu BrithData (một đối tượng kiểu Date) và DepartmentCode (kiểu int) vào lớp Employee. Giả sử lương này được xử lý một lần trên một tháng. Sau đó, chương trình tính bảng lương cho mỗi Employee (tính đa hình), cộng thêm 100.00$ tiền thưởng vào tổng số lương của mỗi người nếu đây là tháng mà ngày sinh của Employee xảy ra.</para>
+        <para id="id5082792">Bài 3: Cài đặt các lớp trong cây phả hệ lớp sau:</para>
+        <figure id="id5082810">
+          <media id="id1170445192343" alt=""><image src="../../media/graphics18-4fa4.png" mime-type="image/png" height="236" width="675"/></media>
+        </figure>
+        <para id="id6466533">Trong đó các lớp Person, Student và Staff là các lớp trừu tượng, các lớp còn lại là các lớp dẫn xuất thực.</para>
+        <para id="id6466542"> </para>
+      </section>
+    </section>
+  </content>
+</document>

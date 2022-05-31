@@ -1,0 +1,1546 @@
+<document xmlns="http://cnx.rice.edu/cnxml" xmlns:md="http://cnx.rice.edu/mdml">
+  <title>Lớp và đối tượng</title>
+  <metadata>
+  <md:content-id>m30173</md:content-id><md:title>Lớp và đối tượng</md:title>
+  <md:abstract>Phần này trình bày về lớp và đối tượng</md:abstract>
+  <md:uuid>10118ad1-8b88-4efd-8310-348969331834</md:uuid>
+</metadata>
+
+<content>
+    <para id="id6504808">DẪN NHẬP</para>
+    <para id="id6504812">Bây giờ chúng ta bắt đầu tìm hiểu về lập trình hướng đối tượng trong C++. Trong các phần sau, chúng ta cũng tìm hiểu về các kỹ thuật của thiết kế hướng đối tượng (Object-Oriented Design OOD): Chúng ta phân tích một vấn đề cụ thể, xác định các đối tượng nào cần để cài đặt hệ thống, xác định các thuộc tính nào mà đối tượng phải có, xác định hành vi nào mà đối tượng cần đưa ra, và chỉ rõ làm thế nào các đối tượng cần tương tác với đối tượng khác để thực hiện các mục tiêu tổng thể của hệ thống.</para>
+    <para id="id6142672">Chúng ta nhắc lại các khái niệm và thuật ngữ chính của định hướng đối tượng. OOP đóng gói dữ liệu (các thuộc tính) và các hàm (hành vi) thành gói gọi là các đối tượng. Dữ liệu và các hàm của đối tượng có sự liên hệ mật thiết với nhau. Các đối tượng có các đặc tính của việc che dấu thông tin. Điều này nghĩa là mặc dù các đối tượng có thể biết làm thế nào liên lạc với đối tượng khác thông qua các giao diện hoàn toàn xác định, bình thường các đối tượng không được phép biết làm thế nào các đối tượng khác được thực thi, các chi tiết của sự thi hành được dấu bên trong các đối tượng. </para>
+    <para id="id6493085">Trong C và các ngôn ngữ lập trình thủ tục, lập trình có khuynh hướng định hướng hành động, trong khi ý tưởng trong lập trình C++ là định hướng đối tượng. Trong C, đơn vị của lập trình là hàm; trong C++, đơn vị của lập trình là lớp (class) .</para>
+    <para id="id6493113">Các lập trình viên C tập trung vào viết các hàm. Các nhóm của các hành động mà thực hiện vài công việc được tạo thành các hàm, và các hàm được nhóm thành các chương trình. Dữ liệu thì rất quan trọng trong C, nhưng quan điểm là dữ liệu tồn tại chính trong việc hỗ trợ các hành động mà hàm thực hiện. Các động từ trong một hệ thống giúp cho lập trình viên C xác định tập các hàm mà sẽ hoạt động cùng với việc thực thi hệ thống.</para>
+    <para id="id6493132">Các lập trình viên C++ tập trung vào việc tạo ra "các kiểu do người dùng định nghĩa" (user-defined types) gọi là các lớp. Các lớp cũng được tham chiếu như "các kiểu do lập trình viên định nghĩa" (programmer-defined types). Mỗi lớp chứa dữ liệu cũng như tập các hàm mà xử lý dữ liệu. Các thành phần dữ liệu của một lớp được gọi là "các thành viên dữ liệu" (data members). Các thành phần hàm của một lớp được gọi là "các hàm thành viên" (member functions). Giống như thực thể của kiểu có sẵn như int được gọi là một biến, một thực thể của kiểu do người dùng định nghĩa (nghĩa là một lớp) được gọi là một đối tượng. Các danh từ trong một hệ thống giúp cho lập trình viên C++ xác định tập các lớp. Các lớp này được sử dụng để tạo các đối tượng mà sẽ sẽ hoạt động cùng với việc thực thi hệ thống.</para>
+    <para id="id6493184">Các lớp trong C++ được tiến hóa tự nhiên của khái niệm struct trong C. Trước khi tiến hành việc trình bày các lớp trong C++, chúng ta tìm hiểu về cấu trúc, và chúng ta xây dựng một kiểu do người dùng định nghĩa dựa trên một cấu trúc. </para>
+    <section id="id-283180747469">
+      <title>CÀI ĐẶT MỘT KIỂU DO NGƯỜI DÙNG ĐỊNH NGHĨA VỚI MỘT struct</title>
+      <para id="id6493220"><link resource="javascript:if(confirm('http:">Ví dụ 3.1:</link> Chúng ta xây dựng kiểu cấu trúc Time với ba thành viên số nguyên: Hour, Minute và second. Chương trình định nghĩa một cấu trúc Time gọi là DinnerTime. Chương trình in thời gian dưới dạng giờ quân đội và dạng chuẩn.</para>
+      <para id="id6493283">#include &lt;iostream.h&gt;</para>
+      <para id="id6493288">struct Time</para>
+      <para id="id6493292">{</para>
+      <para id="id6493297">int Hour; // 0-23</para>
+      <para id="id6493306">int Minute; // 0-59</para>
+      <para id="id6493316">int Second; // 0-59</para>
+      <para id="id6493326">};</para>
+      <para id="id6493330">void PrintMilitary(const Time &amp;); //prototype</para>
+      <para id="id6493341">void PrintStandard(const Time &amp;); //prototype</para>
+      <para id="id6493348">int main()</para>
+      <para id="id6493353">{</para>
+      <para id="id6493357">Time DinnerTime;</para>
+      <para id="id6493362">//Thiet lap cac thanh vien voi gia tri hop le</para>
+      <para id="id6493368">DinnerTime.Hour = 18;</para>
+      <para id="id6493373">DinnerTime.Minute = 30;</para>
+      <para id="id6493379">DinnerTime.Second = 0;</para>
+      <para id="id6493385">cout &lt;&lt; "Dinner will be held at ";</para>
+      <para id="id6493392">PrintMilitary(DinnerTime);</para>
+      <para id="id6493397">cout &lt;&lt; " military time," &lt;&lt; endl &lt;&lt; "which is ";</para>
+      <para id="id6493404">PrintStandard(DinnerTime);</para>
+      <para id="id6493409">cout &lt;&lt; " standard time." &lt;&lt; endl;</para>
+      <para id="id6493416">//Thiet lap cac thanh vien voi gia tri khong hop le</para>
+      <para id="id6493422">DinnerTime.Hour = 29;</para>
+      <para id="id6493428">DinnerTime.Minute = 73;</para>
+      <para id="id6493433">DinnerTime.Second = 103;</para>
+      <para id="id6493439">cout &lt;&lt; endl &lt;&lt; "Time with invalid values: ";</para>
+      <para id="id6493446">PrintMilitary(DinnerTime);</para>
+      <para id="id6493452">cout &lt;&lt; endl;</para>
+      <para id="id6493458">return 0;</para>
+      <para id="id6493463">}</para>
+      <para id="id6493467">//In thoi gian duoi dang gio quan doi</para>
+      <para id="id6493472">void PrintMilitary(const Time &amp;T)</para>
+      <para id="id6493477">{</para>
+      <para id="id6493481">cout &lt;&lt; (T.Hour &lt; 10 ? "0" : "") &lt;&lt; T.Hour &lt;&lt; ":"</para>
+      <para id="id6493488"> &lt;&lt; (T.Minute &lt; 10 ? "0" : "") &lt;&lt; T.Minute &lt;&lt; ":"</para>
+      <para id="id6493498"> &lt;&lt; (T.Second &lt; 10 ? "0" : "") &lt;&lt; T.Second;</para>
+      <para id="id6493508">}</para>
+      <para id="id6493512">//In thoi gian duoi dang chuan</para>
+      <para id="id6493516">void PrintStandard(const Time &amp;T)</para>
+      <para id="id6493522">{</para>
+      <para id="id6493526">cout &lt;&lt; ((T.Hour == 12) ? 12 : T.Hour % 12)</para>
+      <para id="id6493536"> &lt;&lt; ":" &lt;&lt; (T.Minute &lt; 10 ? "0" : "") &lt;&lt; T.Minute</para>
+      <para id="id6493548"> &lt;&lt; ":" &lt;&lt; (T.Second &lt; 10 ? "0" : "") &lt;&lt; T.Second</para>
+      <para id="id6493558"> &lt;&lt; (T.Hour &lt; 12 ? " AM" : " PM");</para>
+      <para id="id6493568">}</para>
+      <para id="id6493573">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT3_1.EXE">chạy ví dụ 3.1</link>, kết quả ở hình 3.1</para>
+      <figure id="id6493596">
+        <media id="id12500532" alt=""><image src="../../media/graphics1-409d.png" mime-type="image/png" height="92" width="498"/></media>
+      </figure>
+      <para id="id6493620">Hình 3.1: Kết quả của ví dụ 3.1</para>
+      <para id="id6493625">Có một vài hạn chế khi tạo các kiểu dữ liệu mới với các cấu trúc ở phần trên. Khi việc khởi tạo không được yêu cầu, có thể có dữ liệu chưa khởi tạo và các vấn đề nảy sinh. Ngay cả nếu dữ liệu được khởi tạo, nó có thể khởi tạo không chính xác. Các giá trị không hợp lệ có thể được gán cho các thành viên của một cấu trúc bởi vì chương trình trực tiếp truy cập dữ liệu. Chẳng hạn ở ví dụ 3.1 ở dòng 23 đến dòng 25, chương trình gán các giá trị không hợp lệ cho đối tượng DinnerTime. Nếu việc cài đặt của struct thay đổi, tất cả các chương trình sử dụng struct phải thay đổi. Điều này do lập trình viên trực tiếp thao tác kiểu dữ liệu. Không có "giao diện" để bảo đảm lập trình viên sử dụng dữ liệu chính xác và bảo đảm dữ liệu còn lại ở trạng thái thích hợp. Mặt khác, cấu trúc trong C không thể được in như một đơn vị, chúng được in khi các thành viên được in. Các cấu trúc trong C không thể so sánh với nhau, chúng phải được so sánh thành viên với thành viên.</para>
+      <para id="id6493682">Phần sau cài đặt lại cấu trúc Time ở ví dụ 3.1 như một lớp và chứng minh một số thuận lợi để việc tạo ra cái gọi là các kiểu dữ liệu trừu tượng (Abstract Data Types – ADT) như các lớp. Chúng ta sẽ thấy rằng các lớp và các cấu trúc có thể sử dụng gần như giống nhau trong C++. Sự khác nhau giữa chúng là thuộc tính truy cập các thành viên.</para>
+    </section>
+    <section id="id-80727523943">
+      <title>CÀI ĐẶT MỘT  KIỂU DỮ LIỆU TRỪU TƯỢNG VỚI MỘT LỚP</title>
+      <para id="id6493718">Các lớp cho phép lập trình viên mô hình các đối tượng mà có các thuộc tính (biểu diễn như các thành viên dữ liệu – Data members) và các hành vi hoặc các thao tác (biểu diễn như các hàm thành viên – Member functions). Các kiểu chứa các thành viên dữ liệu và các hàm thành viên được định nghĩa thông thường trong C++ sử dụng từ khóa class, có cú pháp như sau: </para>
+      <para id="id6493740">class &lt;class-name&gt;</para>
+      <para id="id6493750">{</para>
+      <para id="id6493756">&lt;member-list&gt; //Thân của lớp</para>
+      <para id="id6493763">};</para>
+      <para id="id6493768">Trong đó:</para>
+      <para id="id6493774">class-name: tên lớp.</para>
+      <para id="id6493780">member-list: đặc tả các thành viên dữ liệu và các hàm thành viên.</para>
+      <para id="id6493789">Các hàm thành viên đôi khi được gọi là các phương thức (methods) trong các ngôn ngữ lập trình hướng đối tượng khác, và được đưa ra trong việc đáp ứng các message gởi tới một đối tượng. Một message tương ứng với việc gọi hàm thành viên.</para>
+      <para id="id6493805">Khi một lớp được định nghĩa, tên lớp có thể được sử dụng để khai báo đối tượng của lớp theo cú pháp sau:</para>
+      <para id="id6493815">&lt;class-name&gt; &lt;object-name&gt;;</para>
+      <para id="id6493821">Chẳng hạn, cấu trúc Time sẽ được định nghĩa dưới dạng lớp như sau:</para>
+      <para id="id6493829">class Time</para>
+      <para id="id6493838">{</para>
+      <para id="id6493842">public:</para>
+      <para id="id6493847">Time();</para>
+      <para id="id6493851">void SetTime(int, int, int)</para>
+      <para id="id6493856">void PrintMilitary();</para>
+      <para id="id6493860">void PrintStandard()</para>
+      <para id="id6493865">private:</para>
+      <para id="id6493869">int Hour; // 0 - 23</para>
+      <para id="id6493874">int Minute; // 0 - 59</para>
+      <para id="id6493878">int Second; // 0 - 59 </para>
+      <para id="id6493883">}; </para>
+      <para id="id6493887">Trong định nghĩa lớp Time chứa ba thành viên dữ liệu là Hour, Minute và Second, và cũng trong lớp này, chúng ta thấy các nhãn public và private được gọi là các thuộc tính xác định truy cập thành viên (member access specifiers) gọi tắt là thuộc tính truy cập. </para>
+      <para id="id6493914">Bất kỳ thành viên dữ liệu hay hàm thành viên khai báo sau public có thể được truy cập bất kỳ nơi nào mà chương trình truy cập đến một đối tượng của lớp. Bất kỳ thành viên dữ liệu hay hàm thành viên khai báo sau private chỉ có thể được truy cập bởi các hàm thành viên của lớp. Các thuộc tính truy cập luôn luôn kết thúc với dấu hai chấm (:) và có thể xuất hiện nhiều lần và theo thứ tự bất kỳ trong định nghĩa lớp. Mặc định thuộc tính truy cập là private.</para>
+      <para id="id6493960">Định nghĩa lớp chứa các prototype của bốn hàm thành viên sau thuộc tính truy cập public là Time(), SetTime(), PrintMilitary() và PrintStandard(). Đó là các hàm thành viên public (public member function) hoặc giao diện (interface) của lớp. Các hàm này sẽ được sử dụng bởi các client (nghĩa là các phần của một chương trình mà là các người dùng) của lớp xử lý dữ liệu của lớp. Có thể nhận thấy trong định nghĩa lớp Time, hàm thành viên Time() có cùng tên với tên lớp Time, nó được gọi là hàm xây dựng (constructor function) của lớp Time.</para>
+      <para id="id6070251">Một constructor là một hàm thành viên đặc biệt mà khởi động các thành viên dữ liệu của một đối tượng của lớp. Một constructor của lớp được gọi tự động khi đối tượng của lớp đó được tạo. </para>
+      <para id="id6070265">Thông thường, các thành viên dữ liệu được liệt kê trong phần private của một lớp, còn các hàm thành viên được liệt kê trong phần public. Nhưng có thể có các hàm thành viên private và thành viên dữ liệu public.</para>
+      <para id="id6070301">Khi lớp được định nghĩa, nó có thể sử dụng như một kiểu trong phần khai báo như sau:</para>
+      <para id="id6070310">Time Sunset, // Đối tượng của lớp Time</para>
+      <para id="id6070318">ArrayTimes[5], // Mảng các đối tượng của lớp Time</para>
+      <para id="id6070325">*PTime, // Con trỏ trỏ đến một đối tượng của lớp Time</para>
+      <para id="id6070333">&amp;DinnerTime = Sunset; // Tham chiếu đến một đối tượng của lớp Time</para>
+      <para id="id6070343"><link resource="javascript:if(confirm('http:">Ví dụ 3.2</link>: Xây dựng lại lớp Time ở <link resource="javascript:if(confirm('http:">ví dụ 3.1</link></para>
+      <para id="id6070383">1: #include &lt;iostream.h&gt;</para>
+      <para id="id6070392">2:</para>
+      <para id="id6070396">3: class Time</para>
+      <para id="id6070401">4: {</para>
+      <para id="id6070405">5:  public:</para>
+      <para id="id6070414">6: Time();  //Constructor</para>
+      <para id="id6070426">7: void SetTime(int, int, int); //Thiết lập Hour, Minute va Second</para>
+      <para id="id6070438">8: void PrintMilitary(); //In thời gian dưới dạng giờ quân đội</para>
+      <para id="id6070451">9: void PrintStandard(); //In thời gian dưới dạng chuẩn</para>
+      <para id="id6070464">10: private:</para>
+      <para id="id6070473">11: int Hour; // 0 - 23</para>
+      <para id="id6070481">12: int Minute; // 0 - 59</para>
+      <para id="id6070490">13: int Second; // 0 - 59</para>
+      <para id="id6070499">14: };</para>
+      <para id="id6070504">15:</para>
+      <para id="id6070509">16: //Constructor khởi tạo mỗi thành viên DL với giá trị zero</para>
+      <para id="id6070520">17: //Bảo đảm tất cả các đối tượng bắt đầu ở một t.thái thích hợp</para>
+      <para id="id6070532">18: Time::Time()</para>
+      <para id="id6070537">19: {</para>
+      <para id="id6070542">20: Hour = Minute = Second = 0;</para>
+      <para id="id6070546">21: }</para>
+      <para id="id6070551">22:</para>
+      <para id="id6070555">23: //Thiết lập một giá trị Time mới sử dụng giờ quânđội</para>
+      <para id="id6070566">24: //Thực hiện việc kiểm tra tính hợp lệ trên các giá trị dữ liệu</para>
+      <para id="id6070578">25: //Thiết lập các giá trị không hợp lệ thành zero</para>
+      <para id="id6070589">26: void Time::SetTime(int H, int M, int S)</para>
+      <para id="id6070594">27: {</para>
+      <para id="id6070598">28:    Hour = (H &gt;= 0 &amp;&amp; H &lt; 24) ? H : 0;</para>
+      <para id="id6070605">29:    Minute = (M &gt;= 0 &amp;&amp; M &lt; 60) ? M : 0;</para>
+      <para id="id6070611">30:    Second = (S &gt;= 0 &amp;&amp; S &lt; 60) ? S : 0;</para>
+      <para id="id6070618">31: }</para>
+      <para id="id6070622">32:</para>
+      <para id="id6070627">33: //In thời gian dưới dạng giờ quân đội</para>
+      <para id="id6070637">34: void Time::PrintMilitary()</para>
+      <para id="id6070642">35: {</para>
+      <para id="id6070646">36:    cout &lt;&lt; (Hour &lt; 10 ? "0" : "") &lt;&lt; Hour &lt;&lt; ":"</para>
+      <para id="id6070653">37:         &lt;&lt; (Minute &lt; 10 ? "0" : "") &lt;&lt; Minute &lt;&lt; ":"</para>
+      <para id="id6070659">38:         &lt;&lt; (Second &lt; 10 ? "0" : "") &lt;&lt; Second;</para>
+      <para id="id6070665">39: }</para>
+      <para id="id6070670">40:</para>
+      <para id="id6070675">41: //In thời gian dưới dạng chuẩn</para>
+      <para id="id6070685">42: void Time::PrintStandard()</para>
+      <para id="id6070690">43: {</para>
+      <para id="id6070694">44:    cout &lt;&lt; ((Hour == 0 || Hour == 12) ? 12 : Hour % 12)</para>
+      <para id="id6070701">44:         &lt;&lt; ":" &lt;&lt; (Minute &lt; 10 ? "0" : "") &lt;&lt; Minute</para>
+      <para id="id6070708">45:         &lt;&lt; ":" &lt;&lt; (Second &lt; 10 ? "0" : "") &lt;&lt; Second</para>
+      <para id="id6070714">46:         &lt;&lt; (Hour &lt; 12 ? " AM" : " PM");</para>
+      <para id="id6070721">48: }</para>
+      <para id="id6070725">49:</para>
+      <para id="id6070730">50: int main()</para>
+      <para id="id6070735">51: {</para>
+      <para id="id6070740">52:    Time T; //Đối tượng T của lớp Time</para>
+      <para id="id6070750">53:</para>
+      <para id="id6070755">54:    cout &lt;&lt; "The initial military time is ";</para>
+      <para id="id6070761">55:    T.PrintMilitary();</para>
+      <para id="id6070767">56:    cout &lt;&lt; endl &lt;&lt; "The initial standard time is ";</para>
+      <para id="id6070774">57:    T.PrintStandard();</para>
+      <para id="id6070779">58:</para>
+      <para id="id6070784">59:    T.SetTime(13, 27, 6);</para>
+      <para id="id6070789">60:    cout &lt;&lt; endl &lt;&lt; endl &lt;&lt; "Military time after SetTime is ";</para>
+      <para id="id6070797">61:    T.PrintMilitary();</para>
+      <para id="id6070803">62:    cout &lt;&lt; endl &lt;&lt; "Standard time after SetTime is ";</para>
+      <para id="id6070810">63:    T.PrintStandard();</para>
+      <para id="id6070815">64:</para>
+      <para id="id6070819">65:    T.SetTime(99, 99, 99); //Thử thiết lập giá trị không hợp lệ</para>
+      <para id="id6070831">66:    cout &lt;&lt; endl &lt;&lt; endl &lt;&lt; "After attempting invalid settings:"</para>
+      <para id="id6070839">67:          &lt;&lt; endl &lt;&lt; "Military time: ";</para>
+      <para id="id6070846">68:    T.PrintMilitary();</para>
+      <para id="id6070851">69:    cout &lt;&lt; endl &lt;&lt; "Standard time: ";</para>
+      <para id="id6070857">70:    T.PrintStandard();</para>
+      <para id="id6070863">71:    cout &lt;&lt; endl;</para>
+      <para id="id6070868">72:    return 0;</para>
+      <para id="id6070873">73: }</para>
+      <para id="id6070878">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT3_2.EXE">chạy ví dụ 3.2</link>, kết quả ở hình 3.2</para>
+      <figure id="id6070901">
+        <media id="id13854919" alt=""><image src="../../media/graphics2-1fe6.png" mime-type="image/png" height="197" width="558"/></media>
+      </figure>
+      <para id="id6070925">Hình 3.2: Kết quả của ví dụ 3.2</para>
+      <para id="id6070930">Trong ví dụ 3.2, chương trình thuyết minh một đối tượng của lớp Time gọi là T (dòng 52). Khi đó constructor của lớp Time tự động gọi và rõ ràng khởi tạo mỗi thành viên dữ liệu private là zero. Sau đó thời gian được in dưới dạng giờ quân đội và dạng chuẩn để xác nhận các thành viên này được khởi tạo thích hợp (dòng 54 đến 57). Kế tới thời gian được thiết lập bằng cách sử dụng hàm thành viên SetTime() (dòng 59) và thời gian lại được in ở hai dạng (dòng 60 đến 63). Cuối cùng hàm thành viên SetTime() (dòng 65) thử thiết lập các thành viên dữ liệu với các giá trị không hợp lệ, và thời gian lại được in ở hai dạng (dòng 66 đến 70).</para>
+      <para id="id6070996">Chúng ta nhận thấy rằng, tất cả các thành viên dữ liệu của một lớp không thể khởi tạo tại nơi mà chúng được khai báo trong thân lớp. Các thành viên dữ liệu này phải được khởi tạo bởi constructor của lớp hay chúng có thể gán giá trị bởi các hàm thiết lập.</para>
+      <para id="id6071012">Khi một lớp được định nghĩa và các hàm thành viên của nó được khai báo, các hàm thành viên này phải được định nghĩa. Mỗi hàm thành viên của lớp có thể được định nghĩa trực tiếp trong thân lớp (hiển nhiên bao gồm prototype hàm của lớp), hoặc hàm thành viên có thể được định nghĩa sau thân lớp. Khi một hàm thành viên được định nghĩa sau định nghĩa lớp tương ứng, tên hàm được đặt trước bởi tên lớp và toán tử định phạm vi (::). Chẳng hạn như ở ví dụ 3.2 gồm các dòng 18, 26, 34 và 42. Bởi vì các lớp khác nhau có thể có các tên thành viên giống nhau, toán tử định phạm vi "ràng buộc" tên thành viên tới tên lớp để nhận dạng các hàm thành viên của một lớp. </para>
+      <para id="id6071043">Mặc dù một hàm thành viên khai báo trong định nghĩa một lớp có thể định nghĩa bên ngoài định nghĩa lớp này, hàm thành viên đó vẫn còn bên trong phạm vi của lớp, nghĩa là tên của nó chỉ được biết tới các thành viên khác của lớp ngoại trừ tham chiếu thông qua một đối tượng của lớp, một tham chiếu tới một đối tượng của lớp, hoặc một con trỏ trỏ tới một đối tượng của lớp.</para>
+      <para id="id6071059">Nếu một hàm thành viên được định nghĩa trong định nghĩa một lớp, hàm thành viên này chính là hàm inline. Các hàm thành viên định nghĩa bên ngoài định nghĩa một lớp có thể là hàm inline bằng cách sử dụng từ khóa inline.</para>
+      <para id="id6071079">Hàm thành viên cùng tên với tên lớp nhưng đặt trước là một ký tự ngã (~) được gọi là destructor của lớp này. Hàm destructor làm "công việc nội trợ kết thúc" trên mỗi đối tượng của lớp trước khi vùng nhờ cho đối tượng được phục hồi bởi hệ thống.</para>
+      <para id="id6071101"><link resource="javascript:if(confirm('http:">Ví dụ 3.3</link>: Lấy lại <link resource="javascript:if(confirm('http:">ví dụ 3.2</link> nhưng hai hàm PrintMilitary() và PrintStandard() là các hàm inline.</para>
+      <para id="id6071155">1: #include &lt;iostream.h&gt;</para>
+      <para id="id6071160">2: </para>
+      <para id="id6071164">3: class Time</para>
+      <para id="id6071169">4: {</para>
+      <para id="id6023292">5: public:</para>
+      <para id="id6023296">6: Time(); ; //Constructor</para>
+      <para id="id6023306">7: void SetTime(int, int, int); //Thiết lập Hour, Minute va Second</para>
+      <para id="id6023316">8: void PrintMilitary() // In thời gian dưới dạng giờ quânđội</para>
+      <para id="id6023326">9: {</para>
+      <para id="id6023331">10: cout &lt;&lt; (Hour &lt; 10 ? "0" : "") &lt;&lt; Hour &lt;&lt; ":"</para>
+      <para id="id6023337">11:          &lt;&lt; (Minute &lt; 10 ? "0" : "") &lt;&lt; Minute &lt;&lt; ":"</para>
+      <para id="id6023343">12:          &lt;&lt; (Second &lt; 10 ? "0" : "") &lt;&lt; Second;</para>
+      <para id="id6023350">13: }</para>
+      <para id="id6023355">14: void PrintStandard(); // In thời gian dưới dạng chuẩn </para>
+      <para id="id6023365">15: private:</para>
+      <para id="id6023370">16: int Hour; // 0 - 23</para>
+      <para id="id6023379">17: int Minute; // 0 - 59</para>
+      <para id="id6023388">18: int Second; // 0 - 59</para>
+      <para id="id6023398">19: };</para>
+      <para id="id6023402">20: //Constructor khởi tạo mỗi thành viên dữ liệu với giá trị zero</para>
+      <para id="id6023410">21: //Bảo đảm t.cả các đối tượng bắt đầu ở một trạng thái thích hợp</para>
+      <para id="id6023417">22: Time::Time()</para>
+      <para id="id6023422">23: {</para>
+      <para id="id6023427">24: Hour = Minute = Second = 0;</para>
+      <para id="id6023431">25: }</para>
+      <para id="id6023436">26:</para>
+      <para id="id6023440">27: #9; //Thiết lập một giá trị Time mới sử dụng giờ quân đội</para>
+      <para id="id6023452">28: #9; //T.hiện việc k.tra tính hợp lệ trên các giá trị DL</para>
+      <para id="id6023463">29: #9; //Thiết lập các giá trị không hợp lệ thành zero</para>
+      <para id="id6023474">30: void Time::SetTime(int H, int M, int S)</para>
+      <para id="id6023478">31: {</para>
+      <para id="id6023483">32: Hour = (H &gt;= 0 &amp;&amp; H &lt; 24) ? H : 0;</para>
+      <para id="id6023489">33: Minute = (M &gt;= 0 &amp;&amp; M &lt; 60) ? M : 0;</para>
+      <para id="id6023495">34: Second = (S &gt;= 0 &amp;&amp; S &lt; 60) ? S : 0;</para>
+      <para id="id6023501">35: }</para>
+      <para id="id6023506">36:</para>
+      <para id="id6023510">37: #9; //In thời gian dưới dạng chuẩn</para>
+      <para id="id6023520">38: inline void Time::PrintStandard()</para>
+      <para id="id6023525">39: {</para>
+      <para id="id6023529">40: cout &lt;&lt; ((Hour == 0 || Hour == 12) ? 12 : Hour % 12)</para>
+      <para id="id6023536">41:       &lt;&lt; ":" &lt;&lt; (Minute &lt; 10 ? "0" : "") &lt;&lt; Minute</para>
+      <para id="id6023542">42:       &lt;&lt; ":" &lt;&lt; (Second &lt; 10 ? "0" : "") &lt;&lt; Second</para>
+      <para id="id6023548">43: &lt;&lt; (Hour &lt; 12 ? " AM" : " PM");</para>
+      <para id="id6023553">44: }</para>
+      <para id="id6023558">45:</para>
+      <para id="id6023562">46: int main()</para>
+      <para id="id6023567">47: {</para>
+      <para id="id6023572">48: Time T;</para>
+      <para id="id6023577">49:</para>
+      <para id="id6023581">50: cout &lt;&lt; "The initial military time is ";</para>
+      <para id="id6023587">51: T.PrintMilitary();</para>
+      <para id="id6023592">52: cout &lt;&lt; endl &lt;&lt; "The initial standard time is ";</para>
+      <para id="id6023599">53: T.PrintStandard();</para>
+      <para id="id6023604">54:</para>
+      <para id="id6023608">55: T.SetTime(13, 27, 6);</para>
+      <para id="id6023613">56: cout &lt;&lt; endl &lt;&lt; endl &lt;&lt; "Military time after SetTime is ";</para>
+      <para id="id6023621">57: T.PrintMilitary();</para>
+      <para id="id6023626">58: cout &lt;&lt; endl &lt;&lt; "Standard time after SetTime is ";</para>
+      <para id="id6023632">59: T.PrintStandard();</para>
+      <para id="id6023637">60:</para>
+      <para id="id6023641">61: T.SetTime(99, 99, 99); //Thử thiết lập giá trị không hợp lệ</para>
+      <para id="id6023652">62: cout &lt;&lt; endl &lt;&lt; endl &lt;&lt; "After attempting invalid settings:"</para>
+      <para id="id6023660">63:       &lt;&lt; endl &lt;&lt; "Military time: ";</para>
+      <para id="id6023666">64: T.PrintMilitary();</para>
+      <para id="id6023671">65: cout &lt;&lt; endl &lt;&lt; "Standard time: ";</para>
+      <para id="id6023677">66: T.PrintStandard();</para>
+      <para id="id6023682">67: cout &lt;&lt; endl;</para>
+      <para id="id6023687">68: return 0;</para>
+      <para id="id6023692">69: }</para>
+      <para id="id6023696">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT3_3.EXE">chạy ví dụ 3.3</link>, kết quả ở hình 3.3</para>
+      <figure id="id6023719">
+        <media id="id13815252" alt=""><image src="../../media/graphics3-1fe6.png" mime-type="image/png" height="219" width="621"/></media>
+      </figure>
+      <para id="id6023743">Hình 3.3: Kết quả của ví dụ 3.3</para>
+    </section>
+    <section id="id-626429617784">
+      <title>PHẠM VI LỚP VÀ TRUY CẬP CÁC THÀNH VIÊN LỚP</title>
+      <para id="id6023758">Các thành viên dữ liệu của một lớp (các biến khai báo trong định nghĩa lớp) và các hàm thành viên (các hàm khai báo trong định nghĩa lớp) thuộc vào phạm vi của lớp.</para>
+      <para id="id6023771">Trong một phạm vi lớp, các thành viên của lớp được truy cập ngay lập tức bởi tất cả các hàm thành viên của lớp đó và có thể được tham chiếu một cách dễ dàng bởi tên. Bên ngoài một phạm vi lớp, các thành viên của lớp được tham chiếu thông qua hoặc một tên đối tượng, một tham chiếu đến một đối tượng, hoặc một con trỏ tới đối tượng.</para>
+      <para id="id6023787">Các hàm thành viên của lớp có thể được đa năng hóa (overload), nhưng chỉ bởi các hàm thành viên khác của lớp. Để đa năng hóa một hàm thành viên, đơn giản cung cấp trong định nghĩa lớp một prototype cho mỗi phiên bản của hàm đa năng hóa, và cung cấp một định nghĩa hàm riêng biệt cho mỗi phiên bản của hàm.</para>
+      <para id="id6023803">Các hàm thành viên có phạm vi hàm trong một lớp – các biến định nghĩa trong một hàm thành viên chỉ được biết tới hàm đó. Nếu một hàm thành viên định nghĩa một biến cùng tên với tên một biến trong phạm vi lớp, biến phạm vi lớp được dấu bởi biến phạm vi hàm bên trong phạm vi hàm. Như thế một biến bị dấu có thể được truy cập thông qua toán tử định phạm vi.</para>
+      <para id="id6023818">Các toán tử được sử dụng để truy cập các thành viên của lớp được đồng nhất với các toán tử sử dụng để truy cập các thành viên của cấu trúc. Toán tử lựa chọn thành viên dấu chấm (.) được kết hợp với một tên của đối tượng hay với một tham chiếu tới một đối tượng để truy cập các thành viên của đối tượng. Toán tử lựa chọn thành viên mũi tên (-&gt;)được kết hợp với một con trỏ trỏ tới một truy cập để truy cập các thành viên của đối tượng.</para>
+      <para id="id6023855"><link resource="javascript:if(confirm('http:">Ví dụ 3.4:</link> Chương trình sau minh họa việc truy cập các thành viên của một lớp với các toán tử lựa chọn thành viên.</para>
+      <para id="id6023882">1: #include &lt;iostream.h&gt;</para>
+      <para id="id6023887">2: </para>
+      <para id="id6023891">3: class Count</para>
+      <para id="id6023896">4: {</para>
+      <para id="id6023901">5:     public:</para>
+      <para id="id6023906">6:     int X;</para>
+      <para id="id6023911">7:     void Print()</para>
+      <para id="id6023916">8:     {</para>
+      <para id="id6023921">9:         cout &lt;&lt; X &lt;&lt; endl;</para>
+      <para id="id6023926">10:     }</para>
+      <para id="id6023931">11: };</para>
+      <para id="id6023936">12:</para>
+      <para id="id6023940">13: int main()</para>
+      <para id="id6023945">14: {</para>
+      <para id="id6023950">15:     Count Counter, //Tạo đối tượng Counter</para>
+      <para id="id6023956">16:     *CounterPtr = &amp;Counter, //Con trỏ trỏ tới Counter</para>
+      <para id="id6023964">17:     &amp;CounterRef = Counter; //Tham chiếu tới Counter</para>
+      <para id="id6023970">18:</para>
+      <para id="id6023974">19:     cout &lt;&lt; "Assign7 to X and Print using the object's name: ";</para>
+      <para id="id6023982">20:     Counter.X = 7; //Gán 7 cho thành viên dữ liệu X</para>
+      <para id="id6023989">21:     Counter.Print(); //Gọi hàm thành viên Print</para>
+      <para id="id6023995">22:</para>
+      <para id="id6024000">23:     cout &lt;&lt; "Assign 8 to X and Print using a reference: ";</para>
+      <para id="id6024007">24:     CounterRef.X = 8; //Gán 8 cho thành viên dữ liệu X</para>
+      <para id="id6024014">25:     CounterRef.Print(); //Gọi hàm thành viên Print</para>
+      <para id="id6024020">26:</para>
+      <para id="id6024025">27:     cout &lt;&lt; "Assign 10 to X and Print using a pointer: ";</para>
+      <para id="id6024032">28:     CounterPtr-&gt;X = 10; // Gán 10 cho thành viên dữ liệu X</para>
+      <para id="id6024039">29:     CounterPtr-&gt;Print(); //Gọi hàm thành viên Print</para>
+      <para id="id6024046">30:     return 0;</para>
+      <para id="id6024052">31: }</para>
+      <para id="id6024056">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT3_4.EXE">chạy ví dụ 3.4</link>, kết quả ở hình 3.4</para>
+      <figure id="id6024079">
+        <media id="id13597976" alt=""><image src="../../media/graphics4-87f1.png" mime-type="image/png" height="82" width="574"/></media>
+      </figure>
+      <para id="id6024103">Hình 3.4: Kết quả của ví dụ 3.4</para>
+    </section>
+    <section id="id-855025260862">
+      <title>ĐIỀU KHIỂN TRUY CẬP TỚI CÁC THÀNH VIÊN</title>
+      <para id="id6024117">Các thuộc tính truy cập public và private (và protected chúng ta sẽ xem xét sau) được sử dụng để điều khiển truy cập tới các thành viên dữ liệu và các hàm thành viên của lớp. Chế độ truy cập mặc định đối với lớp là private vì thế tất cả các thành viên sau phần header của lớp và trước nhãn đầu tiên là private. Sau mỗi nhãn, chế độ mà được kéo theo bởi nhãn đó áp dụng cho đến khi gặp nhãn kế tiếp hoặc cho đến khi gặp dấu móc phải (}) của phần định nghĩa lớp. Các nhãn public, private và protected có thể được lặp lại nhưng cách dùng như vậy thì hiếm có và có thể gây khó hiểu.</para>
+      <para id="id6024196">Các thành viên private chỉ có thể được truy cập bởi các hàm thành viên (và các hàm friend) của lớp đó. Các thành viên public của lớp có thể được truy cập bởi bất kỳ hàm nào trong chương trình.</para>
+      <para id="id6024221">Mục đích chính của các thành viên public là để biểu thị cho client của lớp một cái nhìn của các dịch vụ (services) mà lớp cung cấp. Tập hợp này của các dịch vụ hình thành giao diện public của lớp. Các client của lớp không cần quan tâm làm thế nào lớp hoàn thành các thao tác của nó. Các thành viên private của lớp cũng như các định nghĩa của các hàm thành viên public của nó thì không phải có thể truy cập tới client của một lớp. Các thành phần này hình thành sự thi hành của lớp.</para>
+      <para id="id6137540"><link resource="javascript:if(confirm('http:">Ví dụ 3.5: </link>Chương trình sau cho thấy rằng các thành viên private chỉ có thể truy cập thông qua giao diện public sử dụng các hàm thành viên public. </para>
+      <para id="id6137579">#include &lt;iostream.h&gt;</para>
+      <para id="id6137583">class MyClass</para>
+      <para id="id6137588">{</para>
+      <para id="id6137592">private:</para>
+      <para id="id6137597">int X,Y;</para>
+      <para id="id6137604">public:</para>
+      <para id="id6137609">void Print();</para>
+      <para id="id6137616">};</para>
+      <para id="id6137620">void MyClass::Print()</para>
+      <para id="id6137625">{</para>
+      <para id="id6137629">cout &lt;&lt;X&lt;&lt;Y&lt;&lt;endl;</para>
+      <para id="id6137635">}</para>
+      <para id="id6137639">int main()</para>
+      <para id="id6137644">{</para>
+      <para id="id6137648">MyClass M;</para>
+      <para id="id6137653">M.X = 3;</para>
+      <para id="id6137659">M.Y = 4;</para>
+      <para id="id6137664">M.Print();</para>
+      <para id="id6137670">return 0;</para>
+      <para id="id6137675">}</para>
+      <para id="id6137679">Khi chúng ta biên dịch chương trình này, compiler phát sinh ra hai lỗi tại hai dòng 20 và 21 như sau:</para>
+      <figure id="id6137691">
+        <media id="id12314281" alt=""><image src="../../media/graphics5-d3de.png" mime-type="image/png" height="80" width="562"/></media>
+      </figure>
+      <para id="id6137714">Hình 3.5: Thông báo lỗi của ví dụ 3.5</para>
+      <para id="id6137720">Thuộc tính truy cập mặc định đối với các thành viên của lớp là private. Thuộc tính truy cập các thành viên của một lớp có thể được thiết lập rõ ràng là public, protected hoặc private. Thuộc tính truy cập mặc định đối với các thành viên của struct là public. Thuộc tính truy cập các thành viên của một struct cũng có thể được thiết lập rõ ràng là public, protected hoặc private.</para>
+      <para id="id6137795">Truy cập đến một dữ liệu private cần phải được điều khiển cẩn thận bởi việc sử dụng của các hàm thành viên, gọi là các hàm truy cập (access functions). </para>
+    </section>
+    <section id="id-643104506333">
+      <title>CÁC HÀM TRUY CẬP VÀ CÁC HÀM TIỆN ÍCH</title>
+      <para id="id6137822">Không phải tất cả các hàm thành viên đều là public để phục vụ như bộ phận giao diện của một lớp. Một vài hàm còn lại là private và phục vụ như các hàm tiện ích (utility functions) cho các hàm khác của lớp.</para>
+      <para id="id6137846">Các hàm truy cập có thể đọc hay hiển thị dữ liệu. Sử dụng các hàm truy cập để kiểm tra tính đúng hoặc sai của các điều kiện – các hàm như thế thường được gọi là các hàm khẳng định (predicate functions). Một ví dụ của hàm khẳng định là một hàm IsEmpty() của lớp container - một lớp có khả năng giữ nhiều đối tượng - giống như một danh sách liên kết, một stack hay một hàng đợi. Một chương trình sẽ kiểm tra hàm IsEmpty() trước khi thử đọc mục khác từ đối tượng container. </para>
+      <para id="id6137882">Một hàm tiện ích không là một phần của một giao diện của lớp. Hơn nữa nó là một hàm thành viên private mà hỗ trợ các thao tác của các hàm thành viên public. Các hàm tiện ích không dự định được sử dụng bởi các client của lớp.</para>
+      <para id="id6137908"><link resource="javascript:if(confirm('http:">Ví dụ 3.6:</link>  Minh họa cho các hàm tiện ích.</para>
+      <para id="id6137930">1: #include &lt;iostream.h&gt;</para>
+      <para id="id6137935">2: #include &lt;iomanip.h&gt;</para>
+      <para id="id6137940">3:</para>
+      <para id="id6137947">4: class SalesPerson</para>
+      <para id="id6137952">5: {</para>
+      <para id="id6137956">6: public:</para>
+      <para id="id6137961">7: SalesPerson();             //constructor</para>
+      <para id="id6137967">8: void SetSales(int, double);//Ng.dùng cung cấp các hình của</para>
+      <para id="id6137974">9: #9; #9; //những hàng bán của một tháng</para>
+      <para id="id6137980">10: void PrintAnnualSales();</para>
+      <para id="id6137984">11:</para>
+      <para id="id6137988">12: private:</para>
+      <para id="id6137992">13: double Sales[12]; //12 hình của những hàng bán hằng tháng</para>
+      <para id="id6137999">14: double TotalAnnualSales(); //Hàm tiện ích</para>
+      <para id="id6138005">15: };</para>
+      <para id="id6138009">16:</para>
+      <para id="id6138013">17: //Hàm constructor khởi tạo mảng</para>
+      <para id="id6138019">18: SalesPerson::SalesPerson()</para>
+      <para id="id6138023">19: {</para>
+      <para id="id6138028">20: for (int I = 0; I &lt; 12; I++)</para>
+      <para id="id6138033">21: Sales[I] = 0.0;</para>
+      <para id="id6138037">22: }</para>
+      <para id="id6138042">23:</para>
+      <para id="id6138046">24://Hàm th.lập một trong 12 hình của những hàng bán hằng tháng</para>
+      <para id="id6138053">25: void SalesPerson::SetSales(int Month, double Amount)</para>
+      <para id="id6138058">26: {</para>
+      <para id="id6138062">27: if (Month &gt;= 1 &amp;&amp; Month &lt;= 12 &amp;&amp; Amount &gt; 0)</para>
+      <para id="id6138068">28: Sales[Month - 1] = Amount;</para>
+      <para id="id6138072">29: else</para>
+      <para id="id6138076">30: cout &lt;&lt; "Invalid month or sales figure" &lt;&lt; endl;</para>
+      <para id="id6138082">31: }</para>
+      <para id="id6138087">32:</para>
+      <para id="id6138091">33: //Hàm tiện íchđể tính tổng hàng bán hằng năm</para>
+      <para id="id6138097">34: double SalesPerson::TotalAnnualSales()</para>
+      <para id="id6138102">35: {</para>
+      <para id="id6138106">36: double Total = 0.0;</para>
+      <para id="id6138111">37:</para>
+      <para id="id6138115">38: for (int I = 0; I &lt; 12; I++)</para>
+      <para id="id6138120">39: Total += Sales[I];</para>
+      <para id="id6138124">40: return Total;</para>
+      <para id="id6138129">41: }</para>
+      <para id="id6138133">42:</para>
+      <para id="id6138138">43: //In tổng hàng bán hằng năm</para>
+      <para id="id6138143">44: void SalesPerson::PrintAnnualSales()</para>
+      <para id="id6138150">45: {</para>
+      <para id="id6138155">46: cout &lt;&lt; setprecision(2)</para>
+      <para id="id6138160">47:       &lt;&lt; setiosflags(ios::fixed | ios::showpoint)</para>
+      <para id="id6138167">48:       &lt;&lt; endl &lt;&lt; "The total annual sales are: $"</para>
+      <para id="id6138173">49:       &lt;&lt; TotalAnnualSales() &lt;&lt; endl;</para>
+      <para id="id6138179">50: }</para>
+      <para id="id6138184">51:</para>
+      <para id="id6138188">52: int main()</para>
+      <para id="id6138192">53: {</para>
+      <para id="id6138197">54: SalesPerson S;</para>
+      <para id="id6138201">55: double salesFigure;</para>
+      <para id="id6138206">56:</para>
+      <para id="id6138210">57: for (int I = 1; I &lt;= 12; I++)</para>
+      <para id="id6138215">58: {</para>
+      <para id="id6138220">59: cout &lt;&lt; "Enter sales amount for month "&lt;&lt; I &lt;&lt; ": ";</para>
+      <para id="id6138226">60: cin &gt;&gt; salesFigure;</para>
+      <para id="id6138231">61: S.SetSales(I, salesFigure);</para>
+      <para id="id6138235">62: }</para>
+      <para id="id6138240">63: S.PrintAnnualSales();</para>
+      <para id="id6138244">64: return 0;</para>
+      <para id="id6138249">65: }</para>
+      <para id="id6138253">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT3_6.EXE">chạy ví dụ 3.6</link> , kết quả ở hình 3.6</para>
+      <figure id="id6138276">
+        <media id="id13669389" alt=""><image src="../../media/graphics6-8238.png" mime-type="image/png" height="270" width="518"/></media>
+      </figure>
+      <para id="id6138300">Hình 3.6: Kết quả của ví dụ 3.6</para>
+    </section>
+    <section id="id-0912636790199">
+      <title>KHỞI ĐỘNG CÁC ĐỐI TƯỢNG CỦA LỚP : CONSTRUCTOR</title>
+      <para id="id6138316">Khi một đối tượng được tạo, các thành viên của nó có thể được khởi tạo bởi một hàm constructor. Một constructor là một hàm thành viên với tên giống như tên của lớp. Lập trình viên cung cấp constructor mà được gọi tự động mỗi khi đối tượng của lớp đó được tạo. Các thành viên dữ liệu của một lớp không thể được khởi tạo trong định nghĩa của lớp. Hơn nữa, các thành viên dữ liệu phải được khởi động hoặc trong một constructor của lớp hoặc các giá trị của chúng có thể được thiết lập sau sau khi đối tượng được tạo. Các constructor không thể mô tả các kiểu trả về hoặc các giá trị trả về. Các constructor có thể được đa năng hóa để cung cấp sự đa dạng để khởi tạo các đối tượng của lớp.</para>
+      <para id="id6138352">Constructor có thể chứa các tham số mặc định. Bằng cách cung cấp các tham số mặc định cho constructor, ngay cả nếu không có các giá trị nào được cung cấp trong một constructor thì đối tượng vẫn được bảo đảm để trong một trạng thái phù hợp vì các tham số mặc định. Một constructor của lập trình viên cung cấp mà hoặc tất cả các tham số của nó có giá trị mặc định hoặc không có tham số nào được gọi là constructor mặc định (default constructor). Chỉ có thể có một constructor mặc định cho mỗi lớp.</para>
+      <para id="id6138379"><link resource="javascript:if(confirm('http:">Ví dụ 3.7:</link> Constructor với các tham số mặc định</para>
+      <para id="id6138403">#include &lt;iostream.H&gt;</para>
+      <para id="id6138408">class Time</para>
+      <para id="id6138412">{</para>
+      <para id="id6138416">public:</para>
+      <para id="id6138422">Time(int = 0, int = 0, int = 0); //Constructor mac dinh</para>
+      <para id="id6138429">void SetTime(int, int, int);</para>
+      <para id="id6138435">void PrintMilitary();</para>
+      <para id="id6138442">void PrintStandard();</para>
+      <para id="id6138449">private:</para>
+      <para id="id6066204">int Hour;</para>
+      <para id="id6066211">int Minute;</para>
+      <para id="id6066218">int Second;</para>
+      <para id="id6066224">};</para>
+      <para id="id6066228">//Ham constructor de khoi dong du lieu private</para>
+      <para id="id6066233">//Cac gia tri mac dinh la 0</para>
+      <para id="id6066238">Time::Time(int Hr, int Min, int Sec)</para>
+      <para id="id6066242">{</para>
+      <para id="id6066246">SetTime(Hr, Min, Sec);</para>
+      <para id="id6066252">}</para>
+      <para id="id6066256">//Thiet lap cac gia tri cua Hour, Minute va Second</para>
+      <para id="id6066261">//Gia tri khong hop le duoc thiet lap la 0</para>
+      <para id="id6066265">void Time::SetTime(int H, int M, int S)</para>
+      <para id="id6066269">{</para>
+      <para id="id6066274">Hour = (H &gt;= 0 &amp;&amp; H &lt; 24) ? H : 0;</para>
+      <para id="id6066280">Minute = (M &gt;= 0 &amp;&amp; M &lt; 60) ? M : 0;</para>
+      <para id="id6066287">Second = (S &gt;= 0 &amp;&amp; S &lt; 60) ? S : 0;</para>
+      <para id="id6066293">}</para>
+      <para id="id6066298">//Hien thi thoi gian theo dang gio quan doi: HH:MM:SS</para>
+      <para id="id6066303">void Time::PrintMilitary()</para>
+      <para id="id6066307">{</para>
+      <para id="id6066312">cout &lt;&lt; (Hour &lt; 10 ? "0" : "") &lt;&lt; Hour &lt;&lt; ":"</para>
+      <para id="id6066318"> &lt;&lt; (Minute &lt; 10 ? "0" : "") &lt;&lt; Minute &lt;&lt; ":"</para>
+      <para id="id6066328"> &lt;&lt; (Second &lt; 10 ? "0" : "") &lt;&lt; Second;</para>
+      <para id="id6066338">}</para>
+      <para id="id6066342">//Hien thi thoi gian theo dang chuan: HH:MM:SS AM (hoac PM)</para>
+      <para id="id6066347">void Time::PrintStandard()</para>
+      <para id="id6066352">{</para>
+      <para id="id6066356">cout &lt;&lt; ((Hour == 0 || Hour == 12) ? 12 : Hour % 12)</para>
+      <para id="id6066363"> &lt;&lt; ":" &lt;&lt; (Minute &lt; 10 ? "0" : "") &lt;&lt; Minute</para>
+      <para id="id6066373"> &lt;&lt; ":" &lt;&lt; (Second &lt; 10 ? "0" : "") &lt;&lt; Second</para>
+      <para id="id6066382"> &lt;&lt; (Hour &lt; 12 ? " AM" : " PM");</para>
+      <para id="id6066393">}</para>
+      <para id="id6066397">int main()</para>
+      <para id="id6066401">{</para>
+      <para id="id6066405">Time T1,T2(2),T3(21,34),T4(12,25,42),T5(27,74,99);</para>
+      <para id="id6066411">cout &lt;&lt; "Constructed with:" &lt;&lt; endl  &lt;&lt; "all arguments defaulted:" &lt;&lt; endl &lt;&lt; " ";</para>
+      <para id="id6066428">T1.PrintMilitary();cout &lt;&lt; endl &lt;&lt; " ";</para>
+      <para id="id6066440">T1.PrintStandard();</para>
+      <para id="id6066445">cout &lt;&lt; endl &lt;&lt; "Hour specified; Minute and Second defaulted:" &lt;&lt; endl &lt;&lt; " ";</para>
+      <para id="id6066460">T2.PrintMilitary();cout &lt;&lt; endl &lt;&lt; " ";</para>
+      <para id="id6066472">T2.PrintStandard();</para>
+      <para id="id6066478">cout &lt;&lt; endl &lt;&lt; "Hour and Minute specified; Second defaulted:" &lt;&lt; endl &lt;&lt; " ";</para>
+      <para id="id6066493">T3.PrintMilitary();cout &lt;&lt; endl &lt;&lt; " ";</para>
+      <para id="id6066505">T3.PrintStandard();cout &lt;&lt; endl &lt;&lt; "Hour, Minute, and Second specified:"&lt;&lt;endl&lt;&lt;" ";</para>
+      <para id="id6066520">T4.PrintMilitary(); cout &lt;&lt; endl &lt;&lt; " ";</para>
+      <para id="id6066532">T4.PrintStandard();cout &lt;&lt; endl &lt;&lt; "all invalid values specified:" &lt;&lt; endl &lt;&lt; " ";</para>
+      <para id="id6066551">T5.PrintMilitary();cout &lt;&lt; endl &lt;&lt; " ";</para>
+      <para id="id6066564">T5.PrintStandard();cout &lt;&lt; endl;</para>
+      <para id="id6066572">return 0;</para>
+      <para id="id6066577">}</para>
+      <para id="id6066581">Chương trình ở ví dụ 3.7 khởi tạo năm đối tượng của lớp Time (ở dòng 52). Đối tượng T1 với ba tham số lấy giá trị mặc định, đối tượng T2 với một tham số được mô tả, đối tượng T3 với hai tham số được mô tả, đối tượng T4 với ba tham số được mô tả và đối tượng T5 với các tham số có giá trị không hợp lệ.</para>
+      <para id="id6066633">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT3_7.EXE">chạy ví dụ 3.7</link>, kết quả ở hình 3.7</para>
+      <figure id="id6066656">
+        <media id="id13887810" alt=""><image src="../../media/graphics7-dff2.png" mime-type="image/png" height="320" width="531"/></media>
+      </figure>
+      <para id="id6066680">Hình 3.7: Kết quả của ví dụ 3.7</para>
+      <para id="id6066686">Nếu không có constructor nào được định nghĩa trong một lớp thì trình biên dịch tạo một constructor mặc định. Constructor này không thực hiện bất kỳ sự khởi tạo nào, vì vậy khi đối tượng được tạo, nó không bảo đảm để trong một trạng thái phù hợp.</para>
+    </section>
+    <section id="id-0262174914871">
+      <title>SỬ DỤNG DESTRUCTOR</title>
+      <para id="id6066710">Một destructor là một hàm thành viên đặc biệt của một lớp. Tên của destructor đối với một lớp là ký tự ngã (~) theo sau bởi tên lớp.</para>
+      <para id="id6066726">Destructor của một lớp được gọi khi đối tượng được hủy bỏ nghĩa là khi sự thực hiện chương trình rời khỏi phạm vi mà trong đó đối tượng của lớp đó được khởi tạo. Destructor không thực sự hủy bỏ đối tượng – nó thực hiện "công việc nội trợ kết thúc" trước khi hệ thống phục hồi không gian bộ nhớ của đối tượng để nó có thể được sử dụng giữ các đối tượng mới.</para>
+      <para id="id6066742">Một destructor không nhận các tham số và không trả về giá trị. Một lớp chỉ có duy nhất một destructor – đa năng hóa destructor là không cho phép.</para>
+      <para id="id6066754">Nếu trong một lớp không có định nghĩa một destructor thì trình biên dịch sẽ tạo một destructor mặc định không làm gì cả.</para>
+      <para id="id6066765"><link resource="javascript:if(confirm('http:">Ví dụ 3.8:</link> Lớp có hàm destructor</para>
+      <para id="id6066788">#include &lt;iostream.h&gt;</para>
+      <para id="id6066793">class Simple</para>
+      <para id="id6066798">{private:</para>
+      <para id="id6066802">int *X;</para>
+      <para id="id6066810">public:</para>
+      <para id="id6066816">Simple(); //Constructor</para>
+      <para id="id6066824">~Simple(); //Destructor</para>
+      <para id="id6066832">void SetValue(int V);</para>
+      <para id="id6066840">int GetValue();</para>
+      <para id="id6066848">};</para>
+      <para id="id6066852">Simple::Simple()</para>
+      <para id="id6066857">{ X = new int; //Cấp phát vùng nhớ cho X</para>
+      <para id="id6066867">}</para>
+      <para id="id6066872">Simple::~Simple()</para>
+      <para id="id6066876">{</para>
+      <para id="id6066881">delete X; //Giải phóng vùng nhớ khi đối tượng bị hủy bỏ.</para>
+      <para id="id6066891">}</para>
+      <para id="id6066895">void Simple::SetValue(int V)</para>
+      <para id="id6066900">{</para>
+      <para id="id6066904">*X = V;</para>
+      <para id="id6066912">}</para>
+      <para id="id6066916">int Simple::GetValue()</para>
+      <para id="id6066921">{</para>
+      <para id="id6066926">return *X;</para>
+      <para id="id6066933">}</para>
+      <para id="id6066938">int main()</para>
+      <para id="id6066942">{</para>
+      <para id="id6066947">Simple S;</para>
+      <para id="id6066954">int X;</para>
+      <para id="id6066962">cout&lt;&lt;"Enter a number:";</para>
+      <para id="id6066971">cin&gt;&gt;X;</para>
+      <para id="id6066978">S.SetValue(X);</para>
+      <para id="id6066986">cout&lt;&lt;"The value of this number:"&lt;&lt;S.GetValue();</para>
+      <para id="id6066995">return 0;</para>
+      <para id="id6067003">}</para>
+      <para id="id6067007">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT3_8.EXE">chạy ví dụ 3.8</link>, kết quả ở hình 3.8</para>
+      <figure id="id6067030">
+        <media id="id7036723" alt=""><image src="../../media/graphics8-9dfc.png" mime-type="image/png" height="67" width="549"/></media>
+      </figure>
+      <para id="id6067054">Hình 3.8: Kết quả của ví dụ 3.8</para>
+    </section>
+    <section id="id-461207495932">
+      <title>KHI NÀO CÁC CONSTRUTOR VÀ DESTRUCTOR  ĐƯỢC GỌI ?</title>
+      <para id="id6067070">Các constructor và destructor được gọi một cách tự động. Thứ tự các hàm này được gọi phụ thuộc vào thứ tự trong đó sự thực hiện vào và rời khỏi phạm vi mà các đối tượng được khởi tạo. Một cách tổng quát, các destructor được gọi theo thứ tự ngược với thứ tự của các constructor được gọi.</para>
+      <para id="id6067086">Các constructor được gọi của các đối tượng khai báo trong phạm vi toàn cục trước bất kỳ hàm nào (bao gồm hàm main()) trong file mà bắt đầu thực hiện. Các destructor tương ứng được gọi khi hàm main() kết thúc hoặc hàm exit() được gọi.</para>
+      <para id="id6067117">Các constructor của các đối tượng cục bộ tự động được gọi khi sự thực hiện đến điểm mà các đối tượng được khai báo. Các destructor tương ứng được gọi khi các đối tượng rời khỏi phạm vi (nghĩa là khối mà trong đó chúng được khai báo). Các constructor và destructor đối với các đối tượng cục bộ tự động được gọi mỗi khi các đối tượng vào và rời khỏi phạm vi.</para>
+      <para id="id6067133">Các constructor được gọi của các đối tượng cục bộ tĩnh (static) khi sự thực hiện đến điểm mà các đối tượng được khai báo lần đầu tiên. Các destructor tương ứng được gọi khi hàm main() kết thúc hoặc hàm exit() được gọi.</para>
+      <para id="id6366684"><link resource="javascript:if(confirm('http:">Ví dụ 3.9:</link> Chương trình sau minh họa thứ tự các constructor và destructor được gọi.</para>
+      <para id="id6366710">#include &lt;iostream.h&gt;</para>
+      <para id="id6366714">class CreateAndDestroy</para>
+      <para id="id6366719">{</para>
+      <para id="id6366724">public:</para>
+      <para id="id6366730">CreateAndDestroy(int); //Constructor</para>
+      <para id="id6366739">~CreateAndDestroy(); //Destructor</para>
+      <para id="id6366751">private:</para>
+      <para id="id6366756">int Data;</para>
+      <para id="id6366763">};</para>
+      <para id="id6366768">CreateAndDestroy::CreateAndDestroy(int Value)</para>
+      <para id="id6366773">{</para>
+      <para id="id6366777">Data = Value;</para>
+      <para id="id6366783">cout &lt;&lt; "Object " &lt;&lt; Data &lt;&lt; " constructor";</para>
+      <para id="id6366794">}</para>
+      <para id="id6366799">CreateAndDestroy::~CreateAndDestroy()</para>
+      <para id="id6366803">{</para>
+      <para id="id6366807">cout &lt;&lt; "Object " &lt;&lt; Data &lt;&lt; " destructor " &lt;&lt; endl;</para>
+      <para id="id6366819">}</para>
+      <para id="id6366823">void Create(void); //Prototype</para>
+      <para id="id6366832">CreateAndDestroy First(1); //Doi tuong toan cuc</para>
+      <para id="id6366840">int main()</para>
+      <para id="id6366844">{</para>
+      <para id="id6366849">cout &lt;&lt; " (global created before main)" &lt;&lt; endl;</para>
+      <para id="id6366860">CreateAndDestroy Second(2); //Doi tuong cuc bo</para>
+      <para id="id6366870">cout &lt;&lt; " (local automatic in main)" &lt;&lt; endl;</para>
+      <para id="id6366881">static CreateAndDestroy Third(3); //Doi tuong cuc bo</para>
+      <para id="id6366889">cout &lt;&lt; " (local static in main)" &lt;&lt; endl;</para>
+      <para id="id6366900">Create(); //Goi ham de tao cac doi tuong</para>
+      <para id="id6366908">CreateAndDestroy Fourth(4); //Doi tuong cuc bo</para>
+      <para id="id6366918">cout &lt;&lt; " (local automatic in main)" &lt;&lt; endl;</para>
+      <para id="id6366929">return 0;</para>
+      <para id="id6366935">}</para>
+      <para id="id6366939">//Ham tao cac doi tuong</para>
+      <para id="id6366944">void Create(void)</para>
+      <para id="id6366949">{</para>
+      <para id="id6366953">CreateAndDestroy Fifth(5);</para>
+      <para id="id6366959">cout &lt;&lt; " (local automatic in create)" &lt;&lt; endl;</para>
+      <para id="id6366970">static CreateAndDestroy Sixth(6);</para>
+      <para id="id6366976">cout &lt;&lt; " (local static in create)" &lt;&lt; endl;</para>
+      <para id="id6366987">CreateAndDestroy Seventh(7);</para>
+      <para id="id6366992">cout &lt;&lt; " (local automatic in create)" &lt;&lt; endl;</para>
+      <para id="id6367004">}</para>
+      <para id="id6367008">Chương trình khai báo First ở phạm vi toàn cục. Constructor của nó được gọi khi chương trình bắt đầu thực hiện và destructor của nó được gọi lúc chương trình kết thúc sau tất cả các đối tượng khác được hủy bỏ. Hàm main() khai báo ba đối tượng. Các đối tượng Second và Fourth là các đối tượng cục bộ tự động và đối tượng Third là một đối tượng cục bộ tĩnh. Các constructor của các đối tượng này được gọi khi chương trình thực hiện đến điểm mà mỗi đối tượng được khai báo. Các destructor của các đối tượng Fourth và Second được gọi theo thứ tự này khi kết thúc của main() đạt đến. Vì đối tượng Third là tĩnh, nó tồn tại cho đến khi chương trình kết thúc. Destructor của đối tượng Third được gọi trước destructor của First nhưng sau tất cả các đối tượng khác được hủy bỏ.</para>
+      <para id="id6367099">Hàm Create() khai báo ba đối tượng – Fifth và Seventh là các đối tượng cục bộ tự động và Sixth là một đối tượng cục bộ tĩnh. Các destructor của các đối tượng Seventh và Fifth được gọi theo thứ tự này khi kết thúc của create() đạt đến. Vì đối tượng Sixth là tĩnh, nó tồn tại cho đến khi chương trình kết thúc. Destructor của đối tượng Sixth được gọi trước các destructor của Third và First nhưng sau tất cả các đối tượng khác được hủy bỏ.</para>
+      <para id="id6367176">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT3_9.EXE">chạy ví dụ 3.9</link>, kết quả ở hình 3.9</para>
+      <figure id="id6367199">
+        <media id="id12507696" alt=""><image src="../../media/graphics9-118d.png" mime-type="image/png" height="273" width="518"/></media>
+      </figure>
+      <para id="id6367223">Hình 3.9: Kết quả của ví dụ 3.9</para>
+    </section>
+    <section id="id-175799581179">
+      <title>SỬ DỤNG CÁC THÀNH VIÊN DỮ LIỆU VÀ CÁC HÀM THÀNH VIÊN </title>
+      <para id="id6367239">Các thành viên dữ liệu private chỉ có thể được xử lý bởi các hàm thành viên (hay hàm friend) của lớp. Các lớp thường cung cấp các hàm thành viên public để cho phép các client của lớp để thiết lập (set) (nghĩa là "ghi") hoặc lấy (get) (nghĩa là "đọc") các giá trị của các thành viên dữ liệu private. Các hàm này thường không cần phải được gọi "set" hay "get", nhưng chúng thường đặt tên như vậy. Chẳng hạn, một lớp có thành viên dữ liệu private có tên InterestRate, hàm thành viên thiết lập giá trị có tên là SetInterestRate() và hàm thành viên lấy giá trị có tên là GetInterestRate(). Các hàm "Get" cũng thường được gọi là các hàm chất vấn (query functions). </para>
+      <para id="id6367312">Nếu một thành viên dữ liệu là public thì thành viên dữ liệu có thể được đọc hoặc ghi tại bất kỳ hàm nào trong chương trình. Nếu một thành viên dữ liệu là private, một hàm "get" public nhất định cho phép các hàm khác để đọc dữ liệu nhưng hàm get có thể điều khiển sự định dạng và hiển thị của dữ liệu. Một hàm "set" public có thể sẽ xem xét cẩn thận bất kỳ cố gắng nào để thay đổi giá trị của thành viên dữ liệu. Điều này sẽ bảo đảm rằng giá trị mới thì tương thích đối với mục dữ liệu. Chẳng hạn, một sự cố gắng thiết lập ngày của tháng là 37 sẽ bị loại trừ.</para>
+      <para id="id6367345">Các lợi ích của sự toàn vẹn dữ liệu thì không tự động đơn giản bởi vì các thành viên dữ liệu được tạo là private – lập trình viên phải cung cấp sự kiểm tra hợp lệ. Tuy nhiên C++ cung cấp một khung làm việc trong đó các lập trình viên có thể thiết kế các chương trình tốt hơn.</para>
+      <para id="id6367369">Client của lớp phải được thông báo khi một sự cố gắng được tạo ra để gán một giá trị không hợp lệ cho một thành viên dữ liệu. Chính vì lý do này, các hàm "set" của lớp thường được viết trả về các giá trị cho biết rằng một sự cố gắng đã tạo ra để gán một dữ liệu không hợp lệ cho một đối tượng của lớp. Điều này cho phép các client của lớp kiểm tra các giá trị trả về để xác định nếu đối tượng mà chúng thao tác là một đối tượng hợp lệ và để bắt giữ hoạt động thích hợp nếu đối tượng mà chúng thao tác thì không phải hợp lệ.</para>
+      <para id="id6367399"><link resource="javascript:if(confirm('http:">Ví dụ 3.10:</link> Chương trình mở rộng lớp Time ở ví dụ 3.2 bao gồm hàm get và set đối với các thành viên dữ liệu private là hour, minute và second.</para>
+      <para id="id6367446">1: #include &lt;iostream.h&gt;</para>
+      <para id="id6367451">2: </para>
+      <para id="id6367456">3: class Time</para>
+      <para id="id6367460">4: {</para>
+      <para id="id6367465">5: public:</para>
+      <para id="id6367470">6: Time(int = 0, int = 0, int = 0); //Constructor</para>
+      <para id="id6367475">7: //Các hàm set</para>
+      <para id="id6367480">8: void SetTime(int, int, int); //Thiết lập Hour, Minute, Second</para>
+      <para id="id6367487">9: void SetHour(int); //Thiết lập Hour</para>
+      <para id="id6367493">10: void SetMinute(int); //Thiết lập Minute</para>
+      <para id="id6367499">11: void SetSecond(int); //Thiết lập Second</para>
+      <para id="id6367505">12: //Các hàm get</para>
+      <para id="id6367511">13: int GetHour();    //Trả về Hour</para>
+      <para id="id6367517">14: int GetMinute();    //Trả về Minute</para>
+      <para id="id6367523">15: int GetSecond();    //Trả về Second</para>
+      <para id="id6367529">16:</para>
+      <para id="id6367533">17: void PrintMilitary(); //Xuất thời gian theo dạng giờ quânđội</para>
+      <para id="id6367540">18: void PrintStandard(); //Xuất thời gian theo dạng chuẩn</para>
+      <para id="id6367547">19:</para>
+      <para id="id6367552">20: private:</para>
+      <para id="id6367557">21: int Hour; //0 - 23</para>
+      <para id="id6367562">22: int Minute; //0 - 59</para>
+      <para id="id6367567">23: int Second; //0 – 59</para>
+      <para id="id6367572">24: };</para>
+      <para id="id6367577">25:</para>
+      <para id="id6367582">26: //Constructor khởiđộng dữ liệu private</para>
+      <para id="id6367588">27: //Gọi hàm thành viên SetTime() để thiết lập các biến</para>
+      <para id="id6367595">24: //Các giá trị mặc định là 0</para>
+      <para id="id6367601">25: Time::Time(int Hr, int Min, int Sec)</para>
+      <para id="id6367605">26: {</para>
+      <para id="id6367610">27: SetTime(Hr, Min, Sec);</para>
+      <para id="id6367615">28: }</para>
+      <para id="id6367619">29:</para>
+      <para id="id6124819">30: //Thiết lập các giá trị của Hour, Minute, và Second</para>
+      <para id="id6124826">31: void Time::SetTime(int H, int M, int S)</para>
+      <para id="id6124831">32: {</para>
+      <para id="id6124836">33: Hour = (H &gt;= 0 &amp;&amp; H &lt; 24) ? H : 0;</para>
+      <para id="id6124842">34: Minute = (M &gt;= 0 &amp;&amp; M &lt; 60) ? M : 0;</para>
+      <para id="id6124848">35: Second = (S &gt;= 0 &amp;&amp; S &lt; 60) ? S : 0;</para>
+      <para id="id6124854">36: }</para>
+      <para id="id6124858">37:</para>
+      <para id="id6124863">38: //Thiết lập giá trị của Hour</para>
+      <para id="id6124869">39: void Time::SetHour(int H)</para>
+      <para id="id6124874">40: {</para>
+      <para id="id6124878">41: Hour = (H &gt;= 0 &amp;&amp; H &lt; 24) ? H : 0;</para>
+      <para id="id6124884">42: }</para>
+      <para id="id6124889">43:</para>
+      <para id="id6124894">44: //Thiết lập giá trị của Minute</para>
+      <para id="id6124900">45: void Time::SetMinute(int M)</para>
+      <para id="id6124905">46: {</para>
+      <para id="id6124909">47: Minute = (M &gt;= 0 &amp;&amp; M &lt; 60) ? M : 0;</para>
+      <para id="id6124915">48: }</para>
+      <para id="id6124920">49:</para>
+      <para id="id6124924">50: //Thiết lập giá trị của Second</para>
+      <para id="id6124930">51: void Time::SetSecond(int S)</para>
+      <para id="id6124936">52: {</para>
+      <para id="id6124940">53: Second = (S &gt;= 0 &amp;&amp; S &lt; 60) ? S : 0;</para>
+      <para id="id6124946">54: }</para>
+      <para id="id6124951">55:</para>
+      <para id="id6124955">56: //Lấy giá trị của Hour</para>
+      <para id="id6124961">57: int Time::GetHour()</para>
+      <para id="id6124966">58: {</para>
+      <para id="id6124971">59: return Hour;</para>
+      <para id="id6124975">60: }</para>
+      <para id="id6124980">61:</para>
+      <para id="id6124984">62: //Lấy giá trị của Minute</para>
+      <para id="id6124990">63: int Time::GetMinute()</para>
+      <para id="id6124995">64: {</para>
+      <para id="id6125000">65: return Minute;</para>
+      <para id="id6125005">66: }</para>
+      <para id="id6125009">67:</para>
+      <para id="id6125014">68: //Lấy giá trị của Second</para>
+      <para id="id6125019">69: int Time::GetSecond()</para>
+      <para id="id6125024">70: {</para>
+      <para id="id6125029">71: return Second;</para>
+      <para id="id6125034">72: }</para>
+      <para id="id6125038">73:</para>
+      <para id="id6125043">74: //Hiển thị thời gian dạng giờ quânđội: HH:MM:SS</para>
+      <para id="id6125050">75: void Time::PrintMilitary()</para>
+      <para id="id6125055">76: {</para>
+      <para id="id6125059">77: cout &lt;&lt; (Hour &lt; 10 ? "0" : "") &lt;&lt; Hour &lt;&lt; ":"</para>
+      <para id="id6125065">78:       &lt;&lt; (Minute &lt; 10 ? "0" : "") &lt;&lt; Minute &lt;&lt; ":"</para>
+      <para id="id6125071">79:       &lt;&lt; (Second &lt; 10 ? "0" : "") &lt;&lt; Second;</para>
+      <para id="id6125077">80: }</para>
+      <para id="id6125082">81:</para>
+      <para id="id6125087">83: //Hiển thị thời gian dạng chuẩn: HH:MM:SS AM (hay PM)</para>
+      <para id="id6125094">84: void Time::PrintStandard()</para>
+      <para id="id6125099">85: {</para>
+      <para id="id6125103">86: cout &lt;&lt; ((Hour == 0 || Hour == 12) ? 12 : Hour % 12) &lt;&lt; ":"</para>
+      <para id="id6125110">87:       &lt;&lt; (Minute &lt; 10 ? "0" : "") &lt;&lt; Minute &lt;&lt; ":"</para>
+      <para id="id6125116">88:       &lt;&lt; (Second &lt; 10 ? "0" : "") &lt;&lt; Second</para>
+      <para id="id6125122">89:       &lt;&lt; (Hour &lt; 12 ? " AM" : " PM");</para>
+      <para id="id6125129">90: }</para>
+      <para id="id6125133">91: </para>
+      <para id="id6125138">92: void IncrementMinutes(Time &amp;, const int); //prototype</para>
+      <para id="id6125144">93: </para>
+      <para id="id6125148">94: int main()</para>
+      <para id="id6125153">95: {</para>
+      <para id="id6125158">96: Time T;</para>
+      <para id="id6125162">97:</para>
+      <para id="id6125167">99: T.SetHour(17);</para>
+      <para id="id6125172">100: T.SetMinute(34);</para>
+      <para id="id6125177">101: T.SetSecond(25);</para>
+      <para id="id6125182">102 cout &lt;&lt; "Result of setting all valid values:" &lt;&lt; endl</para>
+      <para id="id6125188">103:       &lt;&lt; " Hour: " &lt;&lt; T.GetHour()</para>
+      <para id="id6125194">104:       &lt;&lt; " Minute: " &lt;&lt; T.GetMinute()</para>
+      <para id="id6125200">105:       &lt;&lt; " Second: " &lt;&lt; T.GetSecond() &lt;&lt; endl &lt;&lt; endl;</para>
+      <para id="id6125207">106: T.SetHour(234); //Hour không hợp lệđược thiết lập bằng 0</para>
+      <para id="id6125214">107: T.SetMinute(43);</para>
+      <para id="id6125219">108: T.SetSecond(6373); //Second không hợp lệđược thiết lập bằng 0</para>
+      <para id="id6125226">109: cout &lt;&lt; "Result of attempting to set invalid Hour and"</para>
+      <para id="id6125233">110:       &lt;&lt; " Second:" &lt;&lt; endl &lt;&lt; " Hour: " &lt;&lt; T.GetHour()</para>
+      <para id="id6125239">111:       &lt;&lt; " Minute: " &lt;&lt; T.GetMinute()</para>
+      <para id="id6125245">112:       &lt;&lt; " Second: " &lt;&lt; T.GetSecond() &lt;&lt; endl &lt;&lt; endl;</para>
+      <para id="id6125251">113: T.SetTime(11, 58, 0);</para>
+      <para id="id6125256">114: IncrementMinutes(T, 3);</para>
+      <para id="id6125261">115: return 0;</para>
+      <para id="id6125266">116: }</para>
+      <para id="id6125270">117:</para>
+      <para id="id6125275">118: void IncrementMinutes(Time &amp;TT, const int Count)</para>
+      <para id="id6125281">119: {</para>
+      <para id="id6125285">120: cout &lt;&lt; "Incrementing Minute " &lt;&lt; Count</para>
+      <para id="id6125292">121:       &lt;&lt; " times:" &lt;&lt; endl &lt;&lt; "Start time: ";</para>
+      <para id="id6125297">122: TT.PrintStandard();</para>
+      <para id="id6125302">123: for (int I = 1; I &lt;= Count; I++)</para>
+      <para id="id6125308">124: {</para>
+      <para id="id6125312">125: TT.SetMinute((TT.GetMinute() + 1) % 60);</para>
+      <para id="id6125318">126: if (TT.GetMinute() == 0)</para>
+      <para id="id6125323">127: TT.SetHour((TT.GetHour() + 1) % 24);</para>
+      <para id="id6125328">128: cout &lt;&lt; endl &lt;&lt; "Minute + 1: ";</para>
+      <para id="id6125334">129: TT.PrintStandard();</para>
+      <para id="id6125339">130: }</para>
+      <para id="id6125343">131: cout &lt;&lt; endl;</para>
+      <para id="id6125348">132: }</para>
+      <para id="id6125353">Trong ví dụ trên chúng ta có hàm IncrementMinutes() là hàm dùng để tăng Minite. Đây là hàm không thành viên mà sử dụng các hàm thành viên get và set để tăng thành viên Minite.</para>
+      <para id="id6125382">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT3_10.EXE">chạy ví dụ .10</link>, kết quả ở hình 3.10</para>
+      <figure id="id6125405">
+        <media id="id13633059" alt=""><image src="../../media/graphics10-16b1.png" mime-type="image/png" height="237" width="558"/></media>
+      </figure>
+      <para id="id6125428">Hình 3.10: Kết quả của ví dụ 3.10</para>
+    </section>
+    <section id="id-224521675297">
+      <title>TRẢ VỀ MỘT THAM CHIẾU TỚI MỘT THÀNH VIÊN DỮ LIỆU PRIVATE</title>
+      <para id="id6125445">Một tham chiếu tới một đối tượng là một bí danh của chính đối tượng đó và do đó có thể được sử dụng ở vế trái của phép gán. Trong khung cảnh đó, tham chiếu tạo một lvalue được chấp nhận hoàn toàn mà có thể nhận một giá trị. Một cách để sử dụng khả năng này (thật không may!) là có một hàm thành viên public của lớp trả về một tham chiếu không const tới một thành viên dữ liệu private của lớp đó.</para>
+      <para id="id6125480"><link resource="javascript:if(confirm('http:">Ví dụ 3.11:</link> Chương trình sau sử dụng một phiên bản đơn giản của lớp Time để minh họa trả về một tham chiếu tới một dữ liệu private.</para>
+      <para id="id6125518">1: #include &lt;iostream.h&gt;</para>
+      <para id="id6125523">2: </para>
+      <para id="id6125527">3: class Time</para>
+      <para id="id6125532">4: {</para>
+      <para id="id6125537">5: public:</para>
+      <para id="id6125541">6: Time(int = 0, int = 0, int = 0);</para>
+      <para id="id6125546">7: void SetTime(int, int, int);</para>
+      <para id="id6125551">8: int GetHour();</para>
+      <para id="id6125556">9: int &amp;BadSetHour(int); //Nguy hiểm trả về tham chiếu !!!</para>
+      <para id="id6125562">10: private:</para>
+      <para id="id6125567">11: int Hour;</para>
+      <para id="id6125572">12: int Minute;</para>
+      <para id="id6125577">13: int Second;</para>
+      <para id="id6125581">14: };</para>
+      <para id="id6125586">15:</para>
+      <para id="id6125590">16: //Constructor khởiđộng dữ liệu private</para>
+      <para id="id6125597">17: //Gọi hàm thành viên SetTime()để thiết lập các biến</para>
+      <para id="id6125604">18: //Các giá trị mặcđịnh là 0</para>
+      <para id="id6125610">19: Time::Time(int Hr, int Min, int Sec)</para>
+      <para id="id6125615">20: {</para>
+      <para id="id6125619">21: SetTime(Hr, Min, Sec);</para>
+      <para id="id6125624">22: }</para>
+      <para id="id6125629">23: //Thiết lập các giá trị của Hour, Minute, và Second</para>
+      <para id="id6125636">24: void Time::SetTime(int H, int M, int S)</para>
+      <para id="id6125641">25: {</para>
+      <para id="id6125646">26: Hour = (H &gt;= 0 &amp;&amp; H &lt; 24) ? H : 0;</para>
+      <para id="id6125652">27: Minute = (M &gt;= 0 &amp;&amp; M &lt; 60) ? M : 0;</para>
+      <para id="id6125658">28: Second = (S &gt;= 0 &amp;&amp; S &lt; 60) ? S : 0;</para>
+      <para id="id6125664">29: }</para>
+      <para id="id6125669">30:</para>
+      <para id="id6125673">31: //Lấy giá trị của Hour</para>
+      <para id="id6125679">32: int Time::GetHour()</para>
+      <para id="id6125684">33: {</para>
+      <para id="id6125688">34: return Hour;</para>
+      <para id="id6125693">35: }</para>
+      <para id="id6125698">36:</para>
+      <para id="id6125702">37: //KHÔNG NÊN LẬP TRÌNH THEO KIỂU NÀY !!!</para>
+      <para id="id6125708">38: //Trả về một tham chiếu tới một thành viên dữ liệu private</para>
+      <para id="id6125716">39: int &amp;Time::BadSetHour(int HH)</para>
+      <para id="id6125722">40: {</para>
+      <para id="id6125726">41: Hour = (HH &gt;= 0 &amp;&amp; HH &lt; 24) ? HH : 0;</para>
+      <para id="id6125732">42: return Hour; //Nguy hiểm trả về tham chiếu !!!</para>
+      <para id="id6125739">43: }</para>
+      <para id="id6125744">44:</para>
+      <para id="id6125748">45: int main()</para>
+      <para id="id6125753">46: {</para>
+      <para id="id6125757">47: Time T;</para>
+      <para id="id6125762">48: int &amp;HourRef = T.BadSetHour(20);</para>
+      <para id="id6125768">49:</para>
+      <para id="id6125773">50: cout &lt;&lt; "Hour before modification: " &lt;&lt; HourRef &lt;&lt; endl;</para>
+      <para id="id6472443">51: HourRef = 30; //Thayđổi với giá trị không hợp lệ </para>
+      <para id="id6472450">52: cout &lt;&lt; "Hour after modification: " &lt;&lt; T.GetHour() &lt;&lt; endl;</para>
+      <para id="id6472456">53: // Nguy hiểm: Hàm trả về một tham chiếu </para>
+      <para id="id6472462">54: //có thểđược sử dụng như một lvalue</para>
+      <para id="id6472469">55: T.BadSetHour(12) = 74;</para>
+      <para id="id6472474">56: cout &lt;&lt; endl &lt;&lt; "*********************************" &lt;&lt; endl</para>
+      <para id="id6472480">57:       &lt;&lt; "BAD PROGRAMMING PRACTICE!!!!!!!!!" &lt;&lt; endl</para>
+      <para id="id6472487">58:       &lt;&lt; "BadSetHour as an lvalue, Hour: "</para>
+      <para id="id6472494">59:       &lt;&lt; T.GetHour()</para>
+      <para id="id6472499">60:       &lt;&lt; endl &lt;&lt; "*********************************" &lt;&lt; endl;</para>
+      <para id="id6472506">61: return 0;</para>
+      <para id="id6472510">62: }</para>
+      <para id="id6472515">Trong chương trình hàm BadSetHour() trả về một tham chiếu tới thành viên dữ liệu Hour.</para>
+      <para id="id6472535">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT3_11.EXE">chạy ví dụ 3.11</link>, kết quả ở hình 3.11</para>
+      <figure id="id6472558">
+        <media id="id13720460" alt=""><image src="../../media/graphics11-7c87.png" mime-type="image/png" height="140" width="494"/></media>
+      </figure>
+      <para id="id6472582">Hình 3.11: Kết quả của ví dụ 3.11</para>
+    </section>
+    <section id="id-669621235671">
+      <title>PHÉP GÁN BỞI TOÁN TỬ SAO CHÉP THÀNH VIÊN MẶC ĐỊNH</title>
+      <para id="id6472597">Toán tử gán (=) được sử dụng để gán một đối tượng cho một đối tượng khác của cùng một kiểu. Toán tử gán như thế bình thường được thực hiện bởi toán tử sao chép thành viên (Memberwise copy) – Mỗi thành viên của một đối tượng được sao chép riêng rẽ tới cùng thành viên ở đối tượng khác (Chú ý rằng sao chép thành viên có thể phát sinh các vấn đề nghiêm trọng khi sử dụng với một lớp mà thành viên dữ liệu chứa vùng nhớ cấp phát động).</para>
+      <para id="id6472619">Các đối tượng có thể được truyền cho các tham số của hàm và có thể được trả về từ các hàm. Như thế việc truyền và trả về được thực hiện theo truyền giá trị – một sao chép của đối tượng được truyền hay trả về.: </para>
+      <para id="id6472635"><link resource="javascript:if(confirm('http:">Ví dụ 3.12:</link> Chương trình sau minh họa toán tử sao chép thành viên mặc định</para>
+      <para id="id6472660">2: #include &lt;iostream.h&gt;</para>
+      <para id="id6472665">3: //Lớp Date đơn giản</para>
+      <para id="id6472670">4: class Date</para>
+      <para id="id6472675">5: {</para>
+      <para id="id6472680">6: public:</para>
+      <para id="id6472684">7: Date(int = 1, int = 1, int = 1990); //Constructor mặc định</para>
+      <para id="id6472691">8: void Print();</para>
+      <para id="id6472696">9: private:</para>
+      <para id="id6472701">10: int Month;</para>
+      <para id="id6472706">11: int Day;</para>
+      <para id="id6472710">12: int Year;</para>
+      <para id="id6472715">13: };</para>
+      <para id="id6472720">14:</para>
+      <para id="id6472725">15: //Constructor Date đơn giản với việc không kiểm tra miền</para>
+      <para id="id6472732">16: Date::Date(int m, int d, int y)</para>
+      <para id="id6472737">17: {</para>
+      <para id="id6472741">18: Month = m;</para>
+      <para id="id6472746">19: Day = d;</para>
+      <para id="id6472751">20: Year = y;</para>
+      <para id="id6472756">21: }</para>
+      <para id="id6472760">22:</para>
+      <para id="id6472765">23: //In Date theo dạng mm-dd-yyyy</para>
+      <para id="id6472770">24: void Date::Print()</para>
+      <para id="id6472775">25: {</para>
+      <para id="id6472780">26: cout &lt;&lt; Month &lt;&lt; '-' &lt;&lt; Day &lt;&lt; '-' &lt;&lt; Year;</para>
+      <para id="id6472786">27: }</para>
+      <para id="id6472790">28:</para>
+      <para id="id6472795">29: int main()</para>
+      <para id="id6472800">30: {</para>
+      <para id="id6472804">31: Date Date1(7, 4, 1993), Date2; //Date2 mặc định là 1/1/90</para>
+      <para id="id6472811">32: cout &lt;&lt; "Date1 = ";</para>
+      <para id="id6472817">33: Date1.Print();</para>
+      <para id="id6472822">34: cout &lt;&lt; endl &lt;&lt; "Date2 = ";</para>
+      <para id="id6472827">35: Date2.Print();</para>
+      <para id="id6472832">36: Date2 = Date1; //Gán bởi toán tử sao chép thành viên mặc định</para>
+      <para id="id6472839">37: cout &lt;&lt; endl &lt;&lt; endl</para>
+      <para id="id6472845">38:       &lt;&lt; "After default memberwise copy, Date2 = ";</para>
+      <para id="id6472852">39: Date2.Print();</para>
+      <para id="id6472857">40: cout &lt;&lt; endl;</para>
+      <para id="id6472862">41: return 0;</para>
+      <para id="id6472866">42: }</para>
+      <para id="id6472871">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT3_12.EXE">chạy ví dụ 3.12</link>, kết quả ở hình 3.12</para>
+      <figure id="id6472894">
+        <media id="id13845531" alt=""><image src="../../media/graphics12-36d4.png" mime-type="image/png" height="102" width="549"/></media>
+      </figure>
+      <para id="id6472918">Hình 3.12: Kết quả của ví dụ 3.12</para>
+    </section>
+    <section id="id-43948129128">
+      <title>CÁC ĐỐI TƯỢNG HẰNG VÀ CÁC HÀM THÀNH VIÊN CONST</title>
+      <para id="id6472934">Một vài đối tượng cần được thay đổi và một vài đối tượng thì không. Lập trình viên có thể sử dụng từ khóa const để cho biết đối tượng không thể thay đổi được, và nếu có cố gắng thay đổi đối tượng thì xảy ra lỗi. Chẳng hạn:</para>
+      <para id="id6472955">const Time Noon(12,0,0); //Khai báo một đối tượng const</para>
+      <para id="id6472967">Các trình biên dịch C++ lưu ý đến các khai báo const vì thế các trình biên dịch cấm hoàn toàn bất kỳ hàm thành viên nào gọi các đối tượng const (Một vài trình biên dịch chỉ cung cấp một cảnh báo). Điều này thì khắc nghiệt bởi vì các client của đối tượng hầu như chắc chắn sẽ muốn sử dụng các hàm thành viên "get" khác nhau với đối tượng, và tất nhiên không thể thay đổi đối tượng. Để cung cấp cho điều này, lập trình viên có thể khai báo các hàm thành viên const; điều này chỉ có thể thao tác trên các đối tượng const. Dĩ nhiên các hàm thành viên const không thể thay đổi đối tượng - trình biên dịch cấm điều này. </para>
+      <para id="id6473023">Một hàm được mô tả như const khi cả hai trong phần khai báo và trong phần định nghĩa của nó được chèn thêm từ khóa const sau danh sách các tham số của hàm, và trong trường hợp của định nghĩa hàm trước dấu ngoặc móc trái ({) mà bắt đầu thân hàm. Chẳng hạn, hàm thành viên của lớp A nào đó:</para>
+      <para id="id6473063">int A::GetValue() const</para>
+      <para id="id6473068">{</para>
+      <para id="id6473072">return PrivateDataMember;</para>
+      <para id="id6473076">}</para>
+      <para id="id6473080">Nếu một hàm thành viên const được định nghĩa bên ngoài định nghĩa của lớp thì khai báo hàm và định nghĩa hàm phải bao gồm const ở mỗi phần.</para>
+      <para id="id6473101">Một vấn đề nảy sinh ở đây đối với các constructor và destructor, mỗi hàm thường cần thay đổi đối tượng. Khai báo const không yêu cầu đối với các constructor và destructor của các đối tượng const. Một constructor phải được phép thay đổi một đối tượng mà đối tượng có thể được khởi tạo thích hợp. Một destructor phải có khả năng thực hiện vai trò "công việc kết thúc nội trợ" trước khi đối tượng được hủy.</para>
+      <para id="id6473136"><link resource="javascript:if(confirm('http:">Ví dụ 3.13:</link> Chương trình sau sử dụng một lớp Time với các đối tượng const và các hàm thành viên const.</para>
+      <para id="id6473178">2: #include &lt;iostream.h&gt;</para>
+      <para id="id6473183">3: class Time</para>
+      <para id="id6473188">4: {</para>
+      <para id="id6473193">5: public:</para>
+      <para id="id6473197">6: Time(int = 0, int = 0, int = 0); //Constructor mặc định</para>
+      <para id="id6473204">7: //Các hàm set</para>
+      <para id="id6473209">8: void SetTime(int, int, int); //Thiết lập thời gian</para>
+      <para id="id6473216">9: void SetHour(int); //Thiết lập Hour</para>
+      <para id="id6473222">10: void SetMinute(int); //Thiết lập Minute</para>
+      <para id="id6473228">11: void SetSecond(int); //Thiết lập Second</para>
+      <para id="id6473234">12: //Các hàm get</para>
+      <para id="id6473239">13: int GetHour() const; //Trả về Hour</para>
+      <para id="id6473245">14: int GetMinute() const; //Trả về Minute</para>
+      <para id="id6473251">15: int GetSecond() const; //Trả về Second</para>
+      <para id="id6473257">16: //Các hàm in</para>
+      <para id="id6473263">17: void PrintMilitary() const; //In t.gian theo dạng giờ quân đội</para>
+      <para id="id6473270">18: void PrintStandard() const; //In thời gian theo dạng giờ chuẩn</para>
+      <para id="id6473277">19: private:</para>
+      <para id="id6473282">20: int Hour; //0 - 23</para>
+      <para id="id6473286">21: int Minute; //0 - 59</para>
+      <para id="id6473291">22: int Second; //0 – 59</para>
+      <para id="id6473297">23: };</para>
+      <para id="id6473302">24:</para>
+      <para id="id6473306">25: //Constructor khởi động dữ liệu private</para>
+      <para id="id6473312">26: //Các giá trị mặc định là 0</para>
+      <para id="id6473318">27: Time::Time(int hr, int min, int sec)</para>
+      <para id="id6473323">28: {</para>
+      <para id="id6473328">29: SetTime(hr, min, sec);</para>
+      <para id="id6473333">30: }</para>
+      <para id="id6473338">31:</para>
+      <para id="id6473342">32: //Thiết lập các giá trị của Hour, Minute, và Second</para>
+      <para id="id6473349">33: void Time::SetTime(int h, int m, int s)</para>
+      <para id="id6473354">34: {</para>
+      <para id="id6473359">35: Hour = (h &gt;= 0 &amp;&amp; h &lt; 24) ? h : 0;</para>
+      <para id="id6473365">36: Minute = (m &gt;= 0 &amp;&amp; m &lt; 60) ? m : 0;</para>
+      <para id="id6473371">37: Second = (s &gt;= 0 &amp;&amp; s &lt; 60) ? s : 0;</para>
+      <para id="id6473377">38: }</para>
+      <para id="id6473382">39:</para>
+      <para id="id6473386">40: //Thiết lập giá trị của Hour</para>
+      <para id="id6473392">41: void Time::SetHour(int h)</para>
+      <para id="id6473397">42: {</para>
+      <para id="id6473402">43: Hour = (h &gt;= 0 &amp;&amp; h &lt; 24) ? h : 0;</para>
+      <para id="id6473408">44: }</para>
+      <para id="id6473413">45: </para>
+      <para id="id5856364">46: //Thiết lập giá trị của Minute</para>
+      <para id="id5856370">47: void Time::SetMinute(int m)</para>
+      <para id="id5856376">48: {</para>
+      <para id="id5856380">49: Minute = (m &gt;= 0 &amp;&amp; m &lt; 60) ? m : 0;</para>
+      <para id="id5856386">50: }</para>
+      <para id="id5856391">51:</para>
+      <para id="id5856395">52: //Thiết lập giá trị của Second</para>
+      <para id="id5856401">53: void Time::SetSecond(int s)</para>
+      <para id="id5856406">54: {</para>
+      <para id="id5856411">55: Second = (s &gt;= 0 &amp;&amp; s &lt; 60) ? s : 0;</para>
+      <para id="id5856417">56: }</para>
+      <para id="id5856422">57: </para>
+      <para id="id5856427">58: //Lấy giá trị của Hour</para>
+      <para id="id5856432">59: int Time::GetHour() const</para>
+      <para id="id5856437">60: {</para>
+      <para id="id5856442">61: return Hour;</para>
+      <para id="id5856447">62: }</para>
+      <para id="id5856451">63:</para>
+      <para id="id5856456">64: //Lấy giá trị của Minute</para>
+      <para id="id5856462">65: int Time::GetMinute() const</para>
+      <para id="id5856467">66: {</para>
+      <para id="id5856471">67: return Minute;</para>
+      <para id="id5856476">68: }</para>
+      <para id="id5856481">69: </para>
+      <para id="id5856485">70: //Lấy giá trị của Second</para>
+      <para id="id5856491">71: int Time::GetSecond() const</para>
+      <para id="id5856496">72: {</para>
+      <para id="id5856501">73: return Second;</para>
+      <para id="id5856506">74: }</para>
+      <para id="id5856510">75:</para>
+      <para id="id5856515">76: //Hiển thị thời gian dạng giờ quân đội: HH:MM:SS</para>
+      <para id="id5856522">77: void Time::PrintMilitary() const</para>
+      <para id="id5856527">78: {</para>
+      <para id="id5856531">79: cout &lt;&lt; (Hour &lt; 10 ? "0" : "") &lt;&lt; Hour &lt;&lt; ":"</para>
+      <para id="id5856537">80:      &lt;&lt; (Minute &lt; 10 ? "0" : "") &lt;&lt; Minute &lt;&lt; ":"</para>
+      <para id="id5856543">81:      &lt;&lt; (Second &lt; 10 ? "0" : "") &lt;&lt; Second;</para>
+      <para id="id5856549">82: }</para>
+      <para id="id5856554">83: </para>
+      <para id="id5856558">84: //Hiển thị thời gian dạng chuẩn: HH:MM:SS AM (hay PM)</para>
+      <para id="id5856565">85: void Time::PrintStandard() const</para>
+      <para id="id5856570">86: {</para>
+      <para id="id5856575">87: cout &lt;&lt; ((Hour == 12) ? 12 : Hour % 12) &lt;&lt; ":"</para>
+      <para id="id5856581">88:       &lt;&lt; (Minute &lt; 10 ? "0" : "") &lt;&lt; Minute &lt;&lt; ":"</para>
+      <para id="id5856587">89:       &lt;&lt; (Second &lt; 10 ? "0" : "") &lt;&lt; Second</para>
+      <para id="id5856594">90:       &lt;&lt; (Hour &lt; 12 ? " AM" : " PM");</para>
+      <para id="id5856600">91: }</para>
+      <para id="id5856605">92:</para>
+      <para id="id5856609">93: int main()</para>
+      <para id="id5856614">94: {</para>
+      <para id="id5856618">95: const Time T(19, 33, 52); //Đối tượng hằng</para>
+      <para id="id5856625">96: T.SetHour(12); //ERROR: non-const member function</para>
+      <para id="id5856630">97: T.SetMinute(20); //ERROR: non-const member function</para>
+      <para id="id5856636">98: T.SetSecond(39); //ERROR: non-const member function</para>
+      <para id="id5856641">99: return 0;</para>
+      <para id="id5856646">100: }</para>
+      <para id="id5856651">Chương trình này khai báo một đối tượng hằng của lớp Time và cố gắng sửa đổi đối tượng với các hàm thành viên không hằng SetHour(), SetMinute() và SetSecond(). Các lỗi cảnh báo được phát sinh bởi trình biên dịch (Borland C++) như hình 3.13.</para>
+      <figure id="id5856691">
+        <media id="id13554658" alt=""><image src="../../media/graphics13-dff4.png" mime-type="image/png" height="147" width="559"/></media>
+      </figure>
+      <para id="id5856715">Hình 3.13: Các cảnh báo của chương trình ở ví dụ 3.13</para>
+      <para id="id5856721">Lưu ý: Hàm thành viên const có thể được đa năng hóa với một phiên bản non-const. Việc lựa chọn hàm thành viên đa năng hóa nào để sử dụng được tạo một cách tự động bởi trình biên dịch dựa vào nơi mà đối tượng được khai báo const hay không.</para>
+      <para id="id5856753">Một đối tượng const không thể được thay đổi bởi phép gán vì thế nó phải được khởi động. Khi một thành viên dữ liệu của một lớp được khai báo const, một bộ khởi tạo thành viên (member initializer) phải được sử dụng để cung cấp cho constructor với giá trị ban đầu của thành viên dữ liệu đối với một đối tượng của lớp.</para>
+      <para id="id5856784"><link resource="javascript:if(confirm('http:">Ví dụ 3.14:</link> C.trình sau sử dụng một bộ khởi tạo thành viên để khởi tạo một hằng của kiểu dữ liệu có sẵn.</para>
+      <para id="id5856810">2: #include &lt;iostream.h&gt;</para>
+      <para id="id5856815">3: class IncrementClass</para>
+      <para id="id5856820">4: {</para>
+      <para id="id5856825">5: public:</para>
+      <para id="id5856830">6: IncrementClass (int C = 0, int I = 1);</para>
+      <para id="id5856835">7: void AddIncrement()</para>
+      <para id="id5856840">8: {</para>
+      <para id="id5856844">9: Count += Increment;</para>
+      <para id="id5856849">10: }</para>
+      <para id="id5856854">11: void Print() const;</para>
+      <para id="id5856859">12: private:</para>
+      <para id="id5856864">13: int Count;</para>
+      <para id="id5856869">14: const int Increment; //Thành viên dữ liệu const</para>
+      <para id="id5856875">15: };</para>
+      <para id="id5856880">16:</para>
+      <para id="id5856884">17: //Constructor của lớp IncrementClass</para>
+      <para id="id5856890">18: //Bộ khởi tạo với thành viên const</para>
+      <para id="id5856896">19: IncrementClass::IncrementClass (int C, int I) : Increment(I) </para>
+      <para id="id5856902">20: {</para>
+      <para id="id5856906">21: Count = C;</para>
+      <para id="id5856911">22: }</para>
+      <para id="id5856916">23:</para>
+      <para id="id5856920">24: //In dữ liệu</para>
+      <para id="id5856926">25: void IncrementClass::Print() const</para>
+      <para id="id5856931">26: {</para>
+      <para id="id5856935">27: cout &lt;&lt; "Count = " &lt;&lt; Count</para>
+      <para id="id5856941">28: #   #   &lt;&lt; ", Increment = " &lt;&lt; Increment &lt;&lt; endl;</para>
+      <para id="id5856947">30: }</para>
+      <para id="id5856952">31:</para>
+      <para id="id5856956">32: int main()</para>
+      <para id="id5856961">33: {</para>
+      <para id="id5856966">34: IncrementClass Value(10, 5);</para>
+      <para id="id5856971">35:</para>
+      <para id="id5856975">36: cout &lt;&lt; "Before incrementing: ";</para>
+      <para id="id5856981">37: Value.Print();</para>
+      <para id="id5856986">38: for (int J = 1; J &lt;= 3; J++)</para>
+      <para id="id5856992">40: {</para>
+      <para id="id5856996">41: Value.AddIncrement();</para>
+      <para id="id5857001">42: cout &lt;&lt; "After increment " &lt;&lt; J &lt;&lt; ": ";</para>
+      <para id="id5857007">43: Value.Print();</para>
+      <para id="id5857012">44: }</para>
+      <para id="id5857016">45: return 0;</para>
+      <para id="id5857021">46: }</para>
+      <para id="id5857026">Chương trình này sử dụng cú pháp bộ khởi tạo thành viên để khởi tạo thành viên dữ liệu const Increment của lớp IncrementClass ở dòng 19.</para>
+      <para id="id5857052">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT3_14.EXE">chạy ví dụ 3.14</link>, kết quả ở hình 3.14</para>
+      <figure id="id5857075">
+        <media id="id13487219" alt=""><image src="../../media/graphics14-cfee.png" mime-type="image/png" height="103" width="558"/></media>
+      </figure>
+      <para id="id5857100">Hình 3.14: Kết quả của ví dụ 3.14</para>
+      <para id="id5857105">Ký hiệu : Increment(I) (ở dòng 19 của ví dụ 3.14) sinh ra Increment được khởi động với giá trị là I. Nếu nhiều bộ khởi tạo thành viên được cần, đơn giản bao gồm chúng trong danh sách phân cách dấu phẩy sau dấu hai chấm. Tất cả các thành viên dữ liệu có thể được khởi tạo sử dụng cú pháp bộ khởi tạo thành viên.</para>
+      <para id="id5857134">Nếu trong <link resource="javascript:if(confirm('http:">ví dụ 3.14</link> chúng ta cố gắng khởi tạo Increment với một lệnh gán hơn là với một bộ khởi tạo thành viên như sau:</para>
+      <para id="id5857168">IncrementClass::IncrementClass (int C, int I) </para>
+      <para id="id5857174">{Count = C;</para>
+      <para id="id5857182">Increment = I;</para>
+      <para id="id5857187">}</para>
+      <para id="id5857192">Khi đó trình biên dịch (Borland C++) sẽ có thông báo lỗi như sau:</para>
+      <figure id="id5857204">
+        <media id="id13624425" alt=""><image src="../../media/graphics15-54eb.png" mime-type="image/png" height="103" width="558"/></media>
+      </figure>
+      <para id="id5857228">Hình 3.15: Thông báo lỗi khi cố gắng khởi tạo một thành viên dữ liệu const bằng phép gán</para>
+    </section>
+    <section id="id-456756777841">
+      <title>LỚP NHƯ LÀ CÁC THÀNH VIÊN CỦA CÁC LỚP KHÁC</title>
+      <para id="id5857251">Một lớp có thể có các đối tượng của các lớp khác như các thành viên. Khi một đối tượng đi vào phạm vi, constructor của nó được gọi một cách tự động, vì thế chúng ta cần mô tả các tham số được truyền như thế nào tới các constructor của đối tượng thành viên. Các đối tượng thành viên được xây dựng theo thứ tự mà trong đó chúng được khai báo (không theo thứ tự mà chúng được liệt kê trong danh sách bộ khởi tạo thành viên của constructor) và trước các đối tượng của lớp chứa đựng chúng được xây dựng.</para>
+      <para id="id5857279"><link resource="javascript:if(confirm('http:">Ví dụ 3.15:</link> Chương trình sau minh họa các đối tượng như các thành viên của các đối tượng khác.</para>
+      <para id="id5857305">1: #include &lt;iostream.h&gt;</para>
+      <para id="id5857310">2: #include &lt;string.h&gt;</para>
+      <para id="id5857315">3:</para>
+      <para id="id5857319">4: class Date</para>
+      <para id="id5857324">5: {</para>
+      <para id="id5857329">6: public:</para>
+      <para id="id5857333">7: Date(int = 1, int = 1, int = 1900); //Constructor mặc định</para>
+      <para id="id5522536">8: void Print() const; //In ngày theo dạng Month/Day/Year</para>
+      <para id="id5522542">9: private:</para>
+      <para id="id5522547">10: int Month; //1-12</para>
+      <para id="id5522552">11: int Day; //1-31</para>
+      <para id="id5522556">12: int Year; //Năm bất kỳ</para>
+      <para id="id5522562">13://Hàm tiện ích để kiểm tra Day tương thích đối với Month và Year</para>
+      <para id="id5522569">14: int CheckDay(int);</para>
+      <para id="id5522574">15: };</para>
+      <para id="id5522579">16:</para>
+      <para id="id5522583">17: class Employee</para>
+      <para id="id5522588">18: {</para>
+      <para id="id5522593">19: public:</para>
+      <para id="id5522598">20: Employee(char *, char *, int, int, int, int, int, int);</para>
+      <para id="id5522603">21: void Print() const;</para>
+      <para id="id5522608">22: private:</para>
+      <para id="id5522613">23: char LastName[25];</para>
+      <para id="id5522618">24: char FirstName[25];</para>
+      <para id="id5522623">25: Date BirthDate;</para>
+      <para id="id5522627">26: Date HireDate;</para>
+      <para id="id5522632">27: };</para>
+      <para id="id5522637">28: </para>
+      <para id="id5522642">29: //Constructor: xác nhận giá trị tương thích của Month</para>
+      <para id="id5522648">30: //Gọi hàm CheckDay() để xác nhận giá trị tương thích của Day</para>
+      <para id="id5522656">31: Date::Date(int Mn, int Dy, int Yr)</para>
+      <para id="id5522661">32: {</para>
+      <para id="id5522665">33: if (Mn &gt; 0 &amp;&amp; Mn &lt;= 12)</para>
+      <para id="id5522671">34: Month = Mn;</para>
+      <para id="id5522676">35: else</para>
+      <para id="id5522680">36: {</para>
+      <para id="id5522685">37: Month = 1;</para>
+      <para id="id5522690">38: cout &lt;&lt; "Month " &lt;&lt; Mn &lt;&lt; " invalid. Set to Month 1."</para>
+      <para id="id5522697">39:            &lt;&lt; endl;</para>
+      <para id="id5522702">40: }</para>
+      <para id="id5522707">41: Year = Yr;</para>
+      <para id="id5522712">42: Day = CheckDay(Dy);</para>
+      <para id="id5522717">43: cout &lt;&lt; "Date object constructor for date ";</para>
+      <para id="id5522723">44: Print();</para>
+      <para id="id5522728">45: cout &lt;&lt; endl;</para>
+      <para id="id5522733">46: }</para>
+      <para id="id5522738">47: </para>
+      <para id="id5522742">48: //Hàm xác nhận giá trị Day tương thích đưa vào Month và Year</para>
+      <para id="id5522750">49: int Date::CheckDay(int TestDay)</para>
+      <para id="id5522755">50: {</para>
+      <para id="id5522759">51: static int DaysPerMonth[13] = {0, 31, 28, 31, 30, 31,</para>
+      <para id="id5522765">52: 9; 9; 9; 9; 9; 9; #   #   #   #   30, 31, 31, 30,31, 30, 31};</para>
+      <para id="id5522772">53:</para>
+      <para id="id5522776">54: if (TestDay &gt; 0 &amp;&amp; TestDay &lt;= DaysPerMonth[Month])</para>
+      <para id="id5522782">55: return TestDay;</para>
+      <para id="id5522787">56: if (Month == 2 &amp;&amp; TestDay == 29 &amp;&amp;</para>
+      <para id="id5522792">57: ; ; (Year % 400 == 0 || (Year % 4 == 0 &amp;&amp; Year % 100 != 0)))</para>
+      <para id="id5522798">58: return TestDay;</para>
+      <para id="id5522803">59: cout &lt;&lt; "Day " &lt;&lt; TestDay &lt;&lt; "invalid. Set to Day 1." &lt;&lt; endl;</para>
+      <para id="id5522810">60: return 1;</para>
+      <para id="id5522815">61: }</para>
+      <para id="id5522820">62:</para>
+      <para id="id5522824">63: //In đối tượng Date dạng Month/Day/Year</para>
+      <para id="id5522831">64: void Date::Print() const</para>
+      <para id="id5522836">65: {</para>
+      <para id="id5522840">66: cout &lt;&lt; Month &lt;&lt; '/' &lt;&lt; Day &lt;&lt; '/' &lt;&lt; Year;</para>
+      <para id="id5522846">67: }</para>
+      <para id="id5522850">68:</para>
+      <para id="id5522855">69: Employee::Employee(char *FName, char *LName,</para>
+      <para id="id5522860">70:             int BMonth, int BDay, int BYear,</para>
+      <para id="id5522867">71:             int HMonth, int HDay, int HYear)</para>
+      <para id="id5522873">72: :BirthDate(BMonth, BDay, BYear), HireDate(HMonth, HDay, HYear)</para>
+      <para id="id5522879">73: {</para>
+      <para id="id5522884">74://Sao chép FName vào FirstName và phải chắc chắn rằng nó phù hợp</para>
+      <para id="id5522891">75: int Length = strlen(FName);</para>
+      <para id="id5522896">76:</para>
+      <para id="id5522900">77: Length = Length &lt; 25 ? Length : 24;</para>
+      <para id="id5522906">78: strncpy(FirstName, FName, Length);</para>
+      <para id="id5522911">79: FirstName[Length] = '\0';</para>
+      <para id="id5522916">80: //Sao chép LName vào LastName và phải chắc chắn rằng nó phù hợp</para>
+      <para id="id5522923">81: Length = strlen(LName);</para>
+      <para id="id5522928">82: Length = Length &lt; 25 ? Length : 24;</para>
+      <para id="id5522933">83: strncpy(LastName, LName, 24);</para>
+      <para id="id5522938">84: LastName[Length] = '\0';</para>
+      <para id="id5522943">85: cout &lt;&lt; "Employee object constructor: "</para>
+      <para id="id5522950">86:       &lt;&lt; FirstName &lt;&lt; ' ' &lt;&lt; LastName &lt;&lt; endl;</para>
+      <para id="id5522956">87: }</para>
+      <para id="id5522960">88:</para>
+      <para id="id5522965">89: void Employee::Print() const</para>
+      <para id="id5522970">90: {</para>
+      <para id="id5522974">91: cout &lt;&lt; LastName &lt;&lt; ", " &lt;&lt; FirstName &lt;&lt; endl &lt;&lt; "Hired: ";</para>
+      <para id="id5522981">92: HireDate.Print();</para>
+      <para id="id5522986">93: cout &lt;&lt; " Birthday: ";</para>
+      <para id="id5522991">94: BirthDate.Print();</para>
+      <para id="id5522996">95: cout &lt;&lt; endl;</para>
+      <para id="id5523001">96: }</para>
+      <para id="id5523006">97:</para>
+      <para id="id5523010">98: int main()</para>
+      <para id="id5523015">99: {</para>
+      <para id="id5523020">100: Employee E("Bob", "Jones", 7, 24, 49, 3, 12, 88);</para>
+      <para id="id5523025">101: </para>
+      <para id="id5523030">102 cout &lt;&lt; endl;</para>
+      <para id="id5523035">103: E.Print();</para>
+      <para id="id5523040">104: cout &lt;&lt; endl &lt;&lt; "Test Date constructor with invalid values:"</para>
+      <para id="id5523046">105:       &lt;&lt; endl;</para>
+      <para id="id5523051">106: Date D(14, 35, 94); //Các giá trị Date không hợp lệ</para>
+      <para id="id5523058">107: return 0;</para>
+      <para id="id5523063">108: }</para>
+      <para id="id5523068">Chương trình gồm lớp Employee chứa các thành viên dữ liệu private LastName, FirstName, BirthDate và HireDate. Các thành viên BirthDate và HireDate là các đối tượng của lớp Date mà chứa các thành viên dữ liệu private Month, Day và Year. Chương trình khởi tạo một đối tượng Employee, và các khởi tạo và các hiển thị các thành viên dữ liệu của nó. Chú ý về cú pháp của phần đầu trong định nghĩa constructor của lớp Employee:</para>
+      <para id="id5523165">Employee::Employee(char *FName, char *LName, int BMonth, int BDay, int BYear,</para>
+      <para id="id5523172">int HMonth, int HDay, int HYear)</para>
+      <para id="id5523177">:BirthDate(BMonth, BDay, BYear), HireDate(HMonth, HDay, HYear)</para>
+      <para id="id5523184">Constructor lấy tám tham số (FName, LName, BMonth, BDay, BYear, HMonth, HDay, và HYear). Dấu hai chấm trong phần đầu phân tách các bộ khởi tạo từ danh sách các tham số. Các bộ khởi tạo định rõ các tham số truyền chon constructor của các đối tượng thành viên. Vì thế BMonth, BDay và BYear được truyền cho constructor của đối tượng BirthDate, và HMonth, HDay, và HYear được truyền cho constructor của đối tượng HireDate. Nhiều bộ khởi tạo được phân tách bởi dấu phẩy.</para>
+      <para id="id5523293">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT3_15.EXE">chạy ví dụ 3.15</link>, kết quả ở hình 3.16</para>
+      <figure id="id5523316">
+        <media id="id13553866" alt=""><image src="../../media/graphics16-ce41.png" mime-type="image/png" height="237" width="558"/></media>
+      </figure>
+      <para id="id5523340">Hình 3.16: Kết quả của ví dụ 3.15</para>
+      <para id="id5523346">Một đối tượng thành viên không cần được khởi tạo thông qua một bộ khởi tạo thành viên. Nếu một bộ khởi tạo thành viên không được cung cấp, constructor mặc định của đối tượng thành viên sẽ được gọi một cách tự động. Các giá trị nếu có thiết lập bởi constructor mặc định thì có thể được ghi đè bởi các hàm set.</para>
+    </section>
+    <section id="id-740920598682">
+      <title>CÁC HÀM VÀ CÁC LỚP friend</title>
+      <para id="id5523370">Một hàm friend của một lớp được định nghĩa bên ngoài phạm vi của lớp đó, lúc này có quyền truy cập đến các thành viên private hoặc protected của một lớp. Một hàm hay toàn bộ lớp có thể được khai báo là một friend của lớp khác. </para>
+      <para id="id5523407">Để khai báo một hàm là một friend của một lớp, đứng trước prototype của hàm trong định nghĩa lớp với từ khóa friend. như sau:</para>
+      <para id="id5523428">friend &lt;function-declarator&gt;;</para>
+      <para id="id5523448">Để khai báo một lớp là friend của lớp khác như sau:</para>
+      <para id="id5523461">friend &lt;class-name&gt;;</para>
+      <para id="id5523480"><link resource="javascript:if(confirm('http:">Ví dụ 3.16:</link> Chương trình sau minh họa khai báo và sử dụng hàm friend.</para>
+      <para id="id5523510">1: #include &lt;iostream.h&gt;</para>
+      <para id="id6090470">2: </para>
+      <para id="id6090474">3: class Count</para>
+      <para id="id6090479">4: {</para>
+      <para id="id6090484">5: friend void SetX(Count &amp;, int); //Khai báo friend</para>
+      <para id="id6090489">6: public:</para>
+      <para id="id6090494">7: Count()//Constructor</para>
+      <para id="id6090499">8: {</para>
+      <para id="id6090503">9: X = 0;</para>
+      <para id="id6090508">10: }</para>
+      <para id="id6090513">11: void Print() const //Xuất</para>
+      <para id="id6090518">12: {</para>
+      <para id="id6090523">13: cout &lt;&lt; X &lt;&lt; endl;</para>
+      <para id="id6090528">14: }</para>
+      <para id="id6090533">15: private:</para>
+      <para id="id6090538">16: int X;</para>
+      <para id="id6090542">17: };</para>
+      <para id="id6090547">18:</para>
+      <para id="id6090552">19: //Có thể thay đổi dữ liệu private của lớp Count vì</para>
+      <para id="id6090558">20: //SetX() khai báo là một hàm friend của lớp Count</para>
+      <para id="id6090565">21: void SetX(Count &amp;C, int Val)</para>
+      <para id="id6090570">22: {</para>
+      <para id="id6090575">23: C.X = Val; //Hợp lệ: SetX() là một hàm friend của lớp Count</para>
+      <para id="id6090582">24: }</para>
+      <para id="id6090587">25: </para>
+      <para id="id6090591">26: int main()</para>
+      <para id="id6090596">27: {</para>
+      <para id="id6090601">28: Count Object;</para>
+      <para id="id6090606">29: </para>
+      <para id="id6090610">30: cout &lt;&lt; "Object.X after instantiation: ";</para>
+      <para id="id6090617">31: Object.Print();</para>
+      <para id="id6090621">32: cout &lt;&lt; "Object.X after call to SetX friend function: ";</para>
+      <para id="id6090628">33: SetX(Object, 8); //Thiết lập X với một friend</para>
+      <para id="id6090635">34: Object.Print();</para>
+      <para id="id6090640">35: return 0;</para>
+      <para id="id6090644">36: }</para>
+      <para id="id6090649">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT3_16.EXE">chạy ví dụ 3.16</link>, kết quả ở hình 3.17</para>
+      <figure id="id6090672">
+        <media id="id13559274" alt=""><image src="../../media/graphics17-9d89.png" mime-type="image/png" height="55" width="487"/></media>
+      </figure>
+      <para id="id6090696">Hình 3.17: Kết quả của ví dụ 3.16</para>
+      <para id="id6090702">Có thể chỉ định các hàm được đa năng hóa là các friend của lớp. Mỗi hàm được đa năng hóa phải được khai báo tường minh trong định nghĩa lớp như là một friend của lớp.</para>
+    </section>
+    <section id="id-37759506561">
+      <title>CON TRỎ THIS</title>
+      <para id="id6090734">Khi một hàm thành viên tham chiếu thành viên khác của lớp cho đối tượng cụ thể của lớp đó, làm thế nào C++ bảo đảm rằng đối tượng thích hợp được tham chiếu? Câu trả lời là mỗi đối tượng duy trì một con trỏ trỏ tới chính nó – gọi là con trỏ this – Đó là một tham số ẩn trong tất cả các tham chiếu tới các thành viên bên trong đối tượng đó. Con trỏ this cũng có thể được sử dụng tường minh. Mỗi đối tượng có thể xác định địa chỉ của chính mình bằng cách sử dụng từ khóa this.</para>
+      <para id="id6090774">Con trỏ this được sử dụng để tham chiếu cả các thành viên dữ liệu và hàm thành viên của một đối tượng. Kiểu của con trỏ this phụ thuộc vào kiểu của đối tượng và trong hàm thành viên con trỏ this được sử dụng là khai báo const. Chẳng hạn, một hàm thành viên không hằng của lớp Employee con trỏ this có kiểu là:</para>
+      <para id="id6090825">Employee * const //Con trỏ hằng trỏ tới đối tượng Employee</para>
+      <para id="id6090833">Đối với một hàm thành viên hằng của lớp Employee con trỏ this có kiểu là:</para>
+      <para id="id6090852">const Employee * const //Con trỏ hằng trỏ tới đối tượng Employee mà là một hằng</para>
+      <para id="id6090860"><link resource="javascript:if(confirm('http:">Ví dụ 3.17:</link> Chương trình sau minh họa sử dụng tường minh của con trỏ this để cho phép một hàm thành viên của lớp Test in dữ liệu X của một đối tượng Test.</para>
+      <para id="id6090910">1: #include &lt;iostream.h&gt;</para>
+      <para id="id6090919">2: </para>
+      <para id="id6090924">3: class Test</para>
+      <para id="id6090929">4: {</para>
+      <para id="id6090933">5: public:</para>
+      <para id="id6090938">6: Test(int = 0); // Constructor mặc định</para>
+      <para id="id6090949">7: void Print() const;</para>
+      <para id="id6090954">8: private:</para>
+      <para id="id6090958">9: int X;</para>
+      <para id="id6090963">10: };</para>
+      <para id="id6090968">11:</para>
+      <para id="id6090972">12: Test::Test(int A)</para>
+      <para id="id6090977">13: {</para>
+      <para id="id6090982">14: X = A;</para>
+      <para id="id6090986">15: }</para>
+      <para id="id6090991">16:</para>
+      <para id="id6090996">17: void Test::Print() const</para>
+      <para id="id6091001">18: {</para>
+      <para id="id6091005">19: cout &lt;&lt; " X = " &lt;&lt; X &lt;&lt; endl</para>
+      <para id="id6091011">20:       &lt;&lt; " this-&gt;X = " &lt;&lt; this-&gt;X &lt;&lt; endl</para>
+      <para id="id6091016">21:       &lt;&lt; "(*this).X = " &lt;&lt; (*this).X &lt;&lt; endl;</para>
+      <para id="id6091022">22: }</para>
+      <para id="id6091027">23:</para>
+      <para id="id6091032">24: int main()</para>
+      <para id="id6091036">25: {</para>
+      <para id="id6091041">26: Test A(12);</para>
+      <para id="id6091046">27: </para>
+      <para id="id6091050">28: A.Print();</para>
+      <para id="id6091055">29: return 0;</para>
+      <para id="id6091060">30: }</para>
+      <para id="id6091065">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT3_17.EXE">chạy ví dụ 3.17</link>, kết quả ở hình 3.18</para>
+      <figure id="id6091088">
+        <media id="id13654064" alt=""><image src="../../media/graphics18-cb43.png" mime-type="image/png" height="82" width="558"/></media>
+      </figure>
+      <para id="id6091112">Hình 3.18: Kết quả của ví dụ 3.17</para>
+      <para id="id6091117">Một cách khác sử dụng con trỏ this là cho phép móc vào nhau các lời gọi hàm thành viên.</para>
+      <para id="id6091132"><link resource="javascript:if(confirm('http:">Ví dụ 3.18:</link> Chương trình sau minh họa trả về một tham chiếu tới một đối tượng Time để cho phép các lời gọi hàm thành viên của lớp Time được móc nối vào nhau.</para>
+      <para id="id6091170">1: #include &lt;iostream.h&gt;</para>
+      <para id="id6091180">2:</para>
+      <para id="id6091184">3: class Time</para>
+      <para id="id6091189">4: {</para>
+      <para id="id6091193">5: public:</para>
+      <para id="id6091198">6: Time(int = 0, int = 0, int = 0); // Constructor mặc định</para>
+      <para id="id6091209">7: // Các hàm set</para>
+      <para id="id6091220">8: Time &amp;SetTime(int, int, int); // Thiết lập Hour, Minute va Second</para>
+      <para id="id6091232">9: Time &amp;SetHour(int); // Thiết lập Hour</para>
+      <para id="id6091244">10: Time &amp;SetMinute(int); // Thiết lập Minute</para>
+      <para id="id6091255">11: Time &amp;SetSecond(int); // Thiết lập Second</para>
+      <para id="id6091267">12: // Các hàm get</para>
+      <para id="id6091278">13: int GetHour() const; // Trả về Hour</para>
+      <para id="id6091288">14: int GetMinute() const; // Trả về Minute</para>
+      <para id="id6091299">15: int GetSecond() const; // Trả về Second</para>
+      <para id="id6091310">16: // Các hàm in</para>
+      <para id="id6091320">17: void PrintMilitary() const; // In t.gian theo dạng giờ quân đội</para>
+      <para id="id6091332">18: void PrintStandard() const; // In thời gian theo dạng giờ chuẩn</para>
+      <para id="id6091344">19: private:</para>
+      <para id="id6091349">20: int Hour; // 0 - 23</para>
+      <para id="id6091359">21: int Minute; // 0 - 59</para>
+      <para id="id6091369">22: int Second; // 0 - 59</para>
+      <para id="id6091379">23: };</para>
+      <para id="id6091384">24:</para>
+      <para id="id6091388">25: // Constructor khởi động dữ liệu private</para>
+      <para id="id6091400">26: // Gọi hàm thành viên SetTime() để thiết lập các biến</para>
+      <para id="id6091412">27: // Các giá trị mặc định là 0</para>
+      <para id="id6091423">28: Time::Time(int Hr, int Min, int Sec)</para>
+      <para id="id6091429">29: {</para>
+      <para id="id6091433">30: SetTime(Hr, Min, Sec);</para>
+      <para id="id6091438">31: }</para>
+      <para id="id6091443">32:</para>
+      <para id="id6091447">33: // Thiết lập các giá trị của Hour, Minute, và Second</para>
+      <para id="id6091459">34: Time &amp;Time::SetTime(int H, int M, int S)</para>
+      <para id="id6091466">35: {</para>
+      <para id="id6091470">36: Hour = (H &gt;= 0 &amp;&amp; H &lt; 24) ? H : 0;</para>
+      <para id="id5547359">37: Minute = (M &gt;= 0 &amp;&amp; M &lt; 60) ? M : 0;</para>
+      <para id="id5547366">38: Second = (S &gt;= 0 &amp;&amp; S &lt; 60) ? S : 0;</para>
+      <para id="id5547372">39: return *this; // Cho phép móc nối</para>
+      <para id="id5547382">40: }</para>
+      <para id="id5547387">41:</para>
+      <para id="id5547391">42: // Thiết lập giá trị của Hour</para>
+      <para id="id5547402">43: Time &amp;Time::SetHour(int H)</para>
+      <para id="id5547408">44: {</para>
+      <para id="id5547413">45: Hour = (H &gt;= 0 &amp;&amp; H &lt; 24) ? H : 0;</para>
+      <para id="id5547419">46: return *this; // Cho phép móc nối</para>
+      <para id="id5547430">47: }</para>
+      <para id="id5547434">48: </para>
+      <para id="id5547439">49: // Thiết lập giá trị của Minute</para>
+      <para id="id5547450">50: Time &amp;Time::SetMinute(int M)</para>
+      <para id="id5547456">51: {</para>
+      <para id="id5547461">52: Minute = (M &gt;= 0 &amp;&amp; M &lt; 60) ? M : 0;</para>
+      <para id="id5547467">53: return *this; // Cho phép móc nối</para>
+      <para id="id5547478">54: }</para>
+      <para id="id5547482">55: </para>
+      <para id="id5547487">56: // Thiết lập giá trị của Second</para>
+      <para id="id5547498">57: Time &amp;Time::SetSecond(int S)</para>
+      <para id="id5547504">58: {</para>
+      <para id="id5547509">59: Second = (S &gt;= 0 &amp;&amp; S &lt; 60) ? S : 0;</para>
+      <para id="id5547515">60: return *this; // Cho phép móc nối</para>
+      <para id="id5547526">61: }</para>
+      <para id="id5547531">62:</para>
+      <para id="id5547535">63: // Lấy giá trị của Hour</para>
+      <para id="id5547546">64: int Time::GetHour() const</para>
+      <para id="id5547551">65: {</para>
+      <para id="id5547556">66: return Hour;</para>
+      <para id="id5547560">67: }</para>
+      <para id="id5547565">68:</para>
+      <para id="id5547570">69: // Lấy giá trị của Minute</para>
+      <para id="id5547580">70: int Time::GetMinute() const</para>
+      <para id="id5547586">71: {</para>
+      <para id="id5547590">72: return Minute;</para>
+      <para id="id5547595">73: }</para>
+      <para id="id5547600">74:</para>
+      <para id="id5547604">75: // Lấy giá trị của Second</para>
+      <para id="id5547615">76: int Time::GetSecond() const</para>
+      <para id="id5547620">77: {</para>
+      <para id="id5547625">78: return Second;</para>
+      <para id="id5547630">79: }</para>
+      <para id="id5547634">80:</para>
+      <para id="id5547639">81: // Hiển thị thời gian dạng giờ quân đội: HH:MM:SS</para>
+      <para id="id5547651">82: void Time::PrintMilitary() const</para>
+      <para id="id5547656">83: {</para>
+      <para id="id5547660">84: cout &lt;&lt; (Hour &lt; 10 ? "0" : "") &lt;&lt; Hour &lt;&lt; ":"</para>
+      <para id="id5547666">85:       &lt;&lt; (Minute &lt; 10 ? "0" : "") &lt;&lt; Minute &lt;&lt; ":"</para>
+      <para id="id5547672">86:       &lt;&lt; (Second &lt; 10 ? "0" : "") &lt;&lt; Second;</para>
+      <para id="id5547678">87: }</para>
+      <para id="id5547683">88:</para>
+      <para id="id5547688">89: // Hiển thị thời gian dạng chuẩn: HH:MM:SS AM (hay PM)</para>
+      <para id="id5547700">90: void Time::PrintStandard() const</para>
+      <para id="id5547705">91: {</para>
+      <para id="id5547709">92: cout &lt;&lt; ((Hour == 0 || Hour == 12) ? 12 : Hour % 12) &lt;&lt; ":"</para>
+      <para id="id5547716">93:       &lt;&lt; (Minute &lt; 10 ? "0" : "") &lt;&lt; Minute &lt;&lt; ":"</para>
+      <para id="id5547722">94:       &lt;&lt; (Second &lt; 10 ? "0" : "") &lt;&lt; Second</para>
+      <para id="id5547728">95:       &lt;&lt; (Hour &lt; 12 ? " AM" : " PM");</para>
+      <para id="id5547735">96: }</para>
+      <para id="id5547740">97:</para>
+      <para id="id5547744">100: int main()</para>
+      <para id="id5547749">101: {</para>
+      <para id="id5547753">102: Time T;</para>
+      <para id="id5547758">103:</para>
+      <para id="id5547763">104: // Các lời gọi móc nối vào nhau </para>
+      <para id="id5547774">105: T.SetHour(18).SetMinute(30).SetSecond(22); </para>
+      <para id="id5547780">106: cout &lt;&lt; "Military time: ";</para>
+      <para id="id5547786">107: T.PrintMilitary();</para>
+      <para id="id5547790">108: cout &lt;&lt; endl &lt;&lt; "Standard time: ";</para>
+      <para id="id5547796">109: T.PrintStandard();</para>
+      <para id="id5547801">110: cout &lt;&lt; endl &lt;&lt; endl &lt;&lt; "New standard time: ";</para>
+      <para id="id5547807">111: // Các lời gọi móc nối vào nhau</para>
+      <para id="id5547818">112: T.SetTime(20, 20, 20).PrintStandard();</para>
+      <para id="id5547823">113: cout &lt;&lt; endl;</para>
+      <para id="id5547828">114: return 0;</para>
+      <para id="id5547833">115: }</para>
+      <para id="id5547838">Các hàm thành viên SetTime(), SetHour(), SetMinute() và SetSecond() mỗi hàm đều trả về *this với kiểu trả về là Time &amp;. Toán tử chấm liên kết từ trái sang phải, vì vậy biểu thức:</para>
+      <para id="id5547883">T.SetHour(18).SetMinute(30).SetSecond(22); </para>
+      <para id="id5547889">Đầu tiên gọi T.SetHour(18) thì trả về một tham chiếu tới đối tượng T là giá trị của lời gọi hàm này. Phần còn lại của biểu thức được hiểu như sau:</para>
+      <para id="id5547912">T.SetMinute(30).SetSecond(22); </para>
+      <para id="id5547918">T.SetMinute(30) gọi thực hiện và trả về tương đương của T. Phần còn của biểu thức là:</para>
+      <para id="id5547937">T.SetSecond(22); </para>
+      <para id="id5547943">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT3_18.EXE">chạy ví dụ 3.18</link>, kết quả ở hình 3.19</para>
+      <figure id="id5547966">
+        <media id="id13635193" alt=""><image src="../../media/graphics19-b3c3.png" mime-type="image/png" height="111" width="570"/></media>
+      </figure>
+      <para id="id5547990">Hình 3.19: Kết quả của ví dụ 3.18</para>
+    </section>
+    <section id="id-158379770431">
+      <title>CÁC ĐỐI TƯỢNG ĐƯỢC CẤP PHÁT ĐỘNG</title>
+      <para id="id5548005">Các đối tượng có thể được cấp phát động giống như các dữ liệu khác bằng toán tử new và delete. Chẳng hạn:</para>
+      <para id="id5548036">Time *TimePtr = new Time(1,20,26);</para>
+      <para id="id5548040">……………..</para>
+      <para id="id5548045">delete TimePtr;</para>
+      <para id="id5548050">Toán tử new tự động gọi hàm constructor ,và toán tử delete tự động gọi destructor.</para>
+    </section>
+    <section id="id-0547335602559">
+      <title>CÁC THÀNH VIÊN TĨNH CỦA LỚP</title>
+      <para id="id5548088">Bình thường, mỗi đối tượng của một lớp có bản sao chép của chính nó của tất cả các thành viên dữ liệu của lớp. Trong các trường hợp nhất định chỉ có duy nhất một bản chép thành viên dữ liệu đặc biệt cần phải dùng chung bởi tất cả các đối tượng của một lớp. Một thành viên dữ liệu tĩnh được sử dụng cho những điều đó và các lý do khác. Một thành viên dữ liệu tĩnh biểu diễn thông tin toàn lớp (class-wide). Khai báo một thành viên tĩnh bắt đầu với từ khóa static.</para>
+      <para id="id5548120">Mặc dù các thành viên dữ liệu tĩnh có thể giống như các biến toàn cục, các thành viên dữ liệu tĩnh có phạm vi lớp. Các thành viên tĩnh có thể là public, private hoặc protected. Các thành viên dữ liệu tĩnh phải được khởi tạo một lần (và chỉ một lần) tại phạm vi file. Các thành viên lớp tĩnh public có thể được truy cập thông qua bất kỳ đối tượng nào của lớp đó, hoặc chúng có thể được truy cập thông qua tên lớp sử dụng toán tử định phạm vi. Các thành viên lớp tĩnh private và protected phải được truy cập thông qua các hàm thành viên public của lớp hoặc thông qua các friend của lớp. Các thành viên lớp tĩnh tồn tại ngay cả khi đối tượng của lớp đó không tồn tại. Để truy cập một thành viên lớp tĩnh public khi các đối tượng của lớp không tồn tại, đơn giản thêm vào đầu tên lớp và toán tử định phạm vi cho thành viên dữ liệu. Để truy cập một thành viên lớp tĩnh private hoặc protected khi các đối tượng của lớp không tồn tại, một hàm thành viên public phải được cung cấp và hàm phải được gọi bởi thêm vào đầu tên của nó với tên lớp và toán tử định phạm vi.</para>
+      <para id="id5548236"><link resource="javascript:if(confirm('http:">Ví dụ 3.19:</link> Chương trình sau minh họa việc sử dụng thành viên dữ liệu tĩnh private và một hàm thành viên tĩnh public.</para>
+      <para id="id5548273">1: #include &lt;iostream.h&gt;</para>
+      <para id="id5548282">2: #include &lt;string.h&gt;</para>
+      <para id="id5548291">3: #include &lt;assert.h&gt;</para>
+      <para id="id5548300">4:</para>
+      <para id="id5548305">5: class Employee</para>
+      <para id="id5548310">6: {</para>
+      <para id="id5548315">7: public:</para>
+      <para id="id5548319">8: Employee(const char*, const char*); // Constructor</para>
+      <para id="id5548330">9: ~Employee(); // Destructor</para>
+      <para id="id5548340">10: char *GetFirstName() const; // Trả về first name</para>
+      <para id="id5548351">11: char *GetLastName() const; // Trả về last name</para>
+      <para id="id5548362">12: // Hàm thành viên tĩnh</para>
+      <para id="id5548373">13: static int GetCount(); // Trả về số đối tượng khởi tạo</para>
+      <para id="id6290641">14: private:</para>
+      <para id="id6290646">15: char *FirstName;</para>
+      <para id="id6290651">16: char *LastName;</para>
+      <para id="id6290655">17: // static data member</para>
+      <para id="id6290666">18: static int Count; // Số đối tượng khởi tạo</para>
+      <para id="id6290677">19: };</para>
+      <para id="id6290682">20:</para>
+      <para id="id6290686">21: // Khởi tạo thành viên dữ liệu tĩnh</para>
+      <para id="id6290698">22: int Employee::Count = 0;</para>
+      <para id="id6290703">23:</para>
+      <para id="id6290707">24://Định nghĩa hàm thành viên tỉnh mà trả về số đối tượng khởi tạo</para>
+      <para id="id6290719">25: int Employee::GetCount()</para>
+      <para id="id6290724">26: {</para>
+      <para id="id6290728">27: return Count;</para>
+      <para id="id6290733">28: }</para>
+      <para id="id6290738">29:</para>
+      <para id="id6290742">30: // Constructor cấp phát động cho first name và last name</para>
+      <para id="id6290754">31: Employee::Employee(const char *First, const char *Last)</para>
+      <para id="id6290760">32: {</para>
+      <para id="id6290764">33: FirstName = new char[ strlen(First) + 1 ];</para>
+      <para id="id6290770">34: assert(FirstName != 0); // Bảo đảm vùng nhớ được cấp phát</para>
+      <para id="id6290782">35: strcpy(FirstName, First);</para>
+      <para id="id6290787">36: LastName = new char[ strlen(Last) + 1 ];</para>
+      <para id="id6290792">37: assert(LastName != 0); // Bảo đảm vùng nhớ được cấp phát</para>
+      <para id="id6290804">38: strcpy(LastName, Last);</para>
+      <para id="id6290809">39: ++Count; // Tăng số đối tượng lên 1</para>
+      <para id="id6290819">40: cout &lt;&lt; "Employee constructor for " &lt;&lt; FirstName</para>
+      <para id="id6290825">41:       &lt;&lt; ' ' &lt;&lt; LastName &lt;&lt; " called." &lt;&lt; endl;</para>
+      <para id="id6290831">42: }</para>
+      <para id="id6290836">43:</para>
+      <para id="id6290840">44: // Destructor giải phóng vùng nhớ đã cấp phát</para>
+      <para id="id6290852">45: Employee::~Employee()</para>
+      <para id="id6290857">46: {</para>
+      <para id="id6290862">47: cout &lt;&lt; "~Employee() called for " &lt;&lt; FirstName</para>
+      <para id="id6290868">48:       &lt;&lt; ' ' &lt;&lt; LastName &lt;&lt; endl;</para>
+      <para id="id6290874">49: delete FirstName;</para>
+      <para id="id6290879">50: delete LastName;</para>
+      <para id="id6290884">51: --Count; // Giảm số đối tượng xuống 1</para>
+      <para id="id6290895">52: }</para>
+      <para id="id6290900">53:</para>
+      <para id="id6290904">54: // Trả về first name</para>
+      <para id="id6290915">55: char *Employee::GetFirstName() const</para>
+      <para id="id6290920">56: {</para>
+      <para id="id6290924">57: char *TempPtr = new char[strlen(FirstName) + 1];</para>
+      <para id="id6290930">58: assert(TempPtr != 0); // Bảo đảm vùng nhớ được cấp phát</para>
+      <para id="id6290942">59: strcpy(TempPtr, FirstName);</para>
+      <para id="id6290947">60: return TempPtr;</para>
+      <para id="id6290952">61: }</para>
+      <para id="id6290956">62: </para>
+      <para id="id6290961">63: // Trả về last name</para>
+      <para id="id6290972">64: char *Employee::GetLastName() const</para>
+      <para id="id6290977">65: {</para>
+      <para id="id6290981">66: char *TempPtr = new char[strlen(LastName) + 1];</para>
+      <para id="id6290987">67: assert(TempPtr != 0); // Bảo đảm vùng nhớ được cấp phát</para>
+      <para id="id6290998">68: strcpy(TempPtr, LastName);</para>
+      <para id="id6291004">69: return TempPtr;</para>
+      <para id="id6291008">70: }</para>
+      <para id="id6291013">71:</para>
+      <para id="id6291017">72: int main()</para>
+      <para id="id6291022">73: {</para>
+      <para id="id6291027">74: cout &lt;&lt; "Number of employees before instantiation is "</para>
+      <para id="id6291034">75:       &lt;&lt; Employee::GetCount() &lt;&lt; endl; // Sử dụng tên lớp</para>
+      <para id="id6291046">76: Employee *E1Ptr = new Employee("Susan", "Baker");</para>
+      <para id="id6291052">77: Employee *E2Ptr = new Employee("Robert", "Jones");</para>
+      <para id="id6291057">78: cout &lt;&lt; "Number of employees after instantiation is "</para>
+      <para id="id6291064">79:       &lt;&lt; E1Ptr-&gt;GetCount() &lt;&lt; endl;</para>
+      <para id="id6291070">80: cout &lt;&lt; endl &lt;&lt; "Employee 1: "</para>
+      <para id="id6291076">81:      &lt;&lt; E1Ptr-&gt;GetFirstName()</para>
+      <para id="id6291082">82:      &lt;&lt; " " &lt;&lt; E1Ptr-&gt;GetLastName()</para>
+      <para id="id6291087">83:      &lt;&lt; endl &lt;&lt; "Employee 2: "</para>
+      <para id="id6291093">84:      &lt;&lt; E2Ptr-&gt;GetFirstName()</para>
+      <para id="id6291099">85:      &lt;&lt; " " &lt;&lt; E2Ptr-&gt;GetLastName() &lt;&lt; endl &lt;&lt; endl;</para>
+      <para id="id6291105">86: delete E1Ptr;</para>
+      <para id="id6291110">87: delete E2Ptr;</para>
+      <para id="id6291115">88: cout &lt;&lt; "Number of employees after deletion is "</para>
+      <para id="id6291121">89:      &lt;&lt; Employee::GetCount() &lt;&lt; endl;</para>
+      <para id="id6291128">90: return 0;</para>
+      <para id="id6291133">91: }</para>
+      <para id="id6291137">Thành viên dữ liệu Count được khởi tạo là zero ở phạm vi file với lệnh:</para>
+      <para id="id6291150">int Employee::Count = 0;</para>
+      <para id="id6291155">Thành viên dữ liệu Count duy trì số các đối tượng của lớp Employee đã được khởi tạo. Khi đối tượng của lớp Employee tồn tại, thành viên Count có thể được tham chiếu thông qua bất kỳ hàm thành viên nào của một đối tượng Employee – trong ví dụ này, Count được tham chiếu bởi cả constructor lẫn destructor. Khi các đối tượng của lớp Employee không tồn tại, thành viên Count có thể vẫn được tham chiếu nhưng chỉ thông qua một lời gọi hàm thành viên tĩnh public GetCount() như sau:</para>
+      <para id="id6291222">Employee::GetCount()</para>
+      <para id="id6291226">Hàm GetCount() được sử dụng để xác định số các đối tượng của Employee khởi tạo hiện hành. Chú ý rằng khi không có các đối tượng trong chương trình, lời gọi hàm Employee::GetCount() được đưa ra. Tuy nhiên khi có các đối tượng khởi động hàm GetCount() có thể được gọi thông qua một trong các đối tượng như sau:</para>
+      <para id="id6291266">E1Ptr-&gt;GetCount()</para>
+      <para id="id6291272">Trong chương trình ở các dòng 34, 37, 58 và 67 sử dụng hàm assert() (định nghĩa trong assert.h). Hàm này kiểm tra giá trị của biểu thức. Nếu giá trị của biểu thức là 0 (false), hàm assert() in một thông báo lỗi và gọi hàm abort() (định nghĩa trong stdlib.h) để kết thúc chương trình thực thi. Nếu biểu thức có giá trị khác 0 (true) thì chương trình tiếp tục. Điều này rất có ích cho công cụ debug đối với việc kiểm tra nếu một biến có giá trị đúng. Chẳng hạn hàm ở dòng 34 hàm assert() kiểm tra con trỏ FirstName để xác định nếu nó không bằng 0 (null). Nếu điều kiện trong khẳng định (assertion) cho trước là đúng, chương trình tiếp tục mà không ngắt. Nếu điều kiện trong khẳng định cho trước là sai, một thông báo lỗi chứa số dòng, điều kiện được kiểm tra, và tên file trong đó sự khẳng định xuất hiện được in, và chương trình kết thúc. Khi đó lập trình viên có thể tập trung vào vùng này của đoạn mã để tìm lỗi. </para>
+      <para id="id6291342">Các khẳng định không phải xóa từ chương trình khi debug xong. Khi các khẳng định không còn cần thiết cho mục đích debug trong một chương trình, dòng sau:</para>
+      <para id="id6291354">#define NDEBUG</para>
+      <para id="id6291359">được thêm vào ở đầu file chương trình. Điều này phát sinh tiền xử lý bỏ qua tất cả các khẳng định thay thế cho lập trình viên xóa mỗi khẳng định bằng tay.</para>
+      <para id="id6291368">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT3_19.EXE">chạy ví dụ 3.19</link>, kết quả ở hình 3.20</para>
+      <figure id="id6291391">
+        <media id="id13653417" alt=""><image src="../../media/graphics20-ca4b.png" mime-type="image/png" height="231" width="531"/></media>
+      </figure>
+      <para id="id6291415">Hình 3.20: Kết quả của ví dụ 3.19</para>
+      <para id="id6291421">Một hàm thành viên có thể được khai báo là static nếu nó không truy cập đến các thành viên không tĩnh. Không giống như các thành viên không tĩnh, một hàm thành viên tĩnh không có con trỏ this bởi vì các thành viên dữ liệu tĩnh và các hàm thành viên tĩnh tồn tại độc lập với bất kỳ đối tượng nào của lớp.</para>
+      <para id="id6291450">Chú ý: Hàm thành viên dữ liệu tĩnh không được là const.</para>
+      <para id="id6291468">BÀI TẬP</para>
+      <para id="id6291473"><media id="id13813723" alt=""><image src="../../media/graphics21-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 1: Xây dựng lớp Stack, dữ liệu bao gồm đỉnh stack và vùng nhớ của stack. Các thao tác gồm:</para>
+      <para id="id6291516"><media id="id13703550" alt=""><image src="../../media/graphics22-a1ec.png" mime-type="image/png" height="13" width="13"/></media>Khởi động stack.</para>
+      <para id="id6291552"><media id="id13598996" alt=""><image src="../../media/graphics23-a1ec.png" mime-type="image/png" height="13" width="13"/></media>Kiểm tra stack có rỗng không?</para>
+      <para id="id6291587"><media id="id12782488" alt=""><image src="../../media/graphics24-a1ec.png" mime-type="image/png" height="13" width="13"/></media>Kiểm tra stack có đầy không?</para>
+      <para id="id6291623"><media id="id13657177" alt=""><image src="../../media/graphics25-a1ec.png" mime-type="image/png" height="13" width="13"/></media>Push và pop.</para>
+      <para id="id6291657"><media id="id13597407" alt=""><image src="../../media/graphics26-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 2: Xây dựng lớp hình trụ Cylinder, dữ liệu bao gồm bán kính và chiều cao của hình trụ. Các thao tác gồm hàm tính diện tích toàn phần và thể tích của hình trụ đó.</para>
+      <para id="id6116470"><media id="id13803497" alt=""><image src="../../media/graphics27-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 3: Hãy xây dựng một lớp Point cho các điểm trong không gian ba chiều (x,y,z). Lớp chứa một constructor mặc định, một hàm Negate() để biến đổi điểm thành đại lượng có dấu âm, một hàm Norm() trả về khoảng cách từ gốc và một hàm Print().</para>
+      <para id="id6116520"><media id="id13881488" alt=""><image src="../../media/graphics28-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 4: Xây dựng một lớp Matrix cho các ma trận bao gồm một constructor mặc định, hàm xuất ma trận, nhập ma trận từ bàn phím, cộng hai ma trận, trừ hai ma trận và nhân hai ma trận.</para>
+      <para id="id6116568"><media id="id13664337" alt=""><image src="../../media/graphics29-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 5: Xây dựng một lớp Matrix cho các ma trận vuông bao gồm một constructor mặc định, hàm xuất ma trận, tính định thức và tính ma trận nghịch đảo.</para>
+      <para id="id6116614"><media id="id13711744" alt=""><image src="../../media/graphics30-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 6: Xây dựng lớp Person để quản lý họ tên, năm sinh, điểm chín môn học của tất cả các học viên của lớp học. Cho biết bao nhiêu học viên trong lớp được phép làm luận văn tốt nghiệp, bao nhiêu học viên thi tốt nghiệp, bao nhiêu người phải thi lại và tên môn thi lại. Tiêu chuẩn để xét:</para>
+      <para id="id6116664"><media id="id13788977" alt=""><image src="../../media/graphics31-a1ec.png" mime-type="image/png" height="13" width="13"/></media>Làm luận văn phải có điểm trung bình lớn hơn 7 trong đó không có môn nào dưới 5.</para>
+      <para id="id6116702"><media id="id13835183" alt=""><image src="../../media/graphics32-a1ec.png" mime-type="image/png" height="13" width="13"/></media>Thi tốt nghiệp khi điểm trung bình không lớn hơn 7 và điểm các môn không dưới 5.</para>
+      <para id="id6116740"><media id="id13647451" alt=""><image src="../../media/graphics33-a1ec.png" mime-type="image/png" height="13" width="13"/></media>Thi lại có môn dưới 5.</para>
+      <para id="id6116776"><media id="id12337183" alt=""><image src="../../media/graphics34-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 7: Xây dựng một lớp String. Mỗi đối tượng của lớp String sẽ đại diện một chuỗi ký tự. Các thành viên dữ liệu là chiều dài chuỗi và chuỗi ký tự thực. Ngoài constructor và destructor còn có các phương thức như tạo một chuỗi với chiều dài cho trước, tạo một chuỗi từ một chuỗi đã có.</para>
+      <para id="id6116826"><media id="id13758438" alt=""><image src="../../media/graphics35-8f35.png" mime-type="image/png" height="14" width="14"/></media>Bài 8: Xây dựng một lớp Vector để lưu trữ vector gồm các số thực. Các thành viên dữ liệu gồm:</para>
+      <para id="id6116870"><media id="id12672160" alt=""><image src="../../media/graphics36-a1ec.png" mime-type="image/png" height="13" width="13"/></media>Kích thước vector.</para>
+      <para id="id6116906"><media id="id13722433" alt=""><image src="../../media/graphics37-a1ec.png" mime-type="image/png" height="13" width="13"/></media>Một mảng động chứa các thành phần của vector.</para>
+      <para id="id6116942">Ngoài constructor và destructor, còn có các phương thức tính tích vô hướng của hai vector, tính chuẩn của vector (theo chuẩn bất kỳ nào đó).</para>
+      <para id="id6116952"><figure id="id6116956"><media id="id13781884" alt=""><image src="../../media/graphics38-8f35.png" mime-type="image/png" height="14" width="14"/></media></figure>Bài 9: Xây dựng lớp Employee gồm họ tên và chứng minh nhân dân. Ngoài constructor còn có phương thức nhập, xuất họ tên và chứng minh nhân dân ra màn hình.<media id="id13798886" alt=""><image src="../../media/graphics39-9e00.png" mime-type="image/png" height="16" width="16"/></media></para>
+    </section>
+  </content>
+</document>

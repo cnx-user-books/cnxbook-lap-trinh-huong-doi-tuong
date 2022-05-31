@@ -1,0 +1,459 @@
+<document xmlns="http://cnx.rice.edu/cnxml" xmlns:md="http://cnx.rice.edu/mdml">
+  <title>Thiết kế chương trình theo hướng đối tượng</title>
+  <metadata>
+  <md:content-id>m30785</md:content-id><md:title>Thiết kế chương trình theo hướng đối tượng</md:title>
+  <md:abstract>Tìm hiểu một ít về cách thiết kế chương trình theo hướng đối tượng, các bước cơ bản cần thiết khi bắt tay vào viết chương trình trên quan điểm thiết kế và thảo chương.</md:abstract>
+  <md:uuid>0866c3bb-989c-4251-8a94-5b24fa2cf38a</md:uuid>
+</metadata>
+
+<content>
+    <para id="id6452866">CÁC GIAI ĐOẠN PHÁT TRIỂN HỆ THỐNG</para>
+    <para id="id6452879">Có năm giai đoạn để phát triển hệ thống phần mềm theo hướng đối tượng:</para>
+    <para id="id6452886"><media id="id1170190716456" alt=""><image src="../../media/graphics1-a1ec.png" mime-type="image/png" height="13" width="13"/></media>Phân tích yêu cầu (Requirement analysis)</para>
+    <para id="id6452922"><media id="id1170191211252" alt=""><image src="../../media/graphics2-a1ec.png" mime-type="image/png" height="13" width="13"/></media>Phân tích (Analysis)</para>
+    <para id="id6452957"><media id="id1170198764260" alt=""><image src="../../media/graphics3-a1ec.png" mime-type="image/png" height="13" width="13"/></media>Thiết kế (Design)</para>
+    <para id="id6452992"><media id="id1170198795980" alt=""><image src="../../media/graphics4-a1ec.png" mime-type="image/png" height="13" width="13"/></media>Lập trình (Programming)</para>
+    <para id="id6453027"><media id="id1170199768955" alt=""><image src="../../media/graphics5-a1ec.png" mime-type="image/png" height="13" width="13"/></media>Kiểm tra (Testing)</para>
+    <para id="id6453062">Phân tích yêu cầu</para>
+    <para id="id6453076">Bằng việc tìm hiểu các trường hợp sử dụng (use case) để nắm bắt các yêu cầu của khách hàng, của vấn đề cần giải quyết. Qua trường hợp sử dụng này, các nhân tố bên ngoài có tham gia vào hệ thống cũng được mô hình hóa bằng các tác nhân. Mỗi trường hợp sử dụng được mô tả bằng văn bản, đặc tả yêu cầu của khách hàng.</para>
+    <para id="id6453090">Phân tích</para>
+    <para id="id6453104">Từ các đặc tả yêu cầu trên, hệ thống sẽ bước đầu được mô hình hóa bởi các khái niệm lớp, đối tượng và các cơ chế để diễn tả hoạt động của hệ thống.</para>
+    <para id="id6453115">Trong giai đoạn phân tích chúng ta chỉ mô tả các lớp trong lĩnh vực của vấn đề cần giải quyết chứ chúng ta không đi sâu vào các chi tiết kỹ thuật.</para>
+    <para id="id6453126">Thiết kế</para>
+    <para id="id6453139">Trong giai đoạn thiết kế, các kết quả của quá trình phân tích được mở rộng thành một giải pháp kỹ thuật. Một số các lớp được thêm vào để cung cấp cơ sở hạ tầng kỹ thuật như lớp giao diện, lớp cơ sở dữ liệu, lớp chức năng, …</para>
+    <para id="id6453154">Lập trình</para>
+    <para id="id6453167">Đây còn gọi là bước xây dựng, giai đoạn này sẽ đặc tả chi tiết kết quả của giai đoạn thiết kế. Các lớp của bước thiết kế sẽ được chuyển thành mã nguồn theo một ngôn ngữ lập trình theo hướng đối tượng nào đó.</para>
+    <para id="id6453176">Kiểm tra</para>
+    <para id="id6453190">Trong giai đoạn kiểm tra, có bốn hình thức kiểm tra hệ thống:</para>
+    <para id="id6453197"><media id="id4744870" alt=""><image src="../../media/graphics6-0eb8.png" mime-type="image/png" height="17" width="13"/></media>Kiểm tra từng đơn thể (unit testing) được dùng kiểm tra các lớp hoặc các nhóm đơn.</para>
+    <para id="id6453235"><media id="id7913261" alt=""><image src="../../media/graphics7-0eb8.png" mime-type="image/png" height="17" width="13"/></media>Kiểm tra tính tích hợp (integration testing), được kết hợp với các thành phần và các lớp để kiểm tra xem chúng hoạt động với nhau có đúng không.</para>
+    <para id="id6453275"><media id="id1170199896904" alt=""><image src="../../media/graphics8-0eb8.png" mime-type="image/png" height="17" width="13"/></media>Kiểm tra hệ thống (system testing) chỉ để kiểm tra xem hệ thống có đáp ứng được chức năng mà người dùng yêu cầu không.</para>
+    <para id="id6453315"><media id="id8479820" alt=""><image src="../../media/graphics9-0eb8.png" mime-type="image/png" height="17" width="13"/></media>Kiểm tra tính chấp nhận được(acceptance testing), việc kiểm tra này được thực hiện bởi khách hàng, việc kiểm tra cũng thực hiện giống như kiểm tra hệ thống.</para>
+    <section id="id-118522396777">
+      <title>CÁCH TÌM LỚP</title>
+      <para id="id6453363">Lớp nên được tìm từ phạm vi bài toán cần giải quyết, vì vậy tên của lớp cũng nên đặt tên các đối tượng thực mà chúng ta biểu diễn. Để tìm ra lớp cho bài toán, chúng ta cần trả lời các câu hỏi sau:</para>
+      <para id="id6453376"><media id="id8696222" alt=""><image src="../../media/graphics10-8f35.png" mime-type="image/png" height="14" width="14"/></media>Có thông tin nào cần lưu trữ hay phân tích không? Nếu có bất kỳ thông tin nào cần phải lưu trữ, biến đổi, phân tích hoặc xử lý thì đó chính là một lớp dự định cần xây dựng.</para>
+      <para id="id6453419"><media id="id8696497" alt=""><image src="../../media/graphics11-8f35.png" mime-type="image/png" height="14" width="14"/></media>Có hệ thống bên ngoài bên ngoài hay không? Hệ thống ngoài có thể được xem như các lớp mà hệ thống của chúng ta chứa hoặc tương tác với nó.</para>
+      <para id="id6453460"><media id="id8696091" alt=""><image src="../../media/graphics12-8f35.png" mime-type="image/png" height="14" width="14"/></media>Có các mẫu thiết kế, thư viện lớp, thành phần, … hay không? Các thành phần này đã được xây dựng từ các project trước đó, từ các đồng nghiệp hoặc các nhà sản xuất?</para>
+      <para id="id6453503"><media id="id1170198920845" alt=""><image src="../../media/graphics13-8f35.png" mime-type="image/png" height="14" width="14"/></media>Có thiết bị nào mà hệ thống phải đáp ứng? Bất cứ thiết bị nào được nối với hệ thống có thể chuyển thành lớp dự tuyển.</para>
+      <para id="id6453544"><media id="id1170199726319" alt=""><image src="../../media/graphics14-8f35.png" mime-type="image/png" height="14" width="14"/></media>Tác nhân đóng vai trò như thế nào trong hệ thống? Các vai diễn này nên được xem là lớp như người sử dụng, khách hang, người điều khiển hệ thống,…</para>
+    </section>
+    <section id="id-465217247485">
+      <title>CÁC BƯỚC CẦN THIẾT ĐỂ THIẾT KẾ CHƯƠNG TRÌNH</title>
+      <para id="id6453595">Để thiết kế một chương trình theo hướng đối tượng, chúng ta phải trải qua bốn bước sau, từ đó chúng ta xây dựng được một cây phả hệ mang tính kế thừa và các mối quan hệ giữa các đối tượng:</para>
+      <para id="id6453604"><media id="id1170199635031" alt=""><image src="../../media/graphics15-8f35.png" mime-type="image/png" height="14" width="14"/></media>Xác định các dạng đối tượng (lớp) của bài toán (định dang các đối tượng).</para>
+      <para id="id6453641"><media id="id1148253" alt=""><image src="../../media/graphics16-8f35.png" mime-type="image/png" height="14" width="14"/></media>Tìm kiếm các đặc tính chung (dữ liệu chung) trong các dạng đối tượng này, những gì chúng cùng nhau chia xẻ.</para>
+      <para id="id6453680"><media id="id8279504" alt=""><image src="../../media/graphics17-8f35.png" mime-type="image/png" height="14" width="14"/></media>Xác định được lớp cơ sở dựa trên cơ sở các đặc tính chung của các dạng đối tượng.</para>
+      <para id="id6453718"><media id="id3826221" alt=""><image src="../../media/graphics18-8f35.png" mime-type="image/png" height="14" width="14"/></media>Từ lớp cơ sở, sử dụng quan hệ tổng quát hóa để đặc tả trong việc đưa ra các lớp dẫn xuất chứa các thành phần, những đặc tính không chung còn lại của dạng đối tượng. Bên cạnh đó, chúng ta còn đưa ra các lớp có quan hệ với các lớp cơ sở và lớp dẫn xuất; các quan hệ này có thể là quan hệ kết hợp, quan hệ tập hợp lại, quan hệ phụ thuộc.</para>
+      <para id="id6453762">Với các bước trên chúng ta có được cây phả hệ và quan hệ giữa các lớp. Đối với hệ thống phức tạp hơn, chúng ta cần phải phân tích để giải quyết được vấn đề đặt ra theo trật tự sau:</para>
+      <para id="id6453775"><media id="id1170200021715" alt=""><image src="../../media/graphics19-8f35.png" mime-type="image/png" height="14" width="14"/></media>Phân tích một cách cẩn thận về các đối tượng của bài toán theo trật tự từ dưới lên (bottom up).</para>
+      <para id="id6358829"><media id="id8328283" alt=""><image src="../../media/graphics20-8f35.png" mime-type="image/png" height="14" width="14"/></media>Tìm ra những gì tồn tại chung giữa các đối tượng, nhóm các đặc tính này lại để được các lớp cơ sơ như hình 7.1 </para>
+      <figure id="id6358870">
+        <media id="id1738774" alt=""><image src="../../media/graphics21-965a.png" mime-type="image/png" height="181" width="555"/></media>
+      </figure>
+      <para id="id6358894">Hình 7.1</para>
+      <para id="id6358899"><media id="id5281282" alt=""><image src="../../media/graphics22-8f35.png" mime-type="image/png" height="14" width="14"/></media>Tiếp tục theo hướng từ dưới lên, chúng ta thiết kế được các đối tượng phù hợp như hình 7.2</para>
+      <figure id="id6358941">
+        <media id="id1170193464247" alt=""><image src="../../media/graphics23-0ea6.png" mime-type="image/png" height="205" width="515"/></media>
+      </figure>
+      <para id="id6358965">Hình 7.2</para>
+      <para id="id6358970">Bằng cách này, chúng ta tiếp tục tìm các đặc tính chung cho đến tột cùng của các đối tượng.</para>
+      <para id="id6358978"><media id="id1170199710498" alt=""><image src="../../media/graphics24-8f35.png" mime-type="image/png" height="14" width="14"/></media>Sau đó cài đặt theo hướng đối tượng từ trên xuống bằng cách cài đặt lớp cơ sở chung nhất.</para>
+      <para id="id6359018"><media id="id7922595" alt=""><image src="../../media/graphics25-8f35.png" mime-type="image/png" height="14" width="14"/></media>Tiếp tục cài đặt các lớp dẫn xuất trên cơ sở các đặc tính chung của từng nhóm đối tượng.</para>
+      <para id="id6359058"><media id="id1170199827674" alt=""><image src="../../media/graphics26-8f35.png" mime-type="image/png" height="14" width="14"/></media>Cho đến khi tất cả các dạng đối tượng của hệ thống được cài đặt xong để được cây phả hệ.</para>
+    </section>
+    <section id="id-951639045548">
+      <title>CÁC VÍ DỤ</title>
+      <para id="id6359105"><figure id="id6359110"><media id="id1170194178200" alt=""><image src="../../media/graphics27-e2e9.png" mime-type="image/png" height="19" width="18"/></media></figure><link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CSource%5CCT7_1.zip">Ví dụ 7.1:</link> Tính tiền lương của các nhân viên trong cơ quan theo các dạng khác nhau. Dạng người lao động lãnh lương từ ngân sách Nhà nước được gọi là cán bộ, công chức (dạng biên chế). Dạng người lao động lãnh lương từ ngân sách của cơ quan được gọi là người làm hợp đồng. Như vậy hệ thống chúng ta có hai đối tượng: biên chế và hợp đồng.</para>
+      <para id="id6359157"><figure id="id6359161"><media id="id8184540" alt=""><image src="../../media/graphics28-8f35.png" mime-type="image/png" height="14" width="14"/></media></figure>  Hai loại đối tượng này có đặc tính chung đó là viên chức làm việc cho cơ quan. Từ đây có thể tạo nên lớp cơ sở để quản lý một viên chức (lớp Nguoi) bao gồm mã số, họ tên và lương.</para>
+      <para id="id6359196"><figure id="id6359201"><media id="id1170198699614" alt=""><image src="../../media/graphics29-8f35.png" mime-type="image/png" height="14" width="14"/></media></figure>  Sau đó chúng ta xây dựng các lớp còn lại kế thừa từ lớp cơ sở trên:</para>
+      <para id="id6359228"><figure id="id6359231"><media id="id4550778" alt=""><image src="../../media/graphics30-0eb8.png" mime-type="image/png" height="17" width="13"/></media></figure>Lớp dành cho cán bộ, công chức (lớp BienChe) gồm các thuộc tính: hệ số lương, tiền phụ cấp chức vụ.</para>
+      <para id="id6359266"><figure id="id6359269"><media id="id1170194229867" alt=""><image src="../../media/graphics31-0eb8.png" mime-type="image/png" height="17" width="13"/></media></figure>Lớp dành cho người làm hợp đồng (lớp HopDong) gồm các thuộc tính: tiền công lao động, số ngày làm việc trong tháng, hệ số vượt giờ. </para>
+      <figure id="id6359308">
+        <media id="id1170199752084" alt=""><image src="../../media/graphics32-5d46.png" mime-type="image/png" height="341" width="544"/></media>
+      </figure>
+      <para id="id6359332">Hình 7.3</para>
+      <para id="id6359336"><media id="id1170193147378" alt=""><image src="../../media/graphics33-1930.png" mime-type="image/png" height="17" width="14"/></media>File PERSON.H</para>
+      <para id="id6359372">1: //PERSON.H</para>
+      <para id="id6359376">2: Định nghĩa lớp Nguoi</para>
+      <para id="id6359382">3: #ifndef PERSON_H</para>
+      <para id="id6359386">4: #define PERSON_H</para>
+      <para id="id6359390">5: </para>
+      <para id="id6359395">6: #include &lt;iostream.h&gt;</para>
+      <para id="id6359399">7:</para>
+      <para id="id6359404">8: #define MAX_TEN 50</para>
+      <para id="id6359408">9: #define MAX_MASO 5</para>
+      <para id="id6359412">10: #define MUC_CO_BAN 120000</para>
+      <para id="id6359417">11:</para>
+      <para id="id6359421">12: class Nguoi</para>
+      <para id="id6359426">13: {</para>
+      <para id="id6359430">14: protected:</para>
+      <para id="id6359435">15: char HoTen[MAX_TEN];</para>
+      <para id="id6359439">16: char MaSo[MAX_MASO];</para>
+      <para id="id6359444">17: float Luong;</para>
+      <para id="id6359448">18: public:</para>
+      <para id="id6359453">19: Nguoi();</para>
+      <para id="id6359457">20: virtual void TinhLuong()=0;</para>
+      <para id="id6359461">21: void Xuat() const;</para>
+      <para id="id6359466">22: virtual void Nhap();</para>
+      <para id="id6359471">23: };</para>
+      <para id="id6359476">24:</para>
+      <para id="id6359480">25: #endif</para>
+      <para id="id6359485"><media id="id1170194105872" alt=""><image src="../../media/graphics34-1c7c.png" mime-type="image/png" height="17" width="14"/></media>File PERSON.CPP</para>
+      <para id="id6359520">1: //PERSON.CPP</para>
+      <para id="id6359525">2: Định nghĩa hàm thành viên cho lớp Nguoi</para>
+      <para id="id6359531">3: #include &lt;iomanip.h&gt;</para>
+      <para id="id6359536">4: #include &lt;string.h&gt;</para>
+      <para id="id6359541">5: #include "person.h"</para>
+      <para id="id6359546">6:</para>
+      <para id="id6359550">7: Nguoi::Nguoi()</para>
+      <para id="id6359555">8: {</para>
+      <para id="id6359559">9: strcpy(HoTen,"");</para>
+      <para id="id6359564">10: strcpy(MaSo,"");</para>
+      <para id="id6359569">11: Luong=0;</para>
+      <para id="id6359574">12: }</para>
+      <para id="id6359578">13:</para>
+      <para id="id6359583">14: void Nguoi::Xuat() const</para>
+      <para id="id6359588">15: {</para>
+      <para id="id6359592">16: cout&lt;&lt;"Ma so:"&lt;&lt;MaSo&lt;&lt;",Ho va ten:"&lt;&lt;HoTen</para>
+      <para id="id6359599">17:       #9; &lt;&lt;",Luong:"&lt;&lt;setiosflags(ios::fixed)&lt;&lt;setprecision(0)&lt;&lt;Luong&lt;&lt;endl;</para>
+      <para id="id6359605">18: }</para>
+      <para id="id6359610">19:</para>
+      <para id="id6359615">20: void Nguoi::Nhap()</para>
+      <para id="id6359620">21: {</para>
+      <para id="id6359624">22: cout&lt;&lt;"Ma so:";</para>
+      <para id="id6359629">23: cin&gt;&gt;MaSo;</para>
+      <para id="id6359634">24: cin.ignore();</para>
+      <para id="id6359639">25: cout&lt;&lt;"Ho va ten:";</para>
+      <para id="id6359644">26: cin.getline(HoTen,MAX_TEN);</para>
+      <para id="id6359649">27: }</para>
+      <para id="id6359654"><media id="id1170199993313" alt=""><image src="../../media/graphics35-1930.png" mime-type="image/png" height="17" width="14"/></media>File STAFF.H</para>
+      <para id="id6359689">1: //STAFF.H</para>
+      <para id="id6359693">2 Định nghĩa lớp BienChe</para>
+      <para id="id6359699">3: #ifndef STAFF_H</para>
+      <para id="id6359704">4: #define STAFF_H</para>
+      <para id="id6359709">5:</para>
+      <para id="id6359713">5: #include "person.h"</para>
+      <para id="id6359718">6:</para>
+      <para id="id6359723">7: class BienChe: public Nguoi</para>
+      <para id="id6359728">8: {</para>
+      <para id="id6359732">9: protected:</para>
+      <para id="id6359737">10: float HeSoLuong;</para>
+      <para id="id6359742">11: float HeSoPhuCap;</para>
+      <para id="id6359747">12: public:</para>
+      <para id="id6359752">13: BienChe();</para>
+      <para id="id6359757">14: virtual void TinhLuong();</para>
+      <para id="id6359762">15: virtual void Nhap();</para>
+      <para id="id6359767">16: };</para>
+      <para id="id6359771">17:</para>
+      <para id="id6359776">18: #endif</para>
+      <para id="id6359781"><media id="id8279644" alt=""><image src="../../media/graphics36-1c7c.png" mime-type="image/png" height="17" width="14"/></media>File STAFF.CPP</para>
+      <para id="id6359817">1: //STAFF.CPP</para>
+      <para id="id6359821">2: Định nghĩa hàm thành viên cho lớp BienChe</para>
+      <para id="id6359828">3: #include "staff.h"</para>
+      <para id="id6359833">4:</para>
+      <para id="id6359837">5: BienChe::BienChe()</para>
+      <para id="id6359842">6: {</para>
+      <para id="id6359847">7: HeSoLuong=HeSoPhuCap=0;</para>
+      <para id="id6359852">8: }</para>
+      <para id="id6359857">9:</para>
+      <para id="id6359861">10: void BienChe::Nhap()</para>
+      <para id="id6359866">11: {</para>
+      <para id="id6359871">12: Nguoi::Nhap();</para>
+      <para id="id6359875">13: cout&lt;&lt;"He so luong:";</para>
+      <para id="id6359881">14: cin&gt;&gt;HeSoLuong;</para>
+      <para id="id6359887">15: cout&lt;&lt;"He so phu cap chu vu:";</para>
+      <para id="id6359893">16: cin&gt;&gt;HeSoPhuCap;</para>
+      <para id="id6359898">17: }</para>
+      <para id="id6359903">18:</para>
+      <para id="id6359908">19: void BienChe::TinhLuong()</para>
+      <para id="id6359913">20: {</para>
+      <para id="id6359917">21: Luong=MUC_CO_BAN*(1.0+HeSoLuong+HeSoPhuCap);</para>
+      <para id="id6359923">22: }</para>
+      <para id="id6359927"><media id="id8798183" alt=""><image src="../../media/graphics37-1930.png" mime-type="image/png" height="17" width="14"/></media>File CONTRACT.H</para>
+      <para id="id6359963">1: //CONTRACT.H</para>
+      <para id="id6359968">2: Định nghĩa lớp HopDong</para>
+      <para id="id6359974">3: #ifndef CONTRACT_H</para>
+      <para id="id6359978">4: #define CONTRACT_H</para>
+      <para id="id6359983">5:</para>
+      <para id="id6359988">6: #include "person.h"</para>
+      <para id="id6359993">7:</para>
+      <para id="id6359997">8: class HopDong : public Nguoi</para>
+      <para id="id6360002">9: {</para>
+      <para id="id6360007">10: protected:</para>
+      <para id="id6360012">11: float TienCong;</para>
+      <para id="id6360016">12: float NgayCong;</para>
+      <para id="id6360021">13: float HeSoVuotGio;</para>
+      <para id="id6360026">14: public:</para>
+      <para id="id6360031">15: HopDong();</para>
+      <para id="id6360036">16: virtual void TinhLuong();</para>
+      <para id="id6360041">17: virtual void Nhap();</para>
+      <para id="id6360046">18: };</para>
+      <para id="id6360050">19:</para>
+      <para id="id6360055">20: #endif</para>
+      <para id="id6360059"><media id="id1170199938086" alt=""><image src="../../media/graphics38-1c7c.png" mime-type="image/png" height="17" width="14"/></media>File CONTRACT.CPP:</para>
+      <para id="id6360095">1: //CONTRACT.CPP</para>
+      <para id="id6360100">2: Định nghĩa hàm thành viên cho lớp HopDong</para>
+      <para id="id6360106">3: #include "contract.h"</para>
+      <para id="id6360111">4:</para>
+      <para id="id6360116">5: HopDong::HopDong()</para>
+      <para id="id6360121">6: {</para>
+      <para id="id6360125">7: TienCong=NgayCong=HeSoVuotGio=0;</para>
+      <para id="id6360130">8: }</para>
+      <para id="id6360135">9:</para>
+      <para id="id6360139">10: void HopDong::Nhap()</para>
+      <para id="id6360144">11: {</para>
+      <para id="id6360149">12: Nguoi::Nhap();</para>
+      <para id="id6360154">13: cout&lt;&lt;"Tien cong:";</para>
+      <para id="id6360159">14: cin&gt;&gt;TienCong;</para>
+      <para id="id6360165">15: cout&lt;&lt;"Ngay cong:";</para>
+      <para id="id6360170">16: cin&gt;&gt;NgayCong;</para>
+      <para id="id6360176">17: cout&lt;&lt;"He so vuot gio:";</para>
+      <para id="id6360182">18: cin&gt;&gt;HeSoVuotGio;</para>
+      <para id="id6360187">19: }</para>
+      <para id="id6360192">20:</para>
+      <para id="id6360196">21: void HopDong::TinhLuong()</para>
+      <para id="id6360201">22: {</para>
+      <para id="id6360206">23: Luong=TienCong*NgayCong*(1+HeSoVuotGio);</para>
+      <para id="id6360211">24: }</para>
+      <para id="id6360216"><media id="id1700649" alt=""><image src="../../media/graphics39-1c7c.png" mime-type="image/png" height="17" width="14"/></media>File CT7_1.CPP:</para>
+      <para id="id6360252">1: //CT7_1.CPP</para>
+      <para id="id6360257">2: //Chương trình 7.1</para>
+      <para id="id6360262">3: #include &lt;iostream.h&gt;</para>
+      <para id="id6360267">4: #include &lt;ctype.h&gt;</para>
+      <para id="id6360272">5: #include "person.h"</para>
+      <para id="id6360277">6: #include "staff.h"</para>
+      <para id="id6360282">7: #include "contract.h"</para>
+      <para id="id6360287">8:</para>
+      <para id="id6360291">9: int main()</para>
+      <para id="id6360296">10: {</para>
+      <para id="id6360300">11: Nguoi *Ng[100];</para>
+      <para id="id6360305">12: int N=0;</para>
+      <para id="id6360310">13: char Chon,Loai;</para>
+      <para id="id6360315">14: do</para>
+      <para id="id6360320">15: {</para>
+      <para id="id6360324">16: cout&lt;&lt;"Bien che hay Hop dong (B/H)? ";</para>
+      <para id="id6360330">17: cin&gt;&gt;Loai;</para>
+      <para id="id6360335">18: Loai=toupper(Loai);</para>
+      <para id="id6360340">19: if (Loai=='B')</para>
+      <para id="id6360345">20: Ng[N]=new BienChe;</para>
+      <para id="id6360350">21: else</para>
+      <para id="id6360355">22: Ng[N]=new HopDong;</para>
+      <para id="id6360360">23: Ng[N++]-&gt;Nhap();</para>
+      <para id="id6360364">24: cout&lt;&lt;"Tiep tuc (C/K)? ";</para>
+      <para id="id6360370">25: cin&gt;&gt;Chon;</para>
+      <para id="id6360375">26: Chon=toupper(Chon);</para>
+      <para id="id6360380">27: if ((N==100)||(Chon=='K'))</para>
+      <para id="id6360385">28: break;</para>
+      <para id="id6360390">29: }</para>
+      <para id="id6360394">30: while (1);</para>
+      <para id="id6360399">31: for(int I=0;I&lt;N;++I)</para>
+      <para id="id6360404">32: {</para>
+      <para id="id6360409">33: Ng[I]-&gt;TinhLuong();</para>
+      <para id="id6360414">34: Ng[I]-&gt;Xuat();</para>
+      <para id="id6360419">35: }</para>
+      <para id="id6360424">36: return 0;</para>
+      <para id="id6360428">37: }</para>
+      <para id="id6360433">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT7_1.EXE">chạy ví dụ 7.1</link>, kết quả ở hình 7.4</para>
+      <figure id="id6360457">
+        <media id="id9054157" alt=""><image src="../../media/graphics40-7c3b.png" mime-type="image/png" height="312" width="551"/></media>
+      </figure>
+      <para id="id6360480">Hình 7.4: Kết quả của ví dụ 7.1</para>
+      <para id="id6360486"><figure id="id6360490"><media id="id9051577" alt=""><image src="../../media/graphics41-e2e9.png" mime-type="image/png" height="19" width="18"/></media></figure><link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CSource%5CCT7_2.zip">Ví dụ 7.2:</link> Giả sử cuối năm học cần trao giải thưởng cho các sinh viên xuất sắc và các giảng viên có nhiều công trình khoa học được công bố trên tạp chí. Các lớp trong cây phả hệ như hình 7.5: lớp Nguoi để quản lý hồ sơ cá nhân, lớp SinhVien quản lý về sinh viên và lớp GiangVien quản lý giảng viên.</para>
+      <para id="id6360554"><figure id="id6360559"><media id="id1170198947515" alt=""><image src="../../media/graphics42.png" mime-type="image/png" height="14" width="14"/></media></figure>Lớp Nguoi:</para>
+      <para id="id6360590"><figure id="id6360593"><media id="id1170197583933" alt=""><image src="../../media/graphics43-0eb8.png" mime-type="image/png" height="17" width="13"/></media></figure>Dữ liệu họ và tên.</para>
+      <para id="id6044568"><figure id="id6044571"><media id="id1170198695955" alt=""><image src="../../media/graphics44-0eb8.png" mime-type="image/png" height="17" width="13"/></media></figure>Phương thức kiểm tra khả năng được khen thưởng. Đây là phương thức thuần ảo.</para>
+      <para id="id6044600"><figure id="id6044603"><media id="id9051461" alt=""><image src="../../media/graphics45-0eb8.png" mime-type="image/png" height="17" width="13"/></media></figure>Phương thức xuất. Đây là phương thức thuần ảo.</para>
+      <para id="id6044631"><figure id="id6044634"><media id="id1170198743647" alt=""><image src="../../media/graphics46-8f35.png" mime-type="image/png" height="14" width="14"/></media></figure>Lớp SinhVien:</para>
+      <para id="id6044665"><figure id="id6044668"><media id="id1170198636269" alt=""><image src="../../media/graphics47-0eb8.png" mime-type="image/png" height="17" width="13"/></media></figure>Dữ liệu điểm trung bình.</para>
+      <para id="id6044694"><figure id="id6044698"><media id="id8876296" alt=""><image src="../../media/graphics48-0eb8.png" mime-type="image/png" height="17" width="13"/></media></figure>Phương thức kiểm tra khả năng được khen thưởng.</para>
+      <para id="id6044725"><figure id="id6044728"><media id="id1170199840289" alt=""><image src="../../media/graphics49-0eb8.png" mime-type="image/png" height="17" width="13"/></media></figure>Phương thức xuất.</para>
+      <para id="id6044754"><figure id="id6044757"><media id="id8530802" alt=""><image src="../../media/graphics50-8f35.png" mime-type="image/png" height="14" width="14"/></media></figure>Lớp GiangVien:</para>
+      <para id="id6044788"><figure id="id6044791"><media id="id1170197427277" alt=""><image src="../../media/graphics51-0eb8.png" mime-type="image/png" height="17" width="13"/></media></figure>Dữ liệu điểm trung bình.</para>
+      <para id="id6044817"><figure id="id6044820"><media id="id8487382" alt=""><image src="../../media/graphics52-0eb8.png" mime-type="image/png" height="17" width="13"/></media></figure>Phương thức kiểm tra khả năng được khen thưởng.</para>
+      <para id="id6044847"><figure id="id6044850"><media id="id1170197635918" alt=""><image src="../../media/graphics53-0eb8.png" mime-type="image/png" height="17" width="13"/></media></figure>Phương thức xuất.</para>
+      <figure id="id6044879">
+        <media id="id1170195191583" alt=""><image src="../../media/graphics54-16f2.png" mime-type="image/png" height="298" width="495"/></media>
+      </figure>
+      <para id="id6044903">Hình 7.5</para>
+      <para id="id6044907"><media id="id1170199840869" alt=""><image src="../../media/graphics55-1930.png" mime-type="image/png" height="17" width="14"/></media>File PERSON.H</para>
+      <para id="id6044943">1: //PERSON.H</para>
+      <para id="id6044948">2: Định nghĩa lớp Nguoi</para>
+      <para id="id6044954">3: #ifndef PERSON_H</para>
+      <para id="id6044958">4: #define PERSON_H</para>
+      <para id="id6044963">5:</para>
+      <para id="id6044968">6: #include &lt;iostream.h&gt;</para>
+      <para id="id6044972">7:</para>
+      <para id="id6044977">8: #define MAX_TEN 50</para>
+      <para id="id6044982">9:</para>
+      <para id="id6044986">10: class Nguoi</para>
+      <para id="id6044991">11: { </para>
+      <para id="id6044996">12: protected:</para>
+      <para id="id6045000">13: char HoTen[MAX_TEN];</para>
+      <para id="id6045005">14: public:</para>
+      <para id="id6045010">15: Nguoi(char *HT);</para>
+      <para id="id6045015">16: virtual int DuocKhenThuong() const=0;</para>
+      <para id="id6045019">17: virtual void Xuat() const=0;</para>
+      <para id="id6045024">18: };</para>
+      <para id="id6045028">19:</para>
+      <para id="id6045033">20: #endif</para>
+      <para id="id6045038"><media id="id7936746" alt=""><image src="../../media/graphics56-1c7c.png" mime-type="image/png" height="17" width="14"/></media>File PERSON.CPP:</para>
+      <para id="id6045073">1: //PERSON.CPP</para>
+      <para id="id6045078">2: Định nghĩa hàm thành viên cho lớp Nguoi</para>
+      <para id="id6045084">3: #include &lt;string.h&gt;</para>
+      <para id="id6045089">4: #include "person.h"</para>
+      <para id="id6045094">5:</para>
+      <para id="id6045099">6: Nguoi::Nguoi(char *HT)</para>
+      <para id="id6045104">7: {</para>
+      <para id="id6045108">8: strcpy(HoTen,HT);</para>
+      <para id="id6045113">9: }</para>
+      <para id="id6045118"><media id="id1170197840623" alt=""><image src="../../media/graphics57-1930.png" mime-type="image/png" height="17" width="14"/></media>File STUDENT.H:</para>
+      <para id="id6045154">1: //STUDENT.H</para>
+      <para id="id6045159">2: Định nghĩa lớp SinhVien</para>
+      <para id="id6045164">3: #ifndef STUDENT_H</para>
+      <para id="id6045169">4: #define STUDENT_H</para>
+      <para id="id6045174">5:</para>
+      <para id="id6045178">6: #include "person.h"</para>
+      <para id="id6045183">7:</para>
+      <para id="id6045188">8: class SinhVien : public Nguoi</para>
+      <para id="id6045193">9: {</para>
+      <para id="id6045198">10: protected:</para>
+      <para id="id6045202">11: float DiemTB;</para>
+      <para id="id6045207">12: public:</para>
+      <para id="id6045212">13: SinhVien(char *HT,float DTB);</para>
+      <para id="id6045217">14: virtual int DuocKhenThuong() const;</para>
+      <para id="id6045221">15: virtual void Xuat() const;</para>
+      <para id="id6045226">16: };</para>
+      <para id="id6045231">17:</para>
+      <para id="id6045235">18: #endif</para>
+      <para id="id6045240"><media id="id1170198971310" alt=""><image src="../../media/graphics58.png" mime-type="image/png" height="17" width="14"/></media>File STUDENT.CPP:</para>
+      <para id="id6045276">1: //STUDENT.CPP</para>
+      <para id="id6045281">2: Định nghĩa hàm thành viên cho lớp SinhVien</para>
+      <para id="id6045287">3: #include "student.h"</para>
+      <para id="id6045292">4:</para>
+      <para id="id6045296">5: SinhVien::SinhVien(char *HT,float DTB):Nguoi(HT)</para>
+      <para id="id6045302">6: {</para>
+      <para id="id6045306">7: DiemTB=DTB;</para>
+      <para id="id6045311">8: }</para>
+      <para id="id6045316">9:</para>
+      <para id="id6045320">10: int SinhVien::DuocKhenThuong() const</para>
+      <para id="id6045325">11: {</para>
+      <para id="id6045329">12: return DiemTB&gt;9.0;</para>
+      <para id="id6045335">13: }</para>
+      <para id="id6045339">14:</para>
+      <para id="id6045344">15: void SinhVien::Xuat() const</para>
+      <para id="id6045349">16: {</para>
+      <para id="id6045354">17: cout&lt;&lt;"Ho va ten cua sinh vien:"&lt;&lt;HoTen;</para>
+      <para id="id6045360">18: }</para>
+      <para id="id6045364"><media id="id5430994" alt=""><image src="../../media/graphics59.png" mime-type="image/png" height="17" width="14"/></media>File TEACHER.H:</para>
+      <para id="id6045401">1: //TEACHER.H</para>
+      <para id="id6045406">2: Định nghĩa lớp GiangVien</para>
+      <para id="id6045411">3: #ifndef TEACHER_H</para>
+      <para id="id6045416">4: #define TEACHER_H</para>
+      <para id="id6045421">5:</para>
+      <para id="id6045425">6: #include "person.h"</para>
+      <para id="id6045430">7:</para>
+      <para id="id6045435">8: class GiangVien : public Nguoi</para>
+      <para id="id6045440">9: {</para>
+      <para id="id6045444">10: protected:</para>
+      <para id="id6045449">11: int SoBaiBao;</para>
+      <para id="id6045454">12: public:</para>
+      <para id="id6045459">13: GiangVien(char *HT,int SBB);</para>
+      <para id="id6045464">14: virtual int DuocKhenThuong() const;</para>
+      <para id="id6045468">15: virtual void Xuat() const;</para>
+      <para id="id6045473">16: };</para>
+      <para id="id6045478">17:</para>
+      <para id="id6045482">18: #endif</para>
+      <para id="id6045487"><media id="id1170194528237" alt=""><image src="../../media/graphics60.png" mime-type="image/png" height="17" width="14"/></media>File TEACHER.CPP:</para>
+      <para id="id6045523">1: //TEACHER.CPP</para>
+      <para id="id6045528">2: Định nghĩa hàm thành viên cho lớp GiangVien</para>
+      <para id="id6045534">3: #include "teacher.h"</para>
+      <para id="id6045539">4:</para>
+      <para id="id6045543">5: GiangVien::GiangVien(char *HT,int SBB):Nguoi(HT)</para>
+      <para id="id6045549">6: {</para>
+      <para id="id6045553">7: SoBaiBao=SBB;</para>
+      <para id="id6045558">8: }</para>
+      <para id="id6045563">9:</para>
+      <para id="id6045567">10: int GiangVien::DuocKhenThuong() const</para>
+      <para id="id6045572">11: {</para>
+      <para id="id6045576">12: return SoBaiBao&gt;5;</para>
+      <para id="id6045582">13: }</para>
+      <para id="id6045586">14:</para>
+      <para id="id6045591">15: void GiangVien::Xuat() const</para>
+      <para id="id6045596">16: {</para>
+      <para id="id6045600">17: cout&lt;&lt;"Ho va ten cua giang vien:"&lt;&lt;HoTen;</para>
+      <para id="id6045606">18: }</para>
+      <para id="id6045611"><media id="id8682502" alt=""><image src="../../media/graphics61.png" mime-type="image/png" height="17" width="14"/></media>File CT7_2.CPP:</para>
+      <para id="id6045647">1: //CT7_2.CPP</para>
+      <para id="id6045651">2: //Chương trình 7.2</para>
+      <para id="id6045656">3: #include &lt;ctype.h&gt;</para>
+      <para id="id6045661">4: #include "person.h"</para>
+      <para id="id6045666">5: #include "student.h"</para>
+      <para id="id6045670">6: #include "teacher.h"</para>
+      <para id="id6045675">7:</para>
+      <para id="id6045679">8: int main()</para>
+      <para id="id6045684">9: {</para>
+      <para id="id6045688">10: Nguoi *Ng[100];</para>
+      <para id="id6045693">11: int N=0;</para>
+      <para id="id6045697">12: char Chon,Loai;</para>
+      <para id="id6045702">13: char HoTen[MAX_TEN];</para>
+      <para id="id6045706">14: do</para>
+      <para id="id6045711">15: {</para>
+      <para id="id6045715">16: cout&lt;&lt;"Ho va ten:";</para>
+      <para id="id6045720">17: cin.getline(HoTen,MAX_TEN);</para>
+      <para id="id6045725">18: cout&lt;&lt;"Sinh vien hay Giang vien(S/G)? ";</para>
+      <para id="id6045731">19: cin&gt;&gt;Loai;</para>
+      <para id="id6045736">20: Loai=toupper(Loai);</para>
+      <para id="id6045740">21: if (Loai=='S')</para>
+      <para id="id6045745">22: {</para>
+      <para id="id6045749">23: float DTB;</para>
+      <para id="id6045754">24: cout&lt;&lt;"Diem trung binh:";</para>
+      <para id="id6045760">25: cin&gt;&gt;DTB;</para>
+      <para id="id6045764">26: Ng[N++]=new SinhVien(HoTen,DTB);</para>
+      <para id="id6045768">27: }</para>
+      <para id="id6045773">28: else</para>
+      <para id="id6045777">29: {</para>
+      <para id="id6045781">30: int SoBaiBao;</para>
+      <para id="id6045786">31: cout&lt;&lt;"So bai bao:";</para>
+      <para id="id6045791">32: cin&gt;&gt;SoBaiBao;</para>
+      <para id="id6045796">33: Ng[N++]=new GiangVien(HoTen,SoBaiBao);</para>
+      <para id="id6045801">34: }</para>
+      <para id="id6045805">35: cout&lt;&lt;"Tiep tuc (C/K)? ";</para>
+      <para id="id6045811">36: cin&gt;&gt;Chon;</para>
+      <para id="id6045815">37: Chon=toupper(Chon);</para>
+      <para id="id6045820">38: cin.ignore();</para>
+      <para id="id6045824">39: if ((N==100)||(Chon=='K'))</para>
+      <para id="id6045829">40: break;</para>
+      <para id="id6045834">41: }</para>
+      <para id="id6045838">42: while (1);</para>
+      <para id="id6045842">43: for(int I=0;I&lt;N;++I)</para>
+      <para id="id6045847">44: {</para>
+      <para id="id6045852">45: Ng[I]-&gt;Xuat();</para>
+      <para id="id6045856">46: if (Ng[I]-&gt;DuocKhenThuong())</para>
+      <para id="id6045862">47: cout&lt;&lt;". Nguoi nay duoc khen thuong";</para>
+      <para id="id6045868">48: cout&lt;&lt;endl;</para>
+      <para id="id6045873">49: }</para>
+      <para id="id6045877">50: return 0;</para>
+      <para id="id6045882">51: }</para>
+      <para id="id6045886">Chúng ta <link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CExe%5CCT7_2.EXE">chạy ví dụ 7.2</link>, kết quả ở hình 7.6</para>
+      <figure id="id6045910">
+        <media id="id1170197592012" alt=""><image src="../../media/graphics62.png" mime-type="image/png" height="328" width="502"/></media>
+      </figure>
+      <para id="id6045934">Hình 7.6: Kết quả của ví dụ 7.2</para>
+      <para id="id6045939"><figure id="id6045944"><media id="id1170197610663" alt=""><image src="../../media/graphics63.png" mime-type="image/png" height="19" width="18"/></media></figure><link url="file:///E:%5CBackup1%5CGiaotrinh%5CGtr_OOP%5CGt_OOP_Nop%5CTH042%5CHtm%5CSource%5CCT7_3.zip">Ví dụ 7.3:</link> Giả sử cần phải tạo các hình: hình tròn và hình chữ nhật được tô theo hai màu red và blue. Xây dựng một cây phả hệ để quản lý các hình này.</para>
+      <para id="id6045987">Trước hết chúng ta cần có lớp cơ sở Shape để lưu trữ thông tin chung cho các hình, sau đó là hai lớp dẫn xuất Rectangle về hình hình chữ nhật và Circle về hình tròn như hình 7.7</para>
+      <para id="id6046015"><figure id="id6046019"><media id="id1170197707353" alt=""><image src="../../media/graphics64.png" mime-type="image/png" height="289" width="425"/></media></figure><figure id="id6046060"><media id="id1170197507043" alt=""><image src="../../media/graphics65.png" mime-type="image/png" height="14" width="14"/></media></figure>Lớp Shape:</para>
+      <para id="id6046091"><figure id="id6046094"><media id="id3746213" alt=""><image src="../../media/graphics66.png" mime-type="image/png" height="17" width="13"/></media></figure>Tọa độ tâm.</para>
+      <para id="id6046120"><figure id="id6046123"><media id="id1170198729806" alt=""><image src="../../media/graphics67.png" mime-type="image/png" height="17" width="13"/></media></figure>Màu đường biên.</para>
+      <para id="id6046148"><figure id="id6046152"><media id="id1170198592503" alt=""><image src="../../media/graphics68.png" mime-type="image/png" height="17" width="13"/></media></figure>Màu tô.</para>
+      <para id="id6046177"><figure id="id6046180"><media id="id1170198732326" alt=""><image src="../../media/graphics69.png" mime-type="image/png" height="17" width="13"/></media></figure>Phương thức thiết lập tô màu.</para>
+      <para id="id6046206"><figure id="id6046209"><media id="id8058170" alt=""><image src="../../media/graphics70.png" mime-type="image/png" height="17" width="13"/></media></figure>Phương thức vẽ hình. Đây là phương thức thuần ảo.</para>
+      <para id="id6046237"><figure id="id6046241"><media id="id1170199849463" alt=""><image src="../../media/graphics71.png" mime-type="image/png" height="14" width="14"/></media></figure>Lớp Rectangle:</para>
+      <para id="id6046272"><figure id="id6046275"><media id="id1170197725964" alt=""><image src="../../media/graphics72.png" mime-type="image/png" height="17" width="13"/></media></figure>Chiều dài và chiều rộng.</para>
+      <para id="id6046301"><figure id="id6046304"><media id="id1170199691792" alt=""><image src="../../media/graphics73.png" mime-type="image/png" height="17" width="13"/></media></figure>Phương thức vẽ hình.</para>
+      <para id="id6046331"><figure id="id6046335"><media id="id8807526" alt=""><image src="../../media/graphics74.png" mime-type="image/png" height="14" width="14"/></media></figure>Lớp Circle:</para>
+      <para id="id6046366"><figure id="id6046369"><media id="id1170198893173" alt=""><image src="../../media/graphics75.png" mime-type="image/png" height="17" width="13"/></media></figure>Bán kính.</para>
+      <para id="id6058552"><figure id="id6058555"><media id="id7546892" alt=""><image src="../../media/graphics76.png" mime-type="image/png" height="17" width="13"/></media></figure>Phương thức vẽ hình.</para>
+    </section>
+  </content>
+</document>
