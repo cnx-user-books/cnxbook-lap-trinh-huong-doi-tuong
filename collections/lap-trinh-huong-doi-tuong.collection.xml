@@ -1,3 +1,22 @@
-<col:collection xmlns="http://cnx.rice.edu/collxml" xmlns:col="http://cnx.rice.edu/collxml" xml:lang="en" type="Course">  <metadata xmlns:md="http://cnx.rice.edu/mdml" mdml-version="0.5">  <md:content-id>col10794</md:content-id>  <md:title>Lập trình hướng đối tượng</md:title>      <md:license url="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution License 3.0</md:license>  <md:language>en</md:language>              <md:uuid>8ed150b1-580e-4469-9107-586491dc87d3</md:uuid>
-<md:slug>lap-trinh-huong-doi-tuong</md:slug>
-</metadata>  <col:content>          <col:module document="m30794"/>                            <col:module document="m29882"/>                            <col:module document="m30173"/>                            <col:module document="m30595"/>                            <col:module document="m30635"/>                            <col:module document="m30564"/>                            <col:module document="m30785"/>                            <col:module document="m30316"/>                            <col:module document="m30489"/>                    </col:content></col:collection>
+<?xml version="1.0"?>
+<col:collection xmlns="http://cnx.rice.edu/collxml" xmlns:col="http://cnx.rice.edu/collxml" xml:lang="en" type="Course" authors="L&#xEA; Th&#x1ECB; M&#x1EF9; H&#x1EA1;nh">
+  <metadata xmlns:md="http://cnx.rice.edu/mdml" mdml-version="0.5">
+    <md:content-id>col10794</md:content-id>
+    <md:title>L&#x1EAD;p tr&#xEC;nh h&#x1B0;&#x1EDB;ng &#x111;&#x1ED1;i t&#x1B0;&#x1EE3;ng</md:title>
+    <md:license url="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution License 3.0</md:license>
+    <md:language>en</md:language>
+    <md:uuid>8ed150b1-580e-4469-9107-586491dc87d3</md:uuid>
+    <md:slug>lap-trinh-huong-doi-tuong</md:slug>
+  </metadata>
+  <col:content>
+    <col:module document="m30794"/>
+    <col:module document="m29882"/>
+    <col:module document="m30173"/>
+    <col:module document="m30595"/>
+    <col:module document="m30635"/>
+    <col:module document="m30564"/>
+    <col:module document="m30785"/>
+    <col:module document="m30316"/>
+    <col:module document="m30489"/>
+  </col:content>
+</col:collection>
